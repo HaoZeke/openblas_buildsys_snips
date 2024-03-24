@@ -12,3 +12,4 @@ platforms = ["linux-64"]
 jupyter = "1.0.0.*"
 jupytext = "1.16.1.*"
 pdm = "2.12.4.*"
+pip = "24.0.*"
