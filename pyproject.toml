@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = []
 requires-python = ">=3.12"
-readme = "README.md"
+readme = "README.org"
 license = {text = "MIT"}
 
 [build-system]
