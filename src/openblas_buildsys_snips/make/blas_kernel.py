@@ -1,7 +1,7 @@
 import re
 
 
-def parse_makefile_lines(lines, directory, kernel_file, base=None):
+def parse_makefile_to_sym(lines, directory, kernel_file, base=None):
     result = {"base": base, "modes": {}}
 
     for line in lines:

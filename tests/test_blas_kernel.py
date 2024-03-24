@@ -1,5 +1,5 @@
 import pytest
-from openblas_buildsys_snips.make.blas_kernel import parse_makefile_lines
+from openblas_buildsys_snips.make.blas_kernel import parse_makefile_to_sym
 from pathlib import Path
 
 
@@ -45,15 +45,15 @@ def test_l2_with_base(datadir):
         },
     }
     assert (
-        parse_makefile_lines(lines.split("\n"), "generic", "ger_k.c", base="ger")
+        parse_makefile_to_sym(lines.split("\n"), "generic", "ger_k.c", base="ger")
         == expected_ger
     )
     assert (
-        parse_makefile_lines(lines.split("\n"), "generic", "zger.c", base="geru")
+        parse_makefile_to_sym(lines.split("\n"), "generic", "zger.c", base="geru")
         == expected_geru
     )
     assert (
-        parse_makefile_lines(lines.split("\n"), "generic", "zger.c", base="gerc")
+        parse_makefile_to_sym(lines.split("\n"), "generic", "zger.c", base="gerc")
         == expected_gerc
     )
 
@@ -70,7 +70,7 @@ def test_l1_with_base(datadir):
         },
     }
     assert (
-        parse_makefile_lines(lines.split("\n"), "arm", "axpby.c", base="axpby")
+        parse_makefile_to_sym(lines.split("\n"), "arm", "axpby.c", base="axpby")
         == expected
     )
 
@@ -87,4 +87,4 @@ def test_l2_without_base():
             "s": {"dir": "generic", "kernel": "zsymv_k.c", "exts": ["_L"]},
         },
     }
-    assert parse_makefile_lines(lines, "generic", "zsymv_k.c") == expected
+    assert parse_makefile_to_sym(lines, "generic", "zsymv_k.c") == expected
