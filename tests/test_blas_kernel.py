@@ -3,7 +3,7 @@ from openblas_buildsys_snips.make.blas_kernel import parse_makefile_lines
 from pathlib import Path
 
 
-def test_with_provided_base(datadir):
+def test_l2_with_base(datadir):
     lines = (datadir / "Makefile.L2").read_text()
     expected_ger = {
         "base": "ger",
@@ -58,7 +58,24 @@ def test_with_provided_base(datadir):
     )
 
 
-def test_without_provided_base():
+def test_l1_with_base(datadir):
+    lines = (datadir / "Makefile.L1").read_text()
+    expected = {
+        "base": "axpby",
+        "modes": {
+            "s": {"dir": "arm", "kernel": "axpby.c", "exts": ["_k"]},
+            "d": {"dir": "arm", "kernel": "axpby.c", "exts": ["_k"]},
+            "c": {"dir": "arm", "kernel": "axpby.c", "exts": ["_k"]},
+            "z": {"dir": "arm", "kernel": "axpby.c", "exts": ["_k"]},
+        },
+    }
+    assert (
+        parse_makefile_lines(lines.split("\n"), "arm", "axpby.c", base="axpby")
+        == expected
+    )
+
+
+def test_l2_without_base():
     lines = [
         "$(KDIR)zsymv_U$(TSUFFIX).$(SUFFIX)  $(KDIR)zsymv_U$(TSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(ZSYMV_U_KERNEL)   $(ZSYMV_U_PARAM)",
         "$(KDIR)ssymv_L$(TSUFFIX).$(SUFFIX)  $(KDIR)ssymv_L$(TSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SSYMV_L_KERNEL)  $(SSYMV_L_PARAM)",
