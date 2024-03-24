@@ -1,8 +1,11 @@
 * About
 A set of tiny functions to keep the ~meson.build~ files for OpenBLAS in sync
-with the corresponding ~Makefile~ s.
+with the corresponding ~Makefiles~.
 ** Why
 For testing the constituent regular expressions and to keep a single notebook to
 help construct paired build systems.
+** Usage
+The documentation consists of notebooks which can be taken as a rough chart of
+potring away from ~Makefiles~ and ~CMake~.
 * License
 MIT.
