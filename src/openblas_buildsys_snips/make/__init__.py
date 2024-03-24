@@ -1,0 +1,1 @@
+from openblas_buildsys_snips.make import blas_kernel
