@@ -2349,6 +2349,28 @@ package:
   size: 9332
   timestamp: 1602536313357
 - platform: linux-64
+  name: pip
+  version: '24.0'
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.7
+  - setuptools
+  - wheel
+  url: https://conda.anaconda.org/conda-forge/noarch/pip-24.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: f586ac1e56c8638b64f9c8122a7b8a67
+    sha256: b7c1c5d8f13e8cb491c4bd1d0d1896a4cf80fc47de01059ad77509112b664a4a
+  build: pyhd8ed1ab_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 1398245
+  timestamp: 1706960660581
+- platform: linux-64
   name: pkgutil-resolve-name
   version: 1.3.10
   category: main
@@ -3649,6 +3671,26 @@ package:
   noarch: python
   size: 46626
   timestamp: 1701630814576
+- platform: linux-64
+  name: wheel
+  version: 0.43.0
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.7
+  url: https://conda.anaconda.org/conda-forge/noarch/wheel-0.43.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 6e43a94e0ee67523b5e781f0faba5c45
+    sha256: 14ebc6f098ebc796669fa6e7d437086a0ee527c8694ff2062a8bcb6dbd9b1581
+  build: pyhd8ed1ab_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 58048
+  timestamp: 1711016334007
 - platform: linux-64
   name: widgetsnbextension
   version: 4.0.10
