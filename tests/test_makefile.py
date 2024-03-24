@@ -124,4 +124,4 @@ def test_without_provided_base():
             "s": {"dir": "generic", "kernel": "zsymv_k.c", "exts": ["_L"]},
         },
     }
-    assert parse_makefile_lines(lines, "generic", "zsymv_k.c", base="symv") == expected
+    assert parse_makefile_lines(lines, "generic", "zsymv_k.c") == expected
