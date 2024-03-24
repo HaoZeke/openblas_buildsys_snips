@@ -1,5 +1,6 @@
 import re
 
+
 def parse_makefile_lines(lines, directory, kernel_file, base=None):
     result = {"base": base, "modes": {}}
 
