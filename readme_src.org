@@ -6,6 +6,17 @@ For testing the constituent regular expressions and to keep a single notebook to
 help construct paired build systems.
 ** Usage
 The documentation consists of notebooks which can be taken as a rough chart of
-potring away from ~Makefiles~ and ~CMake~.
+porting away from ~Makefiles~ and ~CMake~.
+
+While the library can be installed via ~pip~ and then used in scripts, that
+would be rather odd at this point in its developement. The idea is to mostly
+generate snippets and copy them into ~meson.build~ files by hand for now, later
+these can form the basis of a templated system for automating updates further.
+** Documentation
+*** Readme
+The ~readme~ can be constructed via:
+#+begin_src bash
+./scripts/org_to_md.sh readme_src.org readme.md
+#+end_src
 * License
 MIT.

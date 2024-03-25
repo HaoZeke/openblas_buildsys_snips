@@ -8,6 +8,7 @@ A set of functions meant for parsing bits of the OpenBlas build system, both
 :caption: Contents
 
 apidocs/index
+nb/kernel_blas
 ```
 
 ## Indices and tables
