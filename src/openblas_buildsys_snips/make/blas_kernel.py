@@ -42,3 +42,42 @@ def parse_makefile_to_sym(lines, directory, kernel_file, base=None):
                     result["modes"][mode]["exts"].append(extension)
 
     return result
+
+
+def parse_compilation_commands(commands, base):
+    pattern = r"\$\(KDIR\)(?P<mode>[a-z])" + re.escape(base) + r"(?P<extension>[^\$]+)"
+    configs = []
+
+    for command in commands:
+        match = re.search(pattern, command)
+        if not match:
+            continue
+
+        mode = match.group("mode")
+        extension = match.group("extension").strip().split()[0]
+
+        # Extract defines and undefines
+        defs = re.findall(r"-D([A-Z_]+)", command)
+        undefs = re.findall(r"-U([A-Z_]+)", command)
+
+        # Attempt to capture additional flags more inclusively
+        addl_flags_pattern = r"\$\(CFLAGS\)(.*?)\$<"
+        addl_flags_match = re.search(addl_flags_pattern, command, re.DOTALL)
+        addl_flags = addl_flags_match.group(1).strip() if addl_flags_match else ""
+        # Splitting captured flags into a list, filtering out empty strings
+        addl_flags_list = [
+            flag.strip()
+            for flag in re.split(r"\s+", addl_flags)
+            if flag.strip() and "-" not in flag
+        ]
+
+        kcfg = {
+            "name": mode + base + extension,
+            "undef": undefs,
+            "def": defs,
+            "addl": addl_flags_list,
+        }
+
+        configs.append(kcfg)
+
+    return configs

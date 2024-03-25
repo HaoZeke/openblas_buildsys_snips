@@ -1,5 +1,6 @@
 import pytest
-from openblas_buildsys_snips.make.blas_kernel import parse_makefile_to_sym
+import openblas_buildsys_snips.make.blas_kernel as opbk
+import openblas_buildsys_snips._utils as oputil
 from pathlib import Path
 
 
@@ -45,15 +46,15 @@ def test_l2_with_base(datadir):
         },
     }
     assert (
-        parse_makefile_to_sym(lines.split("\n"), "generic", "ger_k.c", base="ger")
+        opbk.parse_makefile_to_sym(lines.split("\n"), "generic", "ger_k.c", base="ger")
         == expected_ger
     )
     assert (
-        parse_makefile_to_sym(lines.split("\n"), "generic", "zger.c", base="geru")
+        opbk.parse_makefile_to_sym(lines.split("\n"), "generic", "zger.c", base="geru")
         == expected_geru
     )
     assert (
-        parse_makefile_to_sym(lines.split("\n"), "generic", "zger.c", base="gerc")
+        opbk.parse_makefile_to_sym(lines.split("\n"), "generic", "zger.c", base="gerc")
         == expected_gerc
     )
 
@@ -70,7 +71,7 @@ def test_l1_with_base(datadir):
         },
     }
     assert (
-        parse_makefile_to_sym(lines.split("\n"), "arm", "axpby.c", base="axpby")
+        opbk.parse_makefile_to_sym(lines.split("\n"), "arm", "axpby.c", base="axpby")
         == expected
     )
 
@@ -87,4 +88,53 @@ def test_l2_without_base():
             "s": {"dir": "generic", "kernel": "zsymv_k.c", "exts": ["_L"]},
         },
     }
-    assert parse_makefile_to_sym(lines, "generic", "zsymv_k.c") == expected
+    assert opbk.parse_makefile_to_sym(lines, "generic", "zsymv_k.c") == expected
+
+
+def test_parse_compile_commands():
+    expected = [
+        {
+            "name": "srot_k",
+            "undef": ["COMPLEX", "COMPLEX", "DOUBLE"],
+            "def": [],
+            "addl": ["$(FMAFLAG)"],
+        },
+        {
+            "name": "drot_k",
+            "undef": ["COMPLEX", "COMPLEX"],
+            "def": ["DOUBLE"],
+            "addl": ["$(FMAFLAG)"],
+        },
+        {
+            "name": "qrot_k",
+            "undef": ["COMPLEX", "COMPLEX"],
+            "def": ["XDOUBLE"],
+            "addl": [],
+        },
+        {
+            "name": "csrot_k",
+            "undef": ["DOUBLE"],
+            "def": ["COMPLEX", "COMPLEX"],
+            "addl": [],
+        },
+    ]
+    lines = """
+    $(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SROTKERNEL)
+        $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $< -o $@
+
+    $(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL)
+        $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $< -o $@
+
+    $(KDIR)qrot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)qrot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(QROTKERNEL)
+        $(CC) -c $(CFLAGS) -UCOMPLEX -UCOMPLEX -DXDOUBLE $< -o $@
+
+    $(KDIR)csrot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)csrot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(CROTKERNEL)
+        $(CC) -c $(CFLAGS) -DCOMPLEX -DCOMPLEX -UDOUBLE  $< -o $@
+    """.strip().split(
+        "\n"
+    )
+
+    results = opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "rot")
+
+    for expect, res in zip(expected, results):
+        assert expect == res
