@@ -118,6 +118,7 @@ def test_parse_compile_commands():
             "addl": [],
         },
     ]
+
     lines = """
     $(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SROTKERNEL)
         $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $< -o $@
@@ -136,5 +137,9 @@ def test_parse_compile_commands():
 
     results = opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "rot")
 
-    for expect, res in zip(expected, results):
-        assert expect == res
+    assert len(results) == len(
+        expected
+    ), "The number of configurations does not match the expected count."
+
+    for exp in expected:
+        assert exp in results, f"Expected configuration not found in results: {exp}"
