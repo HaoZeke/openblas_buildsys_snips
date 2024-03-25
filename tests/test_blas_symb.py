@@ -1,7 +1,5 @@
-import pytest
 import openblas_buildsys_snips.make.blas_kernel as opbk
 import openblas_buildsys_snips._utils as oputil
-from pathlib import Path
 
 
 def test_l2_with_base(datadir):

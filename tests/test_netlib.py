@@ -1,6 +1,4 @@
-import pytest
 from openblas_buildsys_snips.cmake.netlib import cmake_netlib_meson
-from pathlib import Path
 
 
 def test_basic_netlib():
