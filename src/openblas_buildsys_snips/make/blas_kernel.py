@@ -170,7 +170,7 @@ def parse_compilation_commands(commands, base):
     in the configuration and management of compilation settings in a more
     structured format.
     """
-    pattern = r"\$\(KDIR\)(?P<mode>[a-z])" + re.escape(base) + r"(?P<extension>[^\$]+)"
+    pattern = r"\$\(KDIR\)(?P<mode>[a-z]{1,2})"  + re.escape(base) + r"(?P<extension>[^\$]+)"
     configs = []
 
     for command in commands:
