@@ -20,7 +20,7 @@ Broadly speaking this proceeds along the following path:
 5. [ ] `kernel`, which will need to dynamically choose the right one
 6. [ ] Optionally construct and add `lapacke` and the other bells and whistles
 
-Essentially this means we can break down the build in the following directories:
+Essentially means steps 1 through 5 can be broken down into the following:
 
 - **Interfaces** :: Primarily contains wrapper functions for BLAS API calls for
   interfacing with higher-level BLAS functions but do not contain the
