@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Interface" href="interface.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="BLAS Kernels" href="kernel_blas.html" /><link rel="prev" title="First steps" href="../roadmap/firststeps.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>BLAS Kernels - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>Interface - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_contributors.css?v=f079e67e" />
@@ -175,8 +175,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../roadmap/firststeps.html">First steps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="interface.html">Interface</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">BLAS Kernels</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel_blas.html">BLAS Kernels</a></li>
 </ul>
 
 </div>
@@ -211,68 +211,50 @@
           </label>
         </div>
         <article role="main">
-          <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openblas_buildsys_snips.make.blas_kernel</span> <span class="k">as</span> <span class="nn">opbk</span>
-<span class="kn">import</span> <span class="nn">openblas_buildsys_snips._utils</span> <span class="k">as</span> <span class="nn">oputil</span>
-
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-</pre></div>
-</div>
-<section id="blas-kernels">
-<h1>BLAS Kernels<a class="headerlink" href="#blas-kernels" title="Link to this heading">#</a></h1>
-<section id="makefiles-to-meson-build">
-<h2>Makefiles to <code class="docutils literal notranslate"><span class="pre">meson.build</span></code><a class="headerlink" href="#makefiles-to-meson-build" title="Link to this heading">#</a></h2>
-<p>The idea is to use functions from the library to parse the <code class="docutils literal notranslate"><span class="pre">Makefiles</span></code> into an easy to maintain set of <code class="docutils literal notranslate"><span class="pre">meson.build</span></code> files.</p>
-<section id="first-approximation">
-<h3>First approximation<a class="headerlink" href="#first-approximation" title="Link to this heading">#</a></h3>
-<p>The first attempt should be and is just collecting the symbols and the relevant flags. We will use the <code class="docutils literal notranslate"><span class="pre">generic</span></code> variant for an <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> machine.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># For tests</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">$(KDIR)samax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)samax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SAMAXKERNEL)</span>
-<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE  -DUSE_ABS -UUSE_MIN $&lt; -o $@</span>
-
-<span class="s2">$(KDIR)damax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)damax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DAMAXKERNEL)</span>
-<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -DDOUBLE  -DUSE_ABS -UUSE_MIN $&lt; -o $@</span>
-
-<span class="s2">$(KDIR)qamax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)qamax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(QAMAXKERNEL)</span>
-<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -DXDOUBLE -DUSE_ABS -UUSE_MIN $&lt; -o $@</span>
-
-<span class="s2">$(KDIR)camax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)camax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(CAMAXKERNEL)</span>
-<span class="s2">	$(CC) -c $(CFLAGS) -DCOMPLEX -UDOUBLE  -DUSE_ABS -UUSE_MIN $&lt; -o $@</span>
-
-<span class="s2">$(KDIR)zamax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)zamax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(ZAMAXKERNEL)</span>
-<span class="s2">	$(CC) -c $(CFLAGS) -DCOMPLEX -DDOUBLE  -DUSE_ABS -UUSE_MIN $&lt; -o $@</span>
-
-<span class="s2">$(KDIR)xamax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)xamax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(XAMAXKERNEL)</span>
-<span class="s2">	$(CC) -c $(CFLAGS) -DCOMPLEX -DXDOUBLE -DUSE_ABS -UUSE_MIN $&lt; -o $@</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<section id="level-1">
-<h4>Level 1<a class="headerlink" href="#level-1" title="Link to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ml</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../../tests/test_blas_symb/Makefile.L1&quot;</span><span class="p">)</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">opbk</span><span class="o">.</span><span class="n">parse_compilation_commands</span><span class="p">(</span><span class="n">oputil</span><span class="o">.</span><span class="n">pair_kdir_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="s2">&quot;amax&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+          <section id="interface">
+<h1>Interface<a class="headerlink" href="#interface" title="Link to this heading">#</a></h1>
+<p>The interface directory within the OpenBLAS repository is critical, serving as a
+foundational component that bridges high-level BLAS API calls with their
+corresponding low-level, optimized implementations. The key point are that these
+contain…</p>
+<p><strong>Wrapper Functions</strong>: Housing C wrapper functions that which are the entry
+points for the API calls, ensuring that the correct, optimized kernel is
+executed based on the architecture and the specific operation being performed.</p>
+<p>In essence, the interface directory encapsulates the strategic integration of
+compatibility, efficiency, and user accessibility, which is a pretty good
+design.</p>
+<section id="buildsystem-perspective">
+<h2>Buildsystem Perspective<a class="headerlink" href="#buildsystem-perspective" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">make</span></code> handles each object file on its own, so that won’t be covered further.
+Let’s delve into the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> perspective and then the equivalent <code class="docutils literal notranslate"><span class="pre">meson</span></code>
+perspective.</p>
+<section id="cmake-object-library">
+<h3>CMake <code class="docutils literal notranslate"><span class="pre">OBJECT</span> <span class="pre">Library</span></code><a class="headerlink" href="#cmake-object-library" title="Link to this heading">#</a></h3>
+<p>In CMake an OBJECT library compiles source files into object files without
+archiving them into a library file. This approach is useful for compiling code
+that will be used in multiple targets without recompiling the source multiple
+times. In the context of OpenBLAS, compiling the interface directory as an
+OBJECT library allows these compiled objects (wrappers and interface functions)
+to be reused across different final targets (e.g., shared and static versions of
+the library). The linker can then resolve symbols to the optimized
+implementations, which might be compiled separately and linked together in the
+final build step.</p>
 </section>
-<section id="level-2">
-<h4>Level 2<a class="headerlink" href="#level-2" title="Link to this heading">#</a></h4>
-<p>These are a straightforward extension of L1 and work pretty much the same way.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ml</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../../tests/test_blas_symb/Makefile.L2&quot;</span><span class="p">)</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">opbk</span><span class="o">.</span><span class="n">parse_compilation_commands</span><span class="p">(</span><span class="n">oputil</span><span class="o">.</span><span class="n">pair_kdir_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="s2">&quot;hemv&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="level-3">
-<h4>Level 3<a class="headerlink" href="#level-3" title="Link to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ml</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../../tests/test_blas_symb/Makefile.L3&quot;</span><span class="p">)</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">opbk</span><span class="o">.</span><span class="n">parse_compilation_commands</span><span class="p">(</span><span class="n">oputil</span><span class="o">.</span><span class="n">pair_kdir_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="s2">&quot;gemm_small_kernel_b0&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<section id="meson-static-library">
+<h3>Meson <code class="docutils literal notranslate"><span class="pre">static_library</span></code><a class="headerlink" href="#meson-static-library" title="Link to this heading">#</a></h3>
+<p>Similarly, in Meson, a <code class="docutils literal notranslate"><span class="pre">static_library</span></code> is a collection of object files archived
+together.  When we compile source files from the interface directory into a
+<code class="docutils literal notranslate"><span class="pre">static_library</span></code>, we effectively prepare a library which contains all the
+wrapper functions which act as entry points to the optimized routines. These
+wrappers can invoke different implementations based on the compile-time or
+runtime conditions (e.g., architecture-specific optimizations). The unresolved
+symbols in this static library (like calls to the optimized kernels) are
+intentionally left for the linker to resolve, allowing for flexible linking with
+other parts of the project that implement these symbols.</p>
+<section id="relevant-discussions">
+<h4>Relevant discussions<a class="headerlink" href="#relevant-discussions" title="Link to this heading">#</a></h4>
+<p>See <a class="reference external" href="https://github.com/mesonbuild/meson/discussions/11591">gh-11591</a> for a
+discussion on porting <code class="docutils literal notranslate"><span class="pre">cmake</span></code> object libraries to <code class="docutils literal notranslate"><span class="pre">meson</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
@@ -286,15 +268,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="interface.html">
+          <a class="next-page" href="kernel_blas.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">BLAS Kernels</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../roadmap/firststeps.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Interface</div>
+                <div class="title">First steps</div>
                 
               </div>
             </a>
@@ -328,12 +318,11 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">BLAS Kernels</a><ul>
-<li><a class="reference internal" href="#makefiles-to-meson-build">Makefiles to <code class="docutils literal notranslate"><span class="pre">meson.build</span></code></a><ul>
-<li><a class="reference internal" href="#first-approximation">First approximation</a><ul>
-<li><a class="reference internal" href="#level-1">Level 1</a></li>
-<li><a class="reference internal" href="#level-2">Level 2</a></li>
-<li><a class="reference internal" href="#level-3">Level 3</a></li>
+<li><a class="reference internal" href="#">Interface</a><ul>
+<li><a class="reference internal" href="#buildsystem-perspective">Buildsystem Perspective</a><ul>
+<li><a class="reference internal" href="#cmake-object-library">CMake <code class="docutils literal notranslate"><span class="pre">OBJECT</span> <span class="pre">Library</span></code></a></li>
+<li><a class="reference internal" href="#meson-static-library">Meson <code class="docutils literal notranslate"><span class="pre">static_library</span></code></a><ul>
+<li><a class="reference internal" href="#relevant-discussions">Relevant discussions</a></li>
 </ul>
 </li>
 </ul>

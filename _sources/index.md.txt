@@ -9,6 +9,7 @@ A set of functions meant for parsing bits of the OpenBlas build system, both
 
 apidocs/index
 roadmap/firststeps
+nb/interface
 nb/kernel_blas
 ```
 
