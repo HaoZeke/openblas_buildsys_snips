@@ -1,18 +1,19 @@
 ---
-jupytext:
-  formats: ipynb,md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.16.1
-kernelspec:
-  display_name: Python 3 (ipykernel)
-  language: python
-  name: python3
+jupyter:
+  jupytext:
+    formats: ipynb,md
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.16.1
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
 ---
 
-```{code-cell} ipython3
+```python
 import openblas_buildsys_snips.make.blas_kernel as opbk
 import openblas_buildsys_snips._utils as oputil
 
@@ -23,12 +24,11 @@ from pathlib import Path
 ## Makefiles to `meson.build`
 The idea is to use functions from the library to parse the `Makefiles` into an easy to maintain set of `meson.build` files.
 
-+++
 
 ### First approximation
 The first attempt should be and is just collecting the symbols and the relevant flags. We will use the `generic` variant for an `x86_64` machine.
 
-```{code-cell} ipython3
+```python
 # For tests
 lines = """
 $(KDIR)samax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)samax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SAMAXKERNEL)
@@ -53,19 +53,19 @@ $(KDIR)xamax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)xamax_k$(TPSUFFIX).$(PSUFFIX)  : $(KE
 
 #### Level 1
 
-```{code-cell} ipython3
+```python
 ml = Path.cwd() / Path("../../../tests/test_blas_symb/Makefile.L1")
 lines = ml.read_text().split('\n')
 ```
 
-```{code-cell} ipython3
+```python
 opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "amax")
 ```
 
 #### Level 2
 These are a straightforward extension of L1 and work pretty much the same way.
 
-```{code-cell} ipython3
+```python
 ml = Path.cwd() / Path("../../../tests/test_blas_symb/Makefile.L2")
 lines = ml.read_text().split('\n')
 opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "hemv")
@@ -73,12 +73,12 @@ opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "hemv")
 
 #### Level 3
 
-```{code-cell} ipython3
+```python
 ml = Path.cwd() / Path("../../../tests/test_blas_symb/Makefile.L3")
 lines = ml.read_text().split('\n')
 opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "gemm_small_kernel_b0")
 ```
 
-```{code-cell} ipython3
+```python
 
 ```
