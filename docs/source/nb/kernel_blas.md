@@ -59,7 +59,7 @@ lines = ml.read_text().split('\n')
 ```
 
 ```python
-opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "amax")
+opbk.parse_compilation_commands(oputil.pair_suffix_lines(lines), "amax")
 ```
 
 #### Level 2
@@ -68,7 +68,7 @@ These are a straightforward extension of L1 and work pretty much the same way.
 ```python
 ml = Path.cwd() / Path("../../../tests/test_blas_symb/Makefile.L2")
 lines = ml.read_text().split('\n')
-opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "hemv")
+opbk.parse_compilation_commands(oputil.pair_suffix_lines(lines), "hemv")
 ```
 
 #### Level 3
@@ -76,7 +76,7 @@ opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "hemv")
 ```python
 ml = Path.cwd() / Path("../../../tests/test_blas_symb/Makefile.L3")
 lines = ml.read_text().split('\n')
-opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "gemm_small_kernel_b0")
+opbk.parse_compilation_commands(oputil.pair_suffix_lines(lines), "gemm_small_kernel_b0")
 ```
 
 ```python

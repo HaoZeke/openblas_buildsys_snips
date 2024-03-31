@@ -141,7 +141,7 @@ class TestParseCompile:
             "\n"
         )
 
-        results = opbk.parse_compilation_commands(oputil.pair_kdir_lines(lines), "rot")
+        results = opbk.parse_compilation_commands(oputil.pair_suffix_lines(lines), "rot")
 
         assert len(results) == len(
             expected
