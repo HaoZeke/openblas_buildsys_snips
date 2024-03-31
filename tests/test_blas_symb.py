@@ -103,13 +103,13 @@ class TestParseCompile:
                 "name": "srot_k",
                 "undef": ["COMPLEX", "COMPLEX", "DOUBLE"],
                 "def": [],
-                "addl": ["$(FMAFLAG)"],
+                "addl": ["FMAFLAG"],
             },
             {
                 "name": "drot_k",
                 "undef": ["COMPLEX", "COMPLEX"],
                 "def": ["DOUBLE"],
-                "addl": ["$(FMAFLAG)"],
+                "addl": ["FMAFLAG"],
             },
             {
                 "name": "qrot_k",

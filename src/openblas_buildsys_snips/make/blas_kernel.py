@@ -185,16 +185,14 @@ def parse_compilation_commands(commands, base):
         defs = re.findall(r"-D(\S+)", command)
         undefs = re.findall(r"-U(\S+)", command)
 
-        # Attempt to capture additional flags more inclusively
-        addl_flags_pattern = r"\$\(CFLAGS\)(.*?)\$<"
-        addl_flags_match = re.search(addl_flags_pattern, command, re.DOTALL)
-        addl_flags = addl_flags_match.group(1).strip() if addl_flags_match else ""
-        # Splitting captured flags into a list, filtering out empty strings
-        addl_flags_list = [
-            flag.strip()
-            for flag in re.split(r"\s+", addl_flags)
-            if flag.strip() and "-" not in flag
-        ]
+        # Capture the flags between `-c` and `$<`
+        command_pattern = r"-c(.*?)\$<"
+        command_match = re.search(command_pattern, command, re.DOTALL)
+        command_flags = command_match.group(1).strip() if command_match else ""
+        # Extract variables wrapped in $(), drop $(CFLAGS)
+        variables_pattern = r"\$\((.*?)\)"
+        addl_flags = re.findall(variables_pattern, command_flags)
+        addl_flags_list = [flag for flag in addl_flags if 'CFLAGS' not in flag]
 
         kcfg = {
             "name": mode + base + extension,
