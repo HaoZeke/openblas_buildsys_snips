@@ -38,3 +38,5 @@ Essentially this means we can break down the build in the following directories:
   interface and driver directories dispatch to, based on the operation being
   performed and the hardware architecture of the system.
 
+
+Of course, OpenBLAS includes lapack as well, but that is a later concern.
