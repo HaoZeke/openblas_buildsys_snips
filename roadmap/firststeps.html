@@ -219,8 +219,10 @@ here</a>.</p>
 <p>Note that though the evolution of the <code class="docutils literal notranslate"><span class="pre">CMakeLists</span></code> is used, the conversion
 itself follows the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, along with the regex functions defined in this
 library.</p>
-<p>Broadly speaking this proceeds along the following path:
-0. [X] Hardcode some of the default <code class="docutils literal notranslate"><span class="pre">config</span></code> generation mechanism (port them later)</p>
+<p>Broadly speaking this proceeds along the following path:</p>
+<ol class="arabic simple" start="0">
+<li><p>[X] Hardcode some of the default <code class="docutils literal notranslate"><span class="pre">config</span></code> generation mechanism (port them later)</p></li>
+</ol>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">f_check</span></code> and <code class="docutils literal notranslate"><span class="pre">c_check</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">prebuild</span></code> and <code class="docutils literal notranslate"><span class="pre">system</span></code></p></li>
@@ -233,6 +235,22 @@ library.</p>
 <li><p>[ ] <code class="docutils literal notranslate"><span class="pre">kernel</span></code>, which will need to dynamically choose the right one</p></li>
 <li><p>[ ] Optionally construct and add <code class="docutils literal notranslate"><span class="pre">lapacke</span></code> and the other bells and whistles</p></li>
 </ol>
+<p>Essentially this means we can break down the build in the following directories:</p>
+<ul class="simple">
+<li><p><strong>Interfaces</strong> :: Primarily contains wrapper functions for BLAS API
+calls. These wrappers are crucial for interfacing with higher-level BLAS
+functions but do not contain the computational kernels themselves.</p></li>
+<li><p><strong>Drivers</strong> :: Include optimized implementations for Level 2 and
+Level 3 BLAS operations, such as matrix-vector and matrix-matrix
+multiplications. These directories are essential for performance-critical
+operations but still rely on lower-level kernels for the actual computations.</p></li>
+<li><p><strong>Kernels</strong>: This is where the core computational kernels reside.
+These kernels are highly optimized for specific architectures and perform the
+low-level arithmetic operations called by higher-level functions. The kernel
+directory is crucial because it contains the implementations that the
+interface and driver directories dispatch to, based on the operation being
+performed and the hardware architecture of the system.</p></li>
+</ul>
 </section>
 
         </article>
