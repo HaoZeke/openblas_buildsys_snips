@@ -15,17 +15,17 @@
 :class: autosummary longtable
 :align: left
 
-* - {py:obj}`pair_kdir_lines <openblas_buildsys_snips._utils.pair_kdir_lines>`
-  - ```{autodoc2-docstring} openblas_buildsys_snips._utils.pair_kdir_lines
+* - {py:obj}`pair_suffix_lines <openblas_buildsys_snips._utils.pair_suffix_lines>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips._utils.pair_suffix_lines
     :summary:
     ```
 ````
 
 ### API
 
-````{py:function} pair_kdir_lines(lines)
-:canonical: openblas_buildsys_snips._utils.pair_kdir_lines
+````{py:function} pair_suffix_lines(lines)
+:canonical: openblas_buildsys_snips._utils.pair_suffix_lines
 
-```{autodoc2-docstring} openblas_buildsys_snips._utils.pair_kdir_lines
+```{autodoc2-docstring} openblas_buildsys_snips._utils.pair_suffix_lines
 ```
 ````

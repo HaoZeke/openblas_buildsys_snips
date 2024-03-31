@@ -220,8 +220,8 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips._utils.pair_kdir_lines" title="openblas_buildsys_snips._utils.pair_kdir_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pair_kdir_lines</span></code></a></p></td>
-<td><p>Pair each line containing <code class="docutils literal notranslate"><span class="pre">$(KDIR)</span></code> with its immediately following line.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips._utils.pair_suffix_lines" title="openblas_buildsys_snips._utils.pair_suffix_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pair_suffix_lines</span></code></a></p></td>
+<td><p>Pair each line containing <code class="docutils literal notranslate"><span class="pre">$(SUFFIX)</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">:</span></code> with the next line.</p></td>
 </tr>
 </tbody>
 </table>
@@ -230,13 +230,13 @@
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="openblas_buildsys_snips._utils.pair_kdir_lines">
-<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips._utils.</span></span><span class="sig-name descname"><span class="pre">pair_kdir_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips._utils.pair_kdir_lines" title="Link to this definition">#</a></dt>
-<dd><p>Pair each line containing <code class="docutils literal notranslate"><span class="pre">$(KDIR)</span></code> with its immediately following line.</p>
+<dt class="sig sig-object py" id="openblas_buildsys_snips._utils.pair_suffix_lines">
+<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips._utils.</span></span><span class="sig-name descname"><span class="pre">pair_suffix_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips._utils.pair_suffix_lines" title="Link to this definition">#</a></dt>
+<dd><p>Pair each line containing <code class="docutils literal notranslate"><span class="pre">$(SUFFIX)</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">:</span></code> with the next line.</p>
 <p>This generator function iterates over a sequence of lines. For each line
-that contains the <code class="docutils literal notranslate"><span class="pre">$(KDIR)</span></code> marker, it pairs this line with the next line in
-the sequence. Both lines are stripped of leading and trailing whitespace
-before being concatenated and yielded.</p>
+that contains the marker, it pairs this line with the next line in the
+sequence. Both lines are stripped of leading and trailing whitespace before
+being concatenated and yielded.</p>
 <h2 class="rubric" id="id1">Parameters</h2>
 <p><strong>lines</strong> : iterable of str</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>An iterable sequence of lines (strings) to be processed. This can be a
@@ -247,9 +247,9 @@ representing individual lines.
 <h2 class="rubric" id="id2">Yields</h2>
 <p><strong>str</strong></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Paired lines concatenated into a single string. Only lines containing
-`$(KDIR)` are processed and paired with their subsequent line. Each
-yielded string is a concatenation of a `$(KDIR)` line and its following
-line, separated by a space.
+`$(SUFFIX)` and `:` are processed and paired with their subsequent line.
+Each yielded string is a concatenation of the marked line and its
+following line, separated by a space.
 </pre></div>
 </div>
 <h2 class="rubric" id="id3">Examples</h2>
@@ -258,12 +258,15 @@ line, separated by a space.
 <span class="gp">... </span><span class="s2">&quot;$(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $&lt; -o $@&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="s2">&quot;$(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL)&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="s2">&quot;$(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $&lt; -o $@&quot;</span>
+<span class="gp">... </span><span class="s2">&quot;sbstobf16.$(SUFFIX) sbstobf16.$(PSUFFIX) : tobf16.c&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="s2">&quot;$(CC) $(CFLAGS) -DSINGLE_PREC -UDOUBLE_PREC -c $&lt; -o $(@F)&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">paired_lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pair_kdir_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paired_lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pline</span> <span class="ow">in</span> <span class="n">paired_lines</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">pline</span><span class="p">)</span>
 <span class="go">$(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SROTKERNEL) $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $&lt; -o $@</span>
 <span class="go">$(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL) $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $&lt; -o $@</span>
+<span class="go">sbstobf16.$(SUFFIX) sbstobf16.$(PSUFFIX) : tobf16.c $(CC) $(CFLAGS) -DSINGLE_PREC -UDOUBLE_PREC -c $&lt; -o $(@F)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -331,7 +334,7 @@ line, separated by a space.
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a></li>
 <li><a class="reference internal" href="#api">API</a><ul>
-<li><a class="reference internal" href="#openblas_buildsys_snips._utils.pair_kdir_lines"><code class="docutils literal notranslate"><span class="pre">pair_kdir_lines()</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips._utils.pair_suffix_lines"><code class="docutils literal notranslate"><span class="pre">pair_suffix_lines()</span></code></a></li>
 </ul>
 </li>
 </ul>
