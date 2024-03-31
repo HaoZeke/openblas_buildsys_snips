@@ -1,0 +1,446 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips.cmake" href="openblas_buildsys_snips.cmake.html" /><link rel="prev" title="openblas_buildsys_snips.make" href="openblas_buildsys_snips.make.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+        <title>openblas_buildsys_snips.make.blas_kernel - openblas_buildsys_snips 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">openblas_buildsys_snips 0.1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">openblas_buildsys_snips 0.1.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="openblas_buildsys_snips.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="openblas_buildsys_snips.cmake.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.cmake</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.cmake.netlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake.netlib</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../roadmap/firststeps.html">First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nb/kernel_blas.html">BLAS Kernels</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-openblas_buildsys_snips.make.blas_kernel">
+<span id="openblas-buildsys-snips-make-blas-kernel"></span><h1><a class="reference internal" href="#module-openblas_buildsys_snips.make.blas_kernel" title="openblas_buildsys_snips.make.blas_kernel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a><a class="headerlink" href="#module-openblas_buildsys_snips.make.blas_kernel" title="Link to this heading">#</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym" title="openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_makefile_to_sym</span></code></a></p></td>
+<td><p>Parses makefile lines to extract symbols and their corresponding
+configurations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands" title="openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_compilation_commands</span></code></a></p></td>
+<td><p>Parse compilation commands to extract configuration details.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym">
+<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.blas_kernel.</span></span><span class="sig-name descname"><span class="pre">parse_makefile_to_sym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym" title="Link to this definition">#</a></dt>
+<dd><p>Parses makefile lines to extract symbols and their corresponding
+configurations.</p>
+<p>This function iterates over a sequence of lines from a makefile, extracting
+information based on the presence of a base symbol.  It categorizes each
+line into modes based on the symbol’s prefix and collects extensions and
+configurations for each mode.  The function allows for dynamic determination
+of the base symbol if not provided.</p>
+<h2 class="rubric" id="id4">Parameters</h2>
+<p><strong>lines</strong> : iterable of str</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>An iterable sequence of lines (strings) from a makefile to be processed.
+</pre></div>
+</div>
+<p><strong>directory</strong> : str</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The directory associated with the symbols being parsed.
+</pre></div>
+</div>
+<p><strong>kernel_file</strong> : str</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The kernel file associated with the symbols.
+</pre></div>
+</div>
+<p><strong>base</strong> : str, optional</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The base symbol to look for in the lines. If not provided, the base is
+determined dynamically from the lines.
+</pre></div>
+</div>
+<h2 class="rubric" id="id5">Returns</h2>
+<p><strong>dict</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>A dictionary representing the parsed symbol configurations. It includes
+the base symbol, modes, their directories, kernel files, and extensions.
+The structure is:
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span>
+        <span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;base_symbol&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;modes&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;&lt;mode&gt;&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;directory&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;kernel_file&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;exts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;extension1&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;extension2&gt;&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="o">...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<h2 class="rubric" id="id6">Examples</h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_U$(TSUFFIX).$(SUFFIX)  : $(KERNELDIR)/symv_U_kernel $(SOME_DEPENDENCY)&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_L$(TSUFFIX).$(SUFFIX)  : $(KERNELDIR)/symv_L_kernel $(SOME_DEPENDENCY)&quot;</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">directory</span> <span class="o">=</span> <span class="s2">&quot;generic&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel_file</span> <span class="o">=</span> <span class="s2">&quot;symv_k.c&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_makefile_to_sym</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">kernel_file</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="s2">&quot;symv&quot;</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">    &quot;base&quot;: &quot;symv&quot;,</span>
+<span class="go">    &quot;modes&quot;: {</span>
+<span class="go">        &quot;s&quot;: {</span>
+<span class="go">            &quot;dir&quot;: &quot;generic&quot;,</span>
+<span class="go">            &quot;kernel&quot;: &quot;symv_k.c&quot;,</span>
+<span class="go">            &quot;exts&quot;: [&quot;_U&quot;, &quot;_L&quot;]</span>
+<span class="go">        }</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands">
+<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.blas_kernel.</span></span><span class="sig-name descname"><span class="pre">parse_compilation_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands" title="Link to this definition">#</a></dt>
+<dd><p>Parse compilation commands to extract configuration details.</p>
+<p>This function iterates over a list of compilation commands, extracting key
+configuration details such as mode, base, extensions, defined macros
+(<code class="docutils literal notranslate"><span class="pre">def</span></code>), undefined macros (<code class="docutils literal notranslate"><span class="pre">undef</span></code>), and additional flags (<code class="docutils literal notranslate"><span class="pre">addl</span></code>). The
+function utilizes regular expressions to parse each command according to a
+specified pattern, which is dynamically constructed using the provided
+<code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
+<h2 class="rubric" id="id7">Parameters</h2>
+<p><strong>commands</strong> : list of str</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>A list of compilation command strings to be parsed.
+</pre></div>
+</div>
+<p><strong>base</strong> : str</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The base identifier used to construct the regular expression pattern for
+parsing the commands. It is used to identify the relevant part of each
+command.
+</pre></div>
+</div>
+<h2 class="rubric" id="id8">Returns</h2>
+<p><strong>list of dict</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>A list of dictionaries, each representing the parsed configuration from
+a command.  Each dictionary contains the following keys:
+- &#39;name&#39;: A string combining the mode, base, and extension identifier.
+- &#39;undef&#39;: A list of strings representing macros that are undefined in
+  the command.
+- &#39;def&#39;: A list of strings representing macros that are defined in the
+  command.
+- &#39;addl&#39;: A list of additional flags extracted from the command.
+</pre></div>
+</div>
+<h2 class="rubric" id="id9">Examples</h2>
+<p>Suppose <code class="docutils literal notranslate"><span class="pre">commands</span></code> is a list of strings, each representing a command in the
+makefile, and <code class="docutils literal notranslate"><span class="pre">base</span></code> is a string like ‘symv’. The function will parse these
+commands to extract the configuration details based on the specified <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_U$(TSUFFIX).$(SUFFIX) : $(KERNELDIR)/symv_U_kernel -DUSE_UPPER -UDOUBLE&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_L$(TSUFFIX).$(SUFFIX) : $(KERNELDIR)/symv_L_kernel -DUSE_LOWER -UDOUBLE&quot;</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;symv&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configs</span> <span class="o">=</span> <span class="n">parse_compilation_commands</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span>
+<span class="go">[{&#39;name&#39;: &#39;symv_U&#39;, &#39;undef&#39;: [&#39;DOUBLE&#39;], &#39;def&#39;: [&#39;USE_UPPER&#39;], &#39;addl&#39;: []},</span>
+<span class="go"> {&#39;name&#39;: &#39;symv_L&#39;, &#39;undef&#39;: [&#39;DOUBLE&#39;], &#39;def&#39;: [&#39;USE_LOWER&#39;], &#39;addl&#39;: []}]</span>
+</pre></div>
+</div>
+<p>This illustrates how each command is broken down into its components, aiding
+in the configuration and management of compilation settings in a more
+structured format.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="openblas_buildsys_snips.cmake.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake</span></code></div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="openblas_buildsys_snips.make.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Rohit Goswami
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#api">API</a><ul>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym"><code class="docutils literal notranslate"><span class="pre">parse_makefile_to_sym()</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands"><code class="docutils literal notranslate"><span class="pre">parse_compilation_commands()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

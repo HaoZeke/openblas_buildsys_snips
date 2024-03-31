@@ -1,0 +1,53 @@
+# {py:mod}`openblas_buildsys_snips`
+
+```{py:module} openblas_buildsys_snips
+```
+
+```{autodoc2-docstring} openblas_buildsys_snips
+:allowtitles:
+```
+
+## Subpackages
+
+```{toctree}
+:titlesonly:
+:maxdepth: 3
+
+openblas_buildsys_snips.make
+openblas_buildsys_snips.cmake
+```
+
+## Submodules
+
+```{toctree}
+:titlesonly:
+:maxdepth: 1
+
+openblas_buildsys_snips._utils
+```
+
+## Package Contents
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`__all__ <openblas_buildsys_snips.__all__>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.__all__
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} __all__
+:canonical: openblas_buildsys_snips.__all__
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips.__all__
+```
+
+````

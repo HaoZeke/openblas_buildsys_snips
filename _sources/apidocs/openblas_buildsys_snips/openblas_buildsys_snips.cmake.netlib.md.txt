@@ -1,0 +1,31 @@
+# {py:mod}`openblas_buildsys_snips.cmake.netlib`
+
+```{py:module} openblas_buildsys_snips.cmake.netlib
+```
+
+```{autodoc2-docstring} openblas_buildsys_snips.cmake.netlib
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`cmake_netlib_meson <openblas_buildsys_snips.cmake.netlib.cmake_netlib_meson>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.cmake.netlib.cmake_netlib_meson
+    :summary:
+    ```
+````
+
+### API
+
+````{py:function} cmake_netlib_meson(cmake_string)
+:canonical: openblas_buildsys_snips.cmake.netlib.cmake_netlib_meson
+
+```{autodoc2-docstring} openblas_buildsys_snips.cmake.netlib.cmake_netlib_meson
+```
+````

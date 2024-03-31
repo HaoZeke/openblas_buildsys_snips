@@ -1,0 +1,42 @@
+# {py:mod}`openblas_buildsys_snips.make.blas_kernel`
+
+```{py:module} openblas_buildsys_snips.make.blas_kernel
+```
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.blas_kernel
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`parse_makefile_to_sym <openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym
+    :summary:
+    ```
+* - {py:obj}`parse_compilation_commands <openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands
+    :summary:
+    ```
+````
+
+### API
+
+````{py:function} parse_makefile_to_sym(lines, directory, kernel_file, base=None)
+:canonical: openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym
+```
+````
+
+````{py:function} parse_compilation_commands(commands, base)
+:canonical: openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands
+```
+````
