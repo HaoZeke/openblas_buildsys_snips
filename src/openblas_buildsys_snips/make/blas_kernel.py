@@ -182,8 +182,8 @@ def parse_compilation_commands(commands, base):
         extension = match.group("extension").strip().split()[0]
 
         # Extract defines and undefines
-        defs = re.findall(r"-D([A-Z_]+)", command)
-        undefs = re.findall(r"-U([A-Z_]+)", command)
+        defs = re.findall(r"-D(\S+)", command)
+        undefs = re.findall(r"-U(\S+)", command)
 
         # Attempt to capture additional flags more inclusively
         addl_flags_pattern = r"\$\(CFLAGS\)(.*?)\$<"
