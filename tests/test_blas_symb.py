@@ -127,16 +127,16 @@ class TestParseCompile:
 
         lines = """
         $(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SROTKERNEL)
-            $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $< -o $@
+        	$(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $< -o $@
 
         $(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL)
-            $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $< -o $@
+        	$(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $< -o $@
 
         $(KDIR)qrot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)qrot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(QROTKERNEL)
-            $(CC) -c $(CFLAGS) -UCOMPLEX -UCOMPLEX -DXDOUBLE $< -o $@
+        	$(CC) -c $(CFLAGS) -UCOMPLEX -UCOMPLEX -DXDOUBLE $< -o $@
 
         $(KDIR)csrot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)csrot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(CROTKERNEL)
-            $(CC) -c $(CFLAGS) -DCOMPLEX -DCOMPLEX -UDOUBLE  $< -o $@
+        	$(CC) -c $(CFLAGS) -DCOMPLEX -DCOMPLEX -UDOUBLE  $< -o $@
         """.strip().split(
             "\n"
         )
@@ -152,7 +152,7 @@ class TestParseCompile:
 
     def test_define_with_num_and_eq(self):
         lines = [
-            "$(KDIR)cgemm_small_kernel_b0_cr$(TSUFFIX).$(SUFFIX) : $(KERNELDIR)/$(CGEMM_SMALL_K_B0_TN)  : $(CC) $(CFLAGS) -c -UDOUBLE -DCOMPLEX -DCR=CR -DB0 $< -o $@",
+            "$(KDIR)cgemm_small_kernel_b0_cr$(TSUFFIX).$(SUFFIX) : $(KERNELDIR)/$(CGEMM_SMALL_K_B0_TN)	$(CC) $(CFLAGS) -c -UDOUBLE -DCOMPLEX -DCR=CR -DB0 $< -o $@",
         ]
         expected = [
             {

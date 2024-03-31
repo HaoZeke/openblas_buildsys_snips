@@ -41,9 +41,9 @@ def pair_suffix_lines(lines):
     >>> paired_lines = list(pair_suffix_lines(lines))
     >>> for pline in paired_lines:
     ...     print(pline)
-    $(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SROTKERNEL) $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $< -o $@
-    $(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL) $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $< -o $@
-    sbstobf16.$(SUFFIX) sbstobf16.$(PSUFFIX) : tobf16.c $(CC) $(CFLAGS) -DSINGLE_PREC -UDOUBLE_PREC -c $< -o $(@F)
+    $(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  :   $(KERNELDIR)/$(SROTKERNEL)	$(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $< -o $@
+    $(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL)	$(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $< -o $@
+    sbstobf16.$(SUFFIX) sbstobf16.$(PSUFFIX) : tobf16.c	$(CC) $(CFLAGS) -DSINGLE_PREC -UDOUBLE_PREC -c $< -o $(@F)
     ```
     """
     it1, it2 = itertools.tee(lines)
@@ -51,4 +51,4 @@ def pair_suffix_lines(lines):
 
     for line1, line2 in zip(it1, it2):
         if "SUFFIX" in line1 and ":" in line1:
-            yield f"{line1.strip()} {line2.strip()}"
+            yield f"{line1.strip()}\t{line2.strip()}"
