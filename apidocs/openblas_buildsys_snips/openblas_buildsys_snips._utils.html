@@ -175,6 +175,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../roadmap/firststeps.html">First steps</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../feasibility/index.html">Feasibility</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Feasibility</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../feasibility/l1_drot.html">L1 Symbol Sample : <code class="docutils literal notranslate"><span class="pre">drot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../feasibility/l1_drot.html#meson-build-outline"><code class="docutils literal notranslate"><span class="pre">meson.build</span></code> Outline</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../nb/interface.html">Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../nb/kernel_blas.html">BLAS Kernels</a></li>
 </ul>
@@ -264,8 +269,8 @@ following line, separated by a space.
 <span class="gp">&gt;&gt;&gt; </span><span class="n">paired_lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pline</span> <span class="ow">in</span> <span class="n">paired_lines</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">pline</span><span class="p">)</span>
-<span class="go">$(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SROTKERNEL) $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $&lt; -o $@</span>
-<span class="go">$(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL) $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $&lt; -o $@</span>
+<span class="go">$(KDIR)srot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)srot_k$(TPSUFFIX).$(PSUFFIX)  :   $(KERNELDIR)/$(SROTKERNEL)      $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -UDOUBLE  $&lt; -o $@</span>
+<span class="go">$(KDIR)drot_k$(TSUFFIX).$(SUFFIX)  $(KDIR)drot_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(DROTKERNEL)        $(CC) -c $(CFLAGS) $(FMAFLAG) -UCOMPLEX -UCOMPLEX -DDOUBLE  $&lt; -o $@</span>
 <span class="go">sbstobf16.$(SUFFIX) sbstobf16.$(PSUFFIX) : tobf16.c $(CC) $(CFLAGS) -DSINGLE_PREC -UDOUBLE_PREC -c $&lt; -o $(@F)</span>
 </pre></div>
 </div>

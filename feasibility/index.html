@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Feasibility" href="../feasibility/index.html" /><link rel="prev" title="openblas_buildsys_snips._utils" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips._utils.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="L1 Symbol Sample : drot" href="l1_drot.html" /><link rel="prev" title="First steps" href="../roadmap/firststeps.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>First steps - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>Feasibility - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_contributors.css?v=f079e67e" />
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -174,10 +174,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">First steps</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../feasibility/index.html">Feasibility</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Feasibility</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../feasibility/l1_drot.html">L1 Symbol Sample : <code class="docutils literal notranslate"><span class="pre">drot</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../feasibility/l1_drot.html#meson-build-outline"><code class="docutils literal notranslate"><span class="pre">meson.build</span></code> Outline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap/firststeps.html">First steps</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Feasibility</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Feasibility</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="l1_drot.html">L1 Symbol Sample : <code class="docutils literal notranslate"><span class="pre">drot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="l1_drot.html#meson-build-outline"><code class="docutils literal notranslate"><span class="pre">meson.build</span></code> Outline</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../nb/interface.html">Interface</a></li>
@@ -210,49 +210,23 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="first-steps">
-<h1>First steps<a class="headerlink" href="#first-steps" title="Link to this heading">#</a></h1>
-<p>The idea is to follow along with the evolution of the <code class="docutils literal notranslate"><span class="pre">CMakelists.txt</span></code> file, the
-history of which <a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/commits/develop/CMakeLists.txt?after=b1e8ba50173423dd1999c7e1bc97c93039efc5e3+174">is
-here</a>.</p>
-<p>Note that though the evolution of the <code class="docutils literal notranslate"><span class="pre">CMakeLists</span></code> is used, the conversion
-itself follows the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, along with the regex functions defined in this
-library.</p>
-<p>Broadly speaking this proceeds along the following path:</p>
-<ol class="arabic simple" start="0">
-<li><p>[X] Hardcode some of the default <code class="docutils literal notranslate"><span class="pre">config</span></code> generation mechanism (port them later)</p></li>
-</ol>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">f_check</span></code> and <code class="docutils literal notranslate"><span class="pre">c_check</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prebuild</span></code> and <code class="docutils literal notranslate"><span class="pre">system</span></code></p></li>
-</ul>
-<ol class="arabic simple">
-<li><p>[ ] Port the <code class="docutils literal notranslate"><span class="pre">interface</span></code></p></li>
-<li><p>[ ] <code class="docutils literal notranslate"><span class="pre">driver/level2</span></code></p></li>
-<li><p>[ ] <code class="docutils literal notranslate"><span class="pre">driver/level3</span></code></p></li>
-<li><p>[ ] <code class="docutils literal notranslate"><span class="pre">driver/others</span></code></p></li>
-<li><p>[ ] <code class="docutils literal notranslate"><span class="pre">kernel</span></code>, which will need to dynamically choose the right one</p></li>
-<li><p>[ ] Optionally construct and add <code class="docutils literal notranslate"><span class="pre">lapacke</span></code> and the other bells and whistles</p></li>
-</ol>
-<p>Essentially means steps 1 through 5 can be broken down into the following:</p>
-<ul class="simple">
-<li><p><strong>Interfaces</strong> :: Primarily contains wrapper functions for BLAS API calls for
-interfacing with higher-level BLAS functions but do not contain the
-computational kernels themselves.</p></li>
-<li><p><strong>Drivers</strong> :: Include some optimized implementations for Level 2 and Level 3
-BLAS operations, such as matrix-vector and matrix-matrix multiplications.
-These still rely on lower-level kernels for the actual computations.</p></li>
-<li><p><strong>Kernels</strong>: This is where the core computational kernels reside.  These
-kernels are highly optimized for specific architectures and perform the
-low-level arithmetic operations called by higher-level functions.</p></li>
-</ul>
-<p>Of course, OpenBLAS includes lapack as well, but that is a later concern.</p>
+          <section id="feasibility">
+<h1>Feasibility<a class="headerlink" href="#feasibility" title="Link to this heading">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>This section explores the process of transitioning OpenBLAS from traditional
+<code class="docutils literal notranslate"><span class="pre">Makefile</span></code> and <code class="docutils literal notranslate"><span class="pre">CMake</span></code> systems to a Meson build system. It serves as a practical
+guide to identifying essential build flags and configurations in existing build
+scripts and adapting them for use with Meson.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
 </section>
 
         </article>
@@ -260,23 +234,23 @@ low-level arithmetic operations called by higher-level functions.</p></li>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../feasibility/index.html">
+          <a class="next-page" href="l1_drot.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Feasibility</div>
+                <div class="title">L1 Symbol Sample : <code class="docutils literal notranslate"><span class="pre">drot</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips._utils.html">
+          <a class="prev-page" href="../roadmap/firststeps.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></div>
+                <div class="title">First steps</div>
                 
               </div>
             </a>
@@ -298,8 +272,27 @@ low-level arithmetic operations called by higher-level functions.</p></li>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Feasibility</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
