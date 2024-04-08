@@ -91,7 +91,7 @@ Flags which are set for the build as a whole.
 
 - `SMALL_MATRIX_OPT` :: Which enables, as the name suggests a set of additional,
   optionally implemented kernels for interfaced symbols
-- `MAX_STACK_ALLOC` :: Defaults to 2048, [detailed here](https://github.com/OpenMathLib/OpenBLAS/blob/3cf57a61d59a39cc668b21ceafaa006abcfdcf94/common_stackalloc.h#L41-L48)
+- `MAX_STACK_ALLOC` :: Defaults to 2048, [detailed here](https://github.com/OpenMathLib/OpenBLAS/blob/3cf57a61d59a39cc668b21ceafaa006abcfdcf94/common_stackalloc.h#L41-L48) and [here](https://github.com/xianyi/OpenBLAS/pull/482)
 
 Based on the actual Fortran compiler used, the interface definitions need to be
 defined as well.
@@ -167,6 +167,7 @@ subdir('kernel')
 _openblas = static_library('openblas',
                     link_whole: [ _interface, _kern])
 # ...
+# view targets via meson introspect bbdir --targets
 ```
 
 With the relevant `c_args` as is done in [this
