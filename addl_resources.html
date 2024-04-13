@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -211,7 +211,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -219,16 +219,29 @@
         <article role="main">
           <section id="additional-resources">
 <h1>Additional Resources<a class="headerlink" href="#additional-resources" title="Link to this heading">#</a></h1>
-<p>The cannonical resources for OpenBLAS are of course the
-<a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/wiki">OpenBLAS wiki</a> and the the
-<a class="reference external" href="https://netlib.org/blas/">Netlib BLAS</a> documentation.</p>
+<p>The cannonical resources for OpenBLAS are of course the <a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/wiki">OpenBLAS wiki</a> and the
+the <a class="reference external" href="https://netlib.org/blas/">Netlib BLAS</a> documentation.</p>
+<ul class="simple">
+<li><p>Naming conventions are <a class="reference external" href="https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2024-1/naming-conventions-for-blas-routines.html">noted here</a></p></li>
+</ul>
+<section id="conventions-and-implementations">
+<h2>Conventions and Implementations<a class="headerlink" href="#conventions-and-implementations" title="Link to this heading">#</a></h2>
+<p>Beyond the standard <code class="docutils literal notranslate"><span class="pre">netlib</span></code> reference, here are some more common
+implementations:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2024-1/blas-routines.html">Intel oneAPI MKL</a></p></li>
+<li><p><a class="reference external" href="https://developer.arm.com/documentation/101004/2310/BLAS-Basic-Linear-Algebra-Subprograms/BLAS-overview?lang=en">Arm performance library implementation</a> (<code class="docutils literal notranslate"><span class="pre">armpl.h</span></code>)</p></li>
+</ul>
+</section>
+<section id="pedagogical-work">
+<h2>Pedagogical Work<a class="headerlink" href="#pedagogical-work" title="Link to this heading">#</a></h2>
 <p>Here are some additional links for BLAS related information:</p>
 <ul class="simple">
-<li><p>This lecture on
-<a class="reference external" href="https://see.stanford.edu/materials/lsocoee364b/AdditionalLecture3-num-lin-alg-software.pdf">Numerical Linear Algebra Software</a></p></li>
-<li><p>Another lecture on
-<a class="reference external" href="http://faculty.bicmr.pku.edu.cn/~wenzw/opt2015/09_num-lin-alg_new.pdf">Numerical Linear Algebra Background</a></p></li>
+<li><p>Basic <a class="reference external" href="https://caam37830.github.io/book/02_linear_algebra/blas_lapack.html">scientific python tutorial</a>, with a <a class="reference external" href="https://colab.research.google.com/github/caam37830/book/blob/master/02_linear_algebra/blas_lapack.ipynb">notebook here</a></p></li>
+<li><p>This lecture on <a class="reference external" href="https://see.stanford.edu/materials/lsocoee364b/AdditionalLecture3-num-lin-alg-software.pdf">Numerical Linear Algebra Software</a></p></li>
+<li><p>Another lecture on <a class="reference external" href="http://faculty.bicmr.pku.edu.cn/~wenzw/opt2015/09_num-lin-alg_new.pdf">Numerical Linear Algebra Background</a></p></li>
 </ul>
+</section>
 </section>
 
         </article>
@@ -266,8 +279,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Additional Resources</a><ul>
+<li><a class="reference internal" href="#conventions-and-implementations">Conventions and Implementations</a></li>
+<li><a class="reference internal" href="#pedagogical-work">Pedagogical Work</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
