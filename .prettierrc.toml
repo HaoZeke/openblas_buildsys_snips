@@ -1,0 +1,5 @@
+# Prettier markdown config
+proseWrap = "always"
+useTabs = false
+singleQuote = true
+endOfLine = "lf"
