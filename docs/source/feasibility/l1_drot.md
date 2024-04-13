@@ -4,6 +4,7 @@ To demonstrate how the `meson.build` system will work, we will try to generate
 an `openblas` library which can be used to compile the following snippet:
 
 ```{literalinclude} code_src/drot_example.c
+
 ```
 
 ## Baseline `openblas`
@@ -14,8 +15,8 @@ With system libraries this is a snap:
 gcc drot_example.c -lopenblas -o drotex
 ./drotex
 Resulting vectors:
-x: 3.000000 4.000000 5.000000 6.000000 
-y: 2.000000 2.000000 2.000000 2.000000 
+x: 3.000000 4.000000 5.000000 6.000000
+y: 2.000000 2.000000 2.000000 2.000000
 ```
 
 Without a system `openblas`, this works out to:
@@ -28,13 +29,14 @@ make PREFIX=./tmpmake install
 gcc drot_example.c -o drotex "-I$(pwd)/tmpmake/include" "-L$(pwd)/tmpmake/lib" -lopenblas
 ./drotex
 Resulting vectors:
-x: 3.000000 4.000000 5.000000 6.000000 
-y: 2.000000 2.000000 2.000000 2.000000 
+x: 3.000000 4.000000 5.000000 6.000000
+y: 2.000000 2.000000 2.000000 2.000000
 ```
 
 # `meson.build` Outline
 
 As discussed in the roadmap, we need:
+
 - `$GITROOT` :: Where the library is declared
 - `interface` :: Where the prefixed symbols `c$BLAS_SYM` are named
 - `kernel` :: Where the implementation is `$BLAS_SYM`
@@ -91,12 +93,16 @@ Flags which are set for the build as a whole.
 
 - `SMALL_MATRIX_OPT` :: Which enables, as the name suggests a set of additional,
   optionally implemented kernels for interfaced symbols
-- `MAX_STACK_ALLOC` :: Defaults to 2048, [detailed here](https://github.com/OpenMathLib/OpenBLAS/blob/3cf57a61d59a39cc668b21ceafaa006abcfdcf94/common_stackalloc.h#L41-L48) and [here](https://github.com/xianyi/OpenBLAS/pull/482)
+- `MAX_STACK_ALLOC` :: Defaults to 2048,
+  [detailed here](https://github.com/OpenMathLib/OpenBLAS/blob/3cf57a61d59a39cc668b21ceafaa006abcfdcf94/common_stackalloc.h#L41-L48)
+  and [here](https://github.com/xianyi/OpenBLAS/pull/482)
 
 Based on the actual Fortran compiler used, the interface definitions need to be
 defined as well.
 
-- `F_INTERFACE_GFORT`, `F_INTERFACE_INTEL`, `F_INTERFACE_G95` :: Indicates use of GNU Fortran interface naming conventions. Specific setup in Meson might be needed based on project requirements for Fortran interoperability.
+- `F_INTERFACE_GFORT`, `F_INTERFACE_INTEL`, `F_INTERFACE_G95` :: Indicates use
+  of GNU Fortran interface naming conventions. Specific setup in Meson might be
+  needed based on project requirements for Fortran interoperability.
 
 Along with the symbol precision settings:
 
@@ -116,14 +122,18 @@ With some affinity and parallel settings as well.
 - `NO_WARMUP`, `MAX_CPU_NUMBER=12`, `MAX_PARALLEL_NUMBER=1` :: Control aspects
   of parallel execution and resource allocation, managed through
   `add_project_arguments()` in Meson for compile-time definitions.
-- `NO_AFFINITY` :: Disables processor affinity. System-specific setup or dependencies might be required in Meson for thread affinity management.
-  
+- `NO_AFFINITY` :: Disables processor affinity. System-specific setup or
+  dependencies might be required in Meson for thread affinity management.
+
 #### Standard build flags
 
-These have direct `meson` [builtin base
-option](https://mesonbuild.com/Builtin-options.html#base-options) equivalents:
+These have direct `meson`
+[builtin base option](https://mesonbuild.com/Builtin-options.html#base-options)
+equivalents:
 
-- `-O2` :: Specifies the optimization level. Controlled in Meson through the `buildtype` or `optimization` options, where `-O2` corresponds to `buildtype=release` or `optimization=2`.
+- `-O2` :: Specifies the optimization level. Controlled in Meson through the
+  `buildtype` or `optimization` options, where `-O2` corresponds to
+  `buildtype=release` or `optimization=2`.
 - `-fPIC` :: Enables Position Independent Code, which is a default in Meson for
   shared libraries.
 - `-Wall` :: Activates all compiler warnings, aligning with `warning_level=2` or
@@ -135,7 +145,7 @@ These depend on detecting the appropriate hardware.
 
 - `-msse3`, `-mssse3`, `-msse4.1`, `-mavx`, `-mavx2` :: These flags activate
   optimizations for Intel's SSE3, SSSE3, SSE4.1, AVX, and AVX2 instruction sets,
-  respectively. 
+  respectively.
 
 We can detect and apply through the use of
 `meson.get_compiler('c').has_argument()` to conditionally add them based on
@@ -170,8 +180,8 @@ _openblas = static_library('openblas',
 # view targets via meson introspect bbdir --targets
 ```
 
-With the relevant `c_args` as is done in [this
-commit](https://github.com/HaoZeke/OpenBLAS/commit/fa1f52ff7b13e95f2b31096dd65f001ba87b4b3f).
+With the relevant `c_args` as is done in
+[this commit](https://github.com/HaoZeke/OpenBLAS/commit/fa1f52ff7b13e95f2b31096dd65f001ba87b4b3f).
 The Meson build can proceed.
 
 ```bash
@@ -182,8 +192,8 @@ meson setup bbdir
 meson compile -C bbdir
 gcc trial.c -o drotex "-I$(pwd)/" "-L$(pwd)/bbdir" -lopenblas
 Resulting vectors:
-x: 3.000000 4.000000 5.000000 6.000000 
-y: 2.000000 2.000000 2.000000 2.000000 
+x: 3.000000 4.000000 5.000000 6.000000
+y: 2.000000 2.000000 2.000000 2.000000
 ```
 
 Perhaps more pertinently, we can view the actual symbols so generated:

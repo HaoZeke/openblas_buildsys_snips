@@ -18,5 +18,15 @@ The ~readme~ can be constructed via:
 #+begin_src bash
 ./scripts/org_to_md.sh readme_src.org readme.md
 #+end_src
+*** Sphinx and MyST Markdown
+The markdown documentation is typically written with inline styles, but then
+re-written to use reference styles via:
+
+#+begin_src bash
+pandoc --reference-links -f gfm $MDFILE -t gfm
+#+end_src
+
+These should also always be formatted using ~prettier~, for which a style file
+is present in ~$GITROOT~.
 * License
 MIT.

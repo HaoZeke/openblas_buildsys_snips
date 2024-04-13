@@ -21,12 +21,16 @@ from pathlib import Path
 ```
 
 # BLAS Kernels
-## Makefiles to `meson.build`
-The idea is to use functions from the library to parse the `Makefiles` into an easy to maintain set of `meson.build` files.
 
+## Makefiles to `meson.build`
+
+The idea is to use functions from the library to parse the `Makefiles` into an
+easy to maintain set of `meson.build` files.
 
 ### First approximation
-The first attempt should be and is just collecting the symbols and the relevant flags. We will use the `generic` variant for an `x86_64` machine.
+
+The first attempt should be and is just collecting the symbols and the relevant
+flags. We will use the `generic` variant for an `x86_64` machine.
 
 ```python
 # For tests
@@ -63,6 +67,7 @@ opbk.parse_compilation_commands(oputil.pair_suffix_lines(lines), "amax")
 ```
 
 #### Level 2
+
 These are a straightforward extension of L1 and work pretty much the same way.
 
 ```python

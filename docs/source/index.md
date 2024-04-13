@@ -12,11 +12,12 @@ roadmap/firststeps
 feasibility/index
 nb/interface
 nb/kernel_blas
+addl_resources
 ```
 
-Note that we expect some level of familiarity with the [OpenBLAS
-FAQ](https://github.com/OpenMathLib/OpenBLAS/wiki/Faq) for most of this
-documentation.
+Note that we expect some level of familiarity with the
+[OpenBLAS FAQ](https://github.com/OpenMathLib/OpenBLAS/wiki/Faq) for most of
+this documentation.
 
 ## Indices and tables
 
