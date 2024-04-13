@@ -182,6 +182,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../nb/interface.html">Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nb/kernel_blas.html">BLAS Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 </ul>
 
 </div>
@@ -219,14 +220,15 @@
           <section id="first-steps">
 <h1>First steps<a class="headerlink" href="#first-steps" title="Link to this heading">#</a></h1>
 <p>The idea is to follow along with the evolution of the <code class="docutils literal notranslate"><span class="pre">CMakelists.txt</span></code> file, the
-history of which <a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/commits/develop/CMakeLists.txt?after=b1e8ba50173423dd1999c7e1bc97c93039efc5e3+174">is
-here</a>.</p>
+history of which
+<a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/commits/develop/CMakeLists.txt?after=b1e8ba50173423dd1999c7e1bc97c93039efc5e3+174">is here</a>.</p>
 <p>Note that though the evolution of the <code class="docutils literal notranslate"><span class="pre">CMakeLists</span></code> is used, the conversion
 itself follows the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, along with the regex functions defined in this
 library.</p>
 <p>Broadly speaking this proceeds along the following path:</p>
 <ol class="arabic simple" start="0">
-<li><p>[X] Hardcode some of the default <code class="docutils literal notranslate"><span class="pre">config</span></code> generation mechanism (port them later)</p></li>
+<li><p>[x] Hardcode some of the default <code class="docutils literal notranslate"><span class="pre">config</span></code> generation mechanism (port them
+later)</p></li>
 </ol>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">f_check</span></code> and <code class="docutils literal notranslate"><span class="pre">c_check</span></code></p></li>
@@ -248,7 +250,7 @@ computational kernels themselves.</p></li>
 <li><p><strong>Drivers</strong> :: Include some optimized implementations for Level 2 and Level 3
 BLAS operations, such as matrix-vector and matrix-matrix multiplications.
 These still rely on lower-level kernels for the actual computations.</p></li>
-<li><p><strong>Kernels</strong>: This is where the core computational kernels reside.  These
+<li><p><strong>Kernels</strong>: This is where the core computational kernels reside. These
 kernels are highly optimized for specific architectures and perform the
 low-level arithmetic operations called by higher-level functions.</p></li>
 </ul>

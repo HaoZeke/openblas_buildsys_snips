@@ -182,6 +182,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../nb/interface.html">Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nb/kernel_blas.html">BLAS Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 </ul>
 
 </div>
@@ -224,29 +225,29 @@ an <code class="docutils literal notranslate"><span class="pre">openblas</span><
 <span class="c1">#include &lt;stdio.h&gt;</span>
 
 <span class="nb">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nb">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-    <span class="n">double</span> <span class="n">x</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
-    <span class="n">double</span> <span class="n">y</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">};</span>
-    <span class="n">double</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="o">//</span> <span class="n">cosine</span> <span class="n">of</span> <span class="n">the</span> <span class="n">angle</span>
-    <span class="n">double</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="o">//</span> <span class="n">sine</span> <span class="n">of</span> <span class="n">the</span> <span class="n">angle</span>
+  <span class="nb">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">double</span> <span class="n">x</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+  <span class="n">double</span> <span class="n">y</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">};</span>
+  <span class="n">double</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="o">//</span> <span class="n">cosine</span> <span class="n">of</span> <span class="n">the</span> <span class="n">angle</span>
+  <span class="n">double</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="o">//</span> <span class="n">sine</span> <span class="n">of</span> <span class="n">the</span> <span class="n">angle</span>
 
-    <span class="o">//</span> <span class="n">Apply</span> <span class="n">the</span> <span class="n">rotation</span>
-    <span class="n">cblas_drot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+  <span class="o">//</span> <span class="n">Apply</span> <span class="n">the</span> <span class="n">rotation</span>
+  <span class="n">cblas_drot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
 
-    <span class="o">//</span> <span class="n">Print</span> <span class="n">the</span> <span class="n">results</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Resulting vectors:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;x: &quot;</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;y: &quot;</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="o">//</span> <span class="n">Print</span> <span class="n">the</span> <span class="n">results</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Resulting vectors:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;x: &quot;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;y: &quot;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
 
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -256,8 +257,8 @@ an <code class="docutils literal notranslate"><span class="pre">openblas</span><
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gcc<span class="w"> </span>drot_example.c<span class="w"> </span>-lopenblas<span class="w"> </span>-o<span class="w"> </span>drotex
 ./drotex
 Resulting<span class="w"> </span>vectors:
-x:<span class="w"> </span><span class="m">3</span>.000000<span class="w"> </span><span class="m">4</span>.000000<span class="w"> </span><span class="m">5</span>.000000<span class="w"> </span><span class="m">6</span>.000000<span class="w"> </span>
-y:<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span>
+x:<span class="w"> </span><span class="m">3</span>.000000<span class="w"> </span><span class="m">4</span>.000000<span class="w"> </span><span class="m">5</span>.000000<span class="w"> </span><span class="m">6</span>.000000
+y:<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000
 </pre></div>
 </div>
 <p>Without a system <code class="docutils literal notranslate"><span class="pre">openblas</span></code>, this works out to:</p>
@@ -268,8 +269,8 @@ make<span class="w"> </span><span class="nv">PREFIX</span><span class="o">=</spa
 gcc<span class="w"> </span>drot_example.c<span class="w"> </span>-o<span class="w"> </span>drotex<span class="w"> </span><span class="s2">&quot;-I</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/tmpmake/include&quot;</span><span class="w"> </span><span class="s2">&quot;-L</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/tmpmake/lib&quot;</span><span class="w"> </span>-lopenblas
 ./drotex
 Resulting<span class="w"> </span>vectors:
-x:<span class="w"> </span><span class="m">3</span>.000000<span class="w"> </span><span class="m">4</span>.000000<span class="w"> </span><span class="m">5</span>.000000<span class="w"> </span><span class="m">6</span>.000000<span class="w"> </span>
-y:<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span>
+x:<span class="w"> </span><span class="m">3</span>.000000<span class="w"> </span><span class="m">4</span>.000000<span class="w"> </span><span class="m">5</span>.000000<span class="w"> </span><span class="m">6</span>.000000
+y:<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000
 </pre></div>
 </div>
 </section>
@@ -331,12 +332,16 @@ symbol , <code class="docutils literal notranslate"><span class="pre">cblas_drot
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">SMALL_MATRIX_OPT</span></code> :: Which enables, as the name suggests a set of additional,
 optionally implemented kernels for interfaced symbols</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">MAX_STACK_ALLOC</span></code> :: Defaults to 2048, <a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/blob/3cf57a61d59a39cc668b21ceafaa006abcfdcf94/common_stackalloc.h#L41-L48">detailed here</a> and <a class="reference external" href="https://github.com/xianyi/OpenBLAS/pull/482">here</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MAX_STACK_ALLOC</span></code> :: Defaults to 2048,
+<a class="reference external" href="https://github.com/OpenMathLib/OpenBLAS/blob/3cf57a61d59a39cc668b21ceafaa006abcfdcf94/common_stackalloc.h#L41-L48">detailed here</a>
+and <a class="reference external" href="https://github.com/xianyi/OpenBLAS/pull/482">here</a></p></li>
 </ul>
 <p>Based on the actual Fortran compiler used, the interface definitions need to be
 defined as well.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">F_INTERFACE_GFORT</span></code>, <code class="docutils literal notranslate"><span class="pre">F_INTERFACE_INTEL</span></code>, <code class="docutils literal notranslate"><span class="pre">F_INTERFACE_G95</span></code> :: Indicates use of GNU Fortran interface naming conventions. Specific setup in Meson might be needed based on project requirements for Fortran interoperability.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">F_INTERFACE_GFORT</span></code>, <code class="docutils literal notranslate"><span class="pre">F_INTERFACE_INTEL</span></code>, <code class="docutils literal notranslate"><span class="pre">F_INTERFACE_G95</span></code> :: Indicates use
+of GNU Fortran interface naming conventions. Specific setup in Meson might be
+needed based on project requirements for Fortran interoperability.</p></li>
 </ul>
 <p>Along with the symbol precision settings:</p>
 <ul class="simple">
@@ -356,14 +361,18 @@ specific target properties related to threading.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">NO_WARMUP</span></code>, <code class="docutils literal notranslate"><span class="pre">MAX_CPU_NUMBER=12</span></code>, <code class="docutils literal notranslate"><span class="pre">MAX_PARALLEL_NUMBER=1</span></code> :: Control aspects
 of parallel execution and resource allocation, managed through
 <code class="docutils literal notranslate"><span class="pre">add_project_arguments()</span></code> in Meson for compile-time definitions.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NO_AFFINITY</span></code> :: Disables processor affinity. System-specific setup or dependencies might be required in Meson for thread affinity management.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NO_AFFINITY</span></code> :: Disables processor affinity. System-specific setup or
+dependencies might be required in Meson for thread affinity management.</p></li>
 </ul>
 <section id="standard-build-flags">
 <h4>Standard build flags<a class="headerlink" href="#standard-build-flags" title="Link to this heading">#</a></h4>
-<p>These have direct <code class="docutils literal notranslate"><span class="pre">meson</span></code> <a class="reference external" href="https://mesonbuild.com/Builtin-options.html#base-options">builtin base
-option</a> equivalents:</p>
+<p>These have direct <code class="docutils literal notranslate"><span class="pre">meson</span></code>
+<a class="reference external" href="https://mesonbuild.com/Builtin-options.html#base-options">builtin base option</a>
+equivalents:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-O2</span></code> :: Specifies the optimization level. Controlled in Meson through the <code class="docutils literal notranslate"><span class="pre">buildtype</span></code> or <code class="docutils literal notranslate"><span class="pre">optimization</span></code> options, where <code class="docutils literal notranslate"><span class="pre">-O2</span></code> corresponds to <code class="docutils literal notranslate"><span class="pre">buildtype=release</span></code> or <code class="docutils literal notranslate"><span class="pre">optimization=2</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-O2</span></code> :: Specifies the optimization level. Controlled in Meson through the
+<code class="docutils literal notranslate"><span class="pre">buildtype</span></code> or <code class="docutils literal notranslate"><span class="pre">optimization</span></code> options, where <code class="docutils literal notranslate"><span class="pre">-O2</span></code> corresponds to
+<code class="docutils literal notranslate"><span class="pre">buildtype=release</span></code> or <code class="docutils literal notranslate"><span class="pre">optimization=2</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-fPIC</span></code> :: Enables Position Independent Code, which is a default in Meson for
 shared libraries.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-Wall</span></code> :: Activates all compiler warnings, aligning with <code class="docutils literal notranslate"><span class="pre">warning_level=2</span></code> or
@@ -410,8 +419,8 @@ OpenBLAS’s custom configurations.</p>
 <span class="c"># view targets via meson introspect bbdir --targets</span>
 </pre></div>
 </div>
-<p>With the relevant <code class="docutils literal notranslate"><span class="pre">c_args</span></code> as is done in <a class="reference external" href="https://github.com/HaoZeke/OpenBLAS/commit/fa1f52ff7b13e95f2b31096dd65f001ba87b4b3f">this
-commit</a>.
+<p>With the relevant <code class="docutils literal notranslate"><span class="pre">c_args</span></code> as is done in
+<a class="reference external" href="https://github.com/HaoZeke/OpenBLAS/commit/fa1f52ff7b13e95f2b31096dd65f001ba87b4b3f">this commit</a>.
 The Meson build can proceed.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gh<span class="w"> </span>repo<span class="w"> </span>clone<span class="w"> </span>openmathlib/openblas<span class="w"> </span>openblas_meson
 <span class="nb">cd</span><span class="w"> </span>openblas_meson
@@ -420,8 +429,8 @@ meson<span class="w"> </span>setup<span class="w"> </span>bbdir
 meson<span class="w"> </span>compile<span class="w"> </span>-C<span class="w"> </span>bbdir
 gcc<span class="w"> </span>trial.c<span class="w"> </span>-o<span class="w"> </span>drotex<span class="w"> </span><span class="s2">&quot;-I</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/&quot;</span><span class="w"> </span><span class="s2">&quot;-L</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/bbdir&quot;</span><span class="w"> </span>-lopenblas
 Resulting<span class="w"> </span>vectors:
-x:<span class="w"> </span><span class="m">3</span>.000000<span class="w"> </span><span class="m">4</span>.000000<span class="w"> </span><span class="m">5</span>.000000<span class="w"> </span><span class="m">6</span>.000000<span class="w"> </span>
-y:<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span>
+x:<span class="w"> </span><span class="m">3</span>.000000<span class="w"> </span><span class="m">4</span>.000000<span class="w"> </span><span class="m">5</span>.000000<span class="w"> </span><span class="m">6</span>.000000
+y:<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000<span class="w"> </span><span class="m">2</span>.000000
 </pre></div>
 </div>
 <p>Perhaps more pertinently, we can view the actual symbols so generated:</p>

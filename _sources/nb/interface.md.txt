@@ -35,6 +35,7 @@ Let's delve into the `cmake` perspective and then the equivalent `meson`
 perspective.
 
 ### CMake `OBJECT Library`
+
 In CMake an OBJECT library compiles source files into object files without
 archiving them into a library file. This approach is useful for compiling code
 that will be used in multiple targets without recompiling the source multiple
@@ -46,8 +47,9 @@ implementations, which might be compiled separately and linked together in the
 final build step.
 
 ### Meson `static_library`
+
 Similarly, in Meson, a `static_library` is a collection of object files archived
-together.  When we compile source files from the interface directory into a
+together. When we compile source files from the interface directory into a
 `static_library`, we effectively prepare a library which contains all the
 wrapper functions which act as entry points to the optimized routines. These
 wrappers can invoke different implementations based on the compile-time or
@@ -60,6 +62,35 @@ other parts of the project that implement these symbols.
 
 See [gh-11591](https://github.com/mesonbuild/meson/discussions/11591) for a
 discussion on porting `cmake` object libraries to `meson`.
+
+## Practicalities
+
+This means that the `interface` is pretty useful, since it includes the
+`cblas_definitions`.
+
+```python
+import openblas_buildsys_snips.make.blas_kernel as opbk
+import openblas_buildsys_snips._utils as oputil
+
+from pathlib import Path
+```
+
+```python
+ml = Path.cwd() / Path("../../../tests/test_blas_symb/interface_Makefile")
+lines = ml.read_text().split('\n')
+```
+
+```python
+opbk.parse_compilation_commands(oputil.pair_suffix_lines(lines), "min")
+```
+
+```python
+print(parsed_lines)
+```
+
+```python
+
+```
 
 ```python
 

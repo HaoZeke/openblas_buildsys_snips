@@ -1,8 +1,8 @@
 # First steps
 
 The idea is to follow along with the evolution of the `CMakelists.txt` file, the
-history of which [is
-here](https://github.com/OpenMathLib/OpenBLAS/commits/develop/CMakeLists.txt?after=b1e8ba50173423dd1999c7e1bc97c93039efc5e3+174).
+history of which
+[is here](https://github.com/OpenMathLib/OpenBLAS/commits/develop/CMakeLists.txt?after=b1e8ba50173423dd1999c7e1bc97c93039efc5e3+174).
 
 Note that though the evolution of the `CMakeLists` is used, the conversion
 itself follows the `Makefile`, along with the regex functions defined in this
@@ -10,9 +10,12 @@ library.
 
 Broadly speaking this proceeds along the following path:
 
-0. [X] Hardcode some of the default `config` generation mechanism (port them later)
-  - `f_check` and `c_check`
-  - `prebuild` and `system`
+0. [x] Hardcode some of the default `config` generation mechanism (port them
+       later)
+
+- `f_check` and `c_check`
+- `prebuild` and `system`
+
 1. [ ] Port the `interface`
 2. [ ] `driver/level2`
 3. [ ] `driver/level3`
@@ -30,7 +33,7 @@ Essentially means steps 1 through 5 can be broken down into the following:
   BLAS operations, such as matrix-vector and matrix-matrix multiplications.
   These still rely on lower-level kernels for the actual computations.
 
-- **Kernels**: This is where the core computational kernels reside.  These
+- **Kernels**: This is where the core computational kernels reside. These
   kernels are highly optimized for specific architectures and perform the
   low-level arithmetic operations called by higher-level functions.
 

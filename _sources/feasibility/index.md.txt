@@ -7,7 +7,6 @@ This section explores the process of transitioning OpenBLAS from traditional
 guide to identifying essential build flags and configurations in existing build
 scripts and adapting them for use with Meson.
 
-
 ```{toctree}
 :maxdepth: 2
 :hidden:

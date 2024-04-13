@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Interface" href="interface.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Additional Resources" href="../addl_resources.html" /><link rel="prev" title="Interface" href="interface.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
         <title>BLAS Kernels - openblas_buildsys_snips 0.1.0 documentation</title>
@@ -182,6 +182,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interface.html">Interface</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">BLAS Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 </ul>
 
 </div>
@@ -226,10 +227,12 @@
 <h1>BLAS Kernels<a class="headerlink" href="#blas-kernels" title="Link to this heading">#</a></h1>
 <section id="makefiles-to-meson-build">
 <h2>Makefiles to <code class="docutils literal notranslate"><span class="pre">meson.build</span></code><a class="headerlink" href="#makefiles-to-meson-build" title="Link to this heading">#</a></h2>
-<p>The idea is to use functions from the library to parse the <code class="docutils literal notranslate"><span class="pre">Makefiles</span></code> into an easy to maintain set of <code class="docutils literal notranslate"><span class="pre">meson.build</span></code> files.</p>
+<p>The idea is to use functions from the library to parse the <code class="docutils literal notranslate"><span class="pre">Makefiles</span></code> into an
+easy to maintain set of <code class="docutils literal notranslate"><span class="pre">meson.build</span></code> files.</p>
 <section id="first-approximation">
 <h3>First approximation<a class="headerlink" href="#first-approximation" title="Link to this heading">#</a></h3>
-<p>The first attempt should be and is just collecting the symbols and the relevant flags. We will use the <code class="docutils literal notranslate"><span class="pre">generic</span></code> variant for an <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> machine.</p>
+<p>The first attempt should be and is just collecting the symbols and the relevant
+flags. We will use the <code class="docutils literal notranslate"><span class="pre">generic</span></code> variant for an <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> machine.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># For tests</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">$(KDIR)samax_k$(TSUFFIX).$(SUFFIX)  $(KDIR)samax_k$(TPSUFFIX).$(PSUFFIX)  : $(KERNELDIR)/$(SAMAXKERNEL)</span>
@@ -291,7 +294,15 @@
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="../addl_resources.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Additional Resources</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="interface.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">

@@ -182,6 +182,7 @@
 </li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kernel_blas.html">BLAS Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 </ul>
 
 </div>
@@ -248,7 +249,7 @@ final build step.</p>
 <section id="meson-static-library">
 <h3>Meson <code class="docutils literal notranslate"><span class="pre">static_library</span></code><a class="headerlink" href="#meson-static-library" title="Link to this heading">#</a></h3>
 <p>Similarly, in Meson, a <code class="docutils literal notranslate"><span class="pre">static_library</span></code> is a collection of object files archived
-together.  When we compile source files from the interface directory into a
+together. When we compile source files from the interface directory into a
 <code class="docutils literal notranslate"><span class="pre">static_library</span></code>, we effectively prepare a library which contains all the
 wrapper functions which act as entry points to the optimized routines. These
 wrappers can invoke different implementations based on the compile-time or
@@ -260,11 +261,35 @@ other parts of the project that implement these symbols.</p>
 <h4>Relevant discussions<a class="headerlink" href="#relevant-discussions" title="Link to this heading">#</a></h4>
 <p>See <a class="reference external" href="https://github.com/mesonbuild/meson/discussions/11591">gh-11591</a> for a
 discussion on porting <code class="docutils literal notranslate"><span class="pre">cmake</span></code> object libraries to <code class="docutils literal notranslate"><span class="pre">meson</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="practicalities">
+<h2>Practicalities<a class="headerlink" href="#practicalities" title="Link to this heading">#</a></h2>
+<p>This means that the <code class="docutils literal notranslate"><span class="pre">interface</span></code> is pretty useful, since it includes the
+<code class="docutils literal notranslate"><span class="pre">cblas_definitions</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openblas_buildsys_snips.make.blas_kernel</span> <span class="k">as</span> <span class="nn">opbk</span>
+<span class="kn">import</span> <span class="nn">openblas_buildsys_snips._utils</span> <span class="k">as</span> <span class="nn">oputil</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ml</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../../tests/test_blas_symb/interface_Makefile&quot;</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">opbk</span><span class="o">.</span><span class="n">parse_compilation_commands</span><span class="p">(</span><span class="n">oputil</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">parsed_lines</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-</section>
-</section>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -332,6 +357,7 @@ discussion on porting <code class="docutils literal notranslate"><span class="pr
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#practicalities">Practicalities</a></li>
 </ul>
 </li>
 </ul>
