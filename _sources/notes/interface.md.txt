@@ -10,4 +10,4 @@ implementation.
   `interface` folder (as of [this commit])
 
   [this commit]:
-    https://github.com/HaoZeke/OpenBLAS/commit/79f4532ed08cc33d941f4e4f457e369aa7d28426
+    https://github.com/HaoZeke/OpenBLAS/commit/a107c63894475bcbaf31de46537eb088e2ad547d
