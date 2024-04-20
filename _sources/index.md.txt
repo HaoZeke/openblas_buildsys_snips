@@ -13,6 +13,7 @@ feasibility/index
 nb/interface
 nb/kernel_blas
 addl_resources
+addl_design_issues
 ```
 
 Note that we expect some level of familiarity with the
