@@ -166,6 +166,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.blas_kernel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
 </ul>
 </li>
@@ -236,7 +237,8 @@ implementations of interest, with above average documentation<a class="footnote-
 <li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2024-1/blas-routines.html">Intel oneAPI MKL</a></p></li>
 <li><p><a class="reference external" href="https://developer.arm.com/documentation/101004/2310/BLAS-Basic-Linear-Algebra-Subprograms/BLAS-overview?lang=en">Arm performance library implementation</a> (<code class="docutils literal notranslate"><span class="pre">armpl.h</span></code>)</p></li>
 <li><p>The IBM <a class="reference external" href="https://www.ibm.com/docs/en/essl/6.2?topic=subprograms-overview-linear-algebra">Engineering and Scientific Subroutine Library</a></p></li>
-<li><p>SGI’s <a class="reference external" href="https://techpubs.jurassic.nl/library/manuals/4000/007-4325-001/sgi_html/ch02.html">Scientific Computing Software Library</a></p></li>
+<li><p>SGI’s
+<a class="reference external" href="https://techpubs.jurassic.nl/library/manuals/4000/007-4325-001/sgi_html/ch02.html">Scientific Computing Software Library</a></p></li>
 </ul>
 </section>
 <section id="pedagogical-work">
@@ -248,6 +250,29 @@ implementations of interest, with above average documentation<a class="footnote-
 <li><p>Another lecture on <a class="reference external" href="http://faculty.bicmr.pku.edu.cn/~wenzw/opt2015/09_num-lin-alg_new.pdf">Numerical Linear Algebra Background</a></p></li>
 <li><p>Some <a class="reference external" href="https://cs.stanford.edu/people/shadjis/blas.html">context on CPU performance</a></p></li>
 </ul>
+</section>
+<section id="useful-extensions">
+<h2>Useful extensions<a class="headerlink" href="#useful-extensions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mpimd-csc/flexiblas">FlexiBLAS</a></p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/scipy/scipy/issues/17362">Supported in SciPy</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="python-ecosystem">
+<h2>Python Ecosystem<a class="headerlink" href="#python-ecosystem" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pypackaging-native.github.io/key-issues/native-dependencies/blas_openmp/">PyPackaging Native Overview</a></p></li>
+<li><p>SciPy
+<a class="reference external" href="http://scipy.github.io/devdocs/dev/contributor/debugging_linalg_issues.html#debugging-linalg-issues">document on debugging linear algebra issuse</a></p></li>
+<li><p><a class="reference external" href="https://github.com/MacPython/openblas-libs/">Tarballs built on CI</a></p></li>
+<li><p>NumPy
+<a class="reference external" href="https://numpy.org/devdocs/building/blas_lapack.html">documentation on using different BLAS</a></p></li>
+</ul>
+<p>Testing this is still a matter of
+<a class="reference external" href="https://stackoverflow.com/questions/11443302/compiling-numpy-with-openblas-integration">manual timing apparently</a>.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id3" role="doc-footnote">
@@ -320,6 +345,8 @@ implementations of interest, with above average documentation<a class="footnote-
 <li><a class="reference internal" href="#">Additional Resources</a><ul>
 <li><a class="reference internal" href="#conventions-and-implementations">Conventions and Implementations</a></li>
 <li><a class="reference internal" href="#pedagogical-work">Pedagogical Work</a></li>
+<li><a class="reference internal" href="#useful-extensions">Useful extensions</a></li>
+<li><a class="reference internal" href="#python-ecosystem">Python Ecosystem</a></li>
 </ul>
 </li>
 </ul>

@@ -10,4 +10,5 @@ the OpenBLAS build.
 :hidden:
 
 interface
+testing
 ```

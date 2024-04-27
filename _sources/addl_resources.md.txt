@@ -16,7 +16,8 @@ implementations of interest, with above average documentation[^2]:
 - [Intel oneAPI MKL]
 - [Arm performance library implementation] (`armpl.h`)
 - The IBM [Engineering and Scientific Subroutine Library]
-- SGI's [Scientific Computing Software Library](https://techpubs.jurassic.nl/library/manuals/4000/007-4325-001/sgi_html/ch02.html)
+- SGI's
+  [Scientific Computing Software Library](https://techpubs.jurassic.nl/library/manuals/4000/007-4325-001/sgi_html/ch02.html)
 
 ## Pedagogical Work
 
@@ -29,6 +30,23 @@ Here are some additional links for BLAS related information:
 - Another lecture on [Numerical Linear Algebra Background]
 
 - Some [context on CPU performance]
+
+## Useful extensions
+
+- [FlexiBLAS](https://github.com/mpimd-csc/flexiblas)
+  - [Supported in SciPy](https://github.com/scipy/scipy/issues/17362)
+
+## Python Ecosystem
+
+- [PyPackaging Native Overview](https://pypackaging-native.github.io/key-issues/native-dependencies/blas_openmp/)
+- SciPy
+  [document on debugging linear algebra issuse](http://scipy.github.io/devdocs/dev/contributor/debugging_linalg_issues.html#debugging-linalg-issues)
+- [Tarballs built on CI](https://github.com/MacPython/openblas-libs/)
+- NumPy
+  [documentation on using different BLAS](https://numpy.org/devdocs/building/blas_lapack.html)
+
+Testing this is still a matter of
+[manual timing apparently](https://stackoverflow.com/questions/11443302/compiling-numpy-with-openblas-integration).
 
 [^1]: Barring the [wiki page], which can be a good place to start too.
 [^2]: [This post] has some NumPy specific context, as does [the documentation]

@@ -1,0 +1,8 @@
+# {py:mod}`openblas_buildsys_snips.make.interface`
+
+```{py:module} openblas_buildsys_snips.make.interface
+```
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.interface
+:allowtitles:
+```

@@ -166,6 +166,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.blas_kernel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
 </ul>
 </li>
@@ -286,6 +287,174 @@ discussion on porting <code class="docutils literal notranslate"><span class="pr
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">parse_blas_routine_commands</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse BLAS routine compilation commands to extract types and directives.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lines : list of str</span>
+<span class="sd">        Compilation commands extracted from a Makefile.</span>
+<span class="sd">    base : str</span>
+<span class="sd">        Base routine name with a &#39;?&#39; where type letters should be replaced.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary with routine base, types encountered, and associated defines and undefines.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">type_prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]</span>
+    <span class="n">routine_details</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;_types&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;def&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;undef&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Prepare regex to capture the necessary parts</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(\w+)\.\$\((?:SUFFIX|PSUFFIX)\).*?-c(.*?)\$&lt;.*$&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Collect information</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">routine_name</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">type_char</span> <span class="o">=</span> <span class="n">routine_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">routine_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">type_prefixes</span> <span class="k">else</span> <span class="n">routine_name</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;_types&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_char</span><span class="p">)</span>
+            <span class="c1"># Process defines and undefines</span>
+            <span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-D(\S+)&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="p">))</span>
+            <span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-U(\S+)&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="p">))</span>
+
+    <span class="c1"># Remove duplicates and sort for consistency</span>
+    <span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;_types&#39;</span><span class="p">]))</span>
+    <span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]))</span>
+    <span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">routine_details</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">routine_details</span>
+
+<span class="c1"># Example lines</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;isamax.$(SUFFIX) isamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;idamax.$(SUFFIX) idamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;icamax.$(SUFFIX) icamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;izamax.$(SUFFIX) izamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ixamax.$(SUFFIX) ixamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span>
+<span class="p">]</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;?amax&#39;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">parse_blas_routine_commands</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Example usage with command lines and specifying the base symbols</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;smax.$(SUFFIX) smax.$(PSUFFIX) : max.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -UUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dmax.$(SUFFIX) dmax.$(PSUFFIX) : max.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -UUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;qmax.$(SUFFIX) qmax.$(PSUFFIX) : max.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -UUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;smin.$(SUFFIX) smin.$(PSUFFIX) : max.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -UUSE_ABS -DUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dmin.$(SUFFIX) dmin.$(PSUFFIX) : max.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -UUSE_ABS -DUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;qmin.$(SUFFIX) qmin.$(PSUFFIX) : max.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -UUSE_ABS -DUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;isamax.$(SUFFIX) isamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;idamax.$(SUFFIX) idamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iqamax.$(SUFFIX) iqamax.$(PSUFFIX) : imax.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;srot.$(SUFFIX) srot.$(PSUFFIX) : rot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;drot.$(SUFFIX) drot.$(PSUFFIX) : rot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;qrot.$(SUFFIX) qrot.$(PSUFFIX) : rot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;csrot.$(SUFFIX) csrot.$(PSUFFIX) : zrot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;zdrot.$(SUFFIX) zdrot.$(PSUFFIX) : zrot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;xqrot.$(SUFFIX) xqrot.$(PSUFFIX) : zrot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;saxpy.$(SUFFIX) saxpy.$(PSUFFIX) : axpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;daxpy.$(SUFFIX) daxpy.$(PSUFFIX) : axpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;qaxpy.$(SUFFIX) qaxpy.$(PSUFFIX) : axpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;caxpy.$(SUFFIX) caxpy.$(PSUFFIX) : zaxpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;zaxpy.$(SUFFIX) zaxpy.$(PSUFFIX) : zaxpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;xaxpy.$(SUFFIX) xaxpy.$(PSUFFIX) : zaxpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;caxpyc.$(SUFFIX) caxpyc.$(PSUFFIX) : zaxpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DCONJ $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;zaxpyc.$(SUFFIX) zaxpyc.$(PSUFFIX) : zaxpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DCONJ $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;xaxpyc.$(SUFFIX) xaxpyc.$(PSUFFIX) : zaxpy.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c -DCONJ $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">base_symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;?max&#39;</span><span class="p">,</span> <span class="s1">&#39;?min&#39;</span><span class="p">,</span> <span class="s1">&#39;i?amax&#39;</span><span class="p">,</span> <span class="s1">&#39;?rot&#39;</span><span class="p">,</span> <span class="s1">&#39;?axpy&#39;</span><span class="p">]</span>  <span class="c1"># Base symbols with wildcards</span>
+<span class="n">parsed_configs</span> <span class="o">=</span> <span class="n">parse_blas_routine_commands</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="s1">&#39;axpy&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parsed_configs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">parse_blas_routine_commands</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+    <span class="n">prefix</span><span class="p">,</span> <span class="n">base</span> <span class="o">=</span> <span class="n">symbol</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;^</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s1">(\w+)</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s1">\.\$\((?:SUFFIX|PSUFFIX)\) : ([^ \t]+)\t.*?-c\s*(.*)$&#39;</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">matcher</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">matcher</span><span class="p">:</span>
+            <span class="n">type_char</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="n">base</span><span class="p">,</span>
+                    <span class="s1">&#39;fname&#39;</span><span class="p">:</span> <span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.c&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;_types&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                    <span class="s1">&#39;def&#39;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(),</span>
+                    <span class="s1">&#39;undef&#39;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(),</span>
+                <span class="p">}</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;_types&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_char</span><span class="p">)</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;def&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-D(\w+)&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="p">))</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;undef&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-U(\w+)&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="p">))</span>
+
+    <span class="c1"># Convert sets to sorted lists to finalize the structure</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;_types&#39;</span><span class="p">]))</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">])</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+
+<span class="c1"># Test the function with a list of lines from a hypothetical Makefile</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;srot.$(SUFFIX) srot.$(PSUFFIX) : rot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;drot.$(SUFFIX) drot.$(PSUFFIX) : rot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;qrot.$(SUFFIX) qrot.$(PSUFFIX) : rot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csrot.$(SUFFIX) csrot.$(PSUFFIX) : zrot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;zdrot.$(SUFFIX) zdrot.$(PSUFFIX) : zrot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;xqrot.$(SUFFIX) xqrot.$(PSUFFIX) : zrot.c</span><span class="se">\t</span><span class="s1">$(CC) $(CFLAGS) -c $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;?rot&#39;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">parse_blas_routine_commands</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">parse_blas_routine_commands</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">oputil</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">)][</span><span class="mi">1</span><span class="p">:],</span> <span class="s1">&#39;i?amin&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parse_blas_routine_commands</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">oputil</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">)][</span><span class="mi">1</span><span class="p">:],</span> <span class="s1">&#39;?amin&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parse_blas_routine_commands</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">oputil</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">)][</span><span class="mi">1</span><span class="p">:],</span> <span class="s1">&#39;?min&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sam</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">oputil</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">)][</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sam</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">symb</span> <span class="o">=</span> <span class="s1">&#39;?rot&#39;</span>
+<span class="n">prefix</span><span class="p">,</span> <span class="n">base</span> <span class="o">=</span> <span class="n">symb</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;i?amax&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;?rot&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
