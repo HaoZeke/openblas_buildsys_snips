@@ -93,5 +93,181 @@ print(parsed_lines)
 ```
 
 ```python
+import re
+
+def parse_blas_routine_commands(lines, base):
+    """
+    Parse BLAS routine compilation commands to extract types and directives.
+
+    Parameters
+    ----------
+    lines : list of str
+        Compilation commands extracted from a Makefile.
+    base : str
+        Base routine name with a '?' where type letters should be replaced.
+
+    Returns
+    -------
+    dict
+        Dictionary with routine base, types encountered, and associated defines and undefines.
+    """
+    type_prefixes = ['s', 'd', 'q', 'c', 'z', 'x']
+    routine_details = {
+        'base': base.replace('?', ''),
+        '_types': [],
+        'def': [],
+        'undef': []
+    }
+
+    # Prepare regex to capture the necessary parts
+    pattern = re.compile(r'^(\w+)\.\$\((?:SUFFIX|PSUFFIX)\).*?-c(.*?)\$<.*$')
+
+    # Collect information
+    for line in lines:
+        match = pattern.search(line)
+        if match:
+            routine_name, flags = match.groups()
+            type_char = routine_name[0] if routine_name[0] in type_prefixes else routine_name[:2]
+            routine_details['_types'].append(type_char)
+            # Process defines and undefines
+            routine_details['def'].extend(re.findall(r'-D(\S+)', flags))
+            routine_details['undef'].extend(re.findall(r'-U(\S+)', flags))
+
+    # Remove duplicates and sort for consistency
+    routine_details['_types'] = sorted(set(routine_details['_types']))
+    routine_details['def'] = sorted(set(routine_details['def']))
+    routine_details['undef'] = sorted(set(routine_details['undef']))
+
+    return routine_details
+
+# Example lines
+lines = [
+    'isamax.$(SUFFIX) isamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'idamax.$(SUFFIX) idamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'icamax.$(SUFFIX) icamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'izamax.$(SUFFIX) izamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'ixamax.$(SUFFIX) ixamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)'
+]
+
+# Example usage
+base = '?amax'
+result = parse_blas_routine_commands(lines, base)
+print(result)
+
+# Example usage with command lines and specifying the base symbols
+lines = [
+    'smax.$(SUFFIX) smax.$(PSUFFIX) : max.c\t$(CC) $(CFLAGS) -c -UUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'dmax.$(SUFFIX) dmax.$(PSUFFIX) : max.c\t$(CC) $(CFLAGS) -c -UUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'qmax.$(SUFFIX) qmax.$(PSUFFIX) : max.c\t$(CC) $(CFLAGS) -c -UUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'smin.$(SUFFIX) smin.$(PSUFFIX) : max.c\t$(CC) $(CFLAGS) -c -UUSE_ABS -DUSE_MIN $< -o $(@F)',
+    'dmin.$(SUFFIX) dmin.$(PSUFFIX) : max.c\t$(CC) $(CFLAGS) -c -UUSE_ABS -DUSE_MIN $< -o $(@F)',
+    'qmin.$(SUFFIX) qmin.$(PSUFFIX) : max.c\t$(CC) $(CFLAGS) -c -UUSE_ABS -DUSE_MIN $< -o $(@F)',
+    'isamax.$(SUFFIX) isamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'idamax.$(SUFFIX) idamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+    'iqamax.$(SUFFIX) iqamax.$(PSUFFIX) : imax.c\t$(CC) $(CFLAGS) -c -DUSE_ABS -UUSE_MIN $< -o $(@F)',
+ 'srot.$(SUFFIX) srot.$(PSUFFIX) : rot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'drot.$(SUFFIX) drot.$(PSUFFIX) : rot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'qrot.$(SUFFIX) qrot.$(PSUFFIX) : rot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'csrot.$(SUFFIX) csrot.$(PSUFFIX) : zrot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'zdrot.$(SUFFIX) zdrot.$(PSUFFIX) : zrot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'xqrot.$(SUFFIX) xqrot.$(PSUFFIX) : zrot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+     'saxpy.$(SUFFIX) saxpy.$(PSUFFIX) : axpy.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'daxpy.$(SUFFIX) daxpy.$(PSUFFIX) : axpy.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'qaxpy.$(SUFFIX) qaxpy.$(PSUFFIX) : axpy.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'caxpy.$(SUFFIX) caxpy.$(PSUFFIX) : zaxpy.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'zaxpy.$(SUFFIX) zaxpy.$(PSUFFIX) : zaxpy.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'xaxpy.$(SUFFIX) xaxpy.$(PSUFFIX) : zaxpy.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+ 'caxpyc.$(SUFFIX) caxpyc.$(PSUFFIX) : zaxpy.c\t$(CC) $(CFLAGS) -c -DCONJ $< -o $(@F)',
+ 'zaxpyc.$(SUFFIX) zaxpyc.$(PSUFFIX) : zaxpy.c\t$(CC) $(CFLAGS) -c -DCONJ $< -o $(@F)',
+ 'xaxpyc.$(SUFFIX) xaxpyc.$(PSUFFIX) : zaxpy.c\t$(CC) $(CFLAGS) -c -DCONJ $< -o $(@F)',
+]
+
+base_symbols = ['?max', '?min', 'i?amax', '?rot', '?axpy']  # Base symbols with wildcards
+parsed_configs = parse_blas_routine_commands(lines, 'axpy')
+print(parsed_configs)
+```
+
+```python
+import re
+
+import re
+
+def parse_blas_routine_commands(lines, symbol):
+    prefix, base = symbol.split('?')
+    pattern = re.compile(rf'^{prefix}(\w+){base}\.\$\((?:SUFFIX|PSUFFIX)\) : ([^ \t]+)\t.*?-c\s*(.*)$')
+
+    results = {}
+
+    for line in lines:
+        matcher = pattern.match(line)
+        if matcher:
+            type_char, filename, flags = matcher.groups()
+            key = (base, filename)
+            if key not in results:
+                results[key] = {
+                    'base': base,
+                    'fname': filename.replace('.c', ''),
+                    '_types': [],
+                    'def': set(),
+                    'undef': set(),
+                }
+            results[key]['_types'].append(type_char)
+            results[key]['def'].update(re.findall(r'-D(\w+)', flags))
+            results[key]['undef'].update(re.findall(r'-U(\w+)', flags))
+
+    # Convert sets to sorted lists to finalize the structure
+    for result in results.values():
+        result['_types'] = sorted(set(result['_types']))
+        result['def'] = sorted(result['def'])
+        result['undef'] = sorted(result['undef'])
+
+    return list(results.values())
+
+
+# Test the function with a list of lines from a hypothetical Makefile
+lines = [
+    'srot.$(SUFFIX) srot.$(PSUFFIX) : rot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+    'drot.$(SUFFIX) drot.$(PSUFFIX) : rot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+    'qrot.$(SUFFIX) qrot.$(PSUFFIX) : rot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+    'csrot.$(SUFFIX) csrot.$(PSUFFIX) : zrot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+    'zdrot.$(SUFFIX) zdrot.$(PSUFFIX) : zrot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+    'xqrot.$(SUFFIX) xqrot.$(PSUFFIX) : zrot.c\t$(CC) $(CFLAGS) -c $< -o $(@F)',
+]
+
+symbol = '?rot'
+result = parse_blas_routine_commands(lines, symbol)
+print(result)
+
+```
+
+```python
+print(parse_blas_routine_commands([x for x in oputil.pair_suffix_lines(lines)][1:], 'i?amin'))
+print(parse_blas_routine_commands([x for x in oputil.pair_suffix_lines(lines)][1:], '?amin'))
+print(parse_blas_routine_commands([x for x in oputil.pair_suffix_lines(lines)][1:], '?min'))
+```
+
+```python
+sam=[x for x in oputil.pair_suffix_lines(lines)][2]
+```
+
+```python
+sam.split('\t')
+```
+
+```python
+symb = '?rot'
+prefix, base = symb.split('?')
+print(base, prefix)
+```
+
+```python
+'i?amax'.split('?')
+```
+
+```python
+'?rot'.split('?')
+```
+
+```python
 
 ```
