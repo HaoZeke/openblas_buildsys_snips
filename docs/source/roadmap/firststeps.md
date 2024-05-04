@@ -38,3 +38,9 @@ Essentially means steps 1 through 5 can be broken down into the following:
   low-level arithmetic operations called by higher-level functions.
 
 Of course, OpenBLAS includes lapack as well, but that is a later concern.
+
+## Architectures
+
+The way OpenBLAS is meant to run optimizations depends on processor families,
+e.g. HASWELL or SANDYBRIDGE. Typically this means that the "nearest"
+architecture might be used as a starting point for even more optimizations.
