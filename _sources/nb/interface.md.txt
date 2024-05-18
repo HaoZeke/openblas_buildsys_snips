@@ -269,5 +269,276 @@ print(base, prefix)
 ```
 
 ```python
+import re
+import textwrap
+from typing import List, Dict, Any
+
+def parse_makefile_lines(lines: List[str]) -> List[Dict[str, Any]]:
+    ext_mappings_l3 = []
+    pattern = re.compile(
+        r'^(?P<name>[a-z]+)(?P<ext>_[A-Z]+)\.\$\(\w+\) : (?P<file>[\w.]+)\s*\n?'
+        r'\s*\$\(CC\) -c \$\(CFLAGS\) (?P<flags>.*) \$< -o \$\(@F\)'
+    )
+
+    for line in lines:
+        match = pattern.match(line)
+        if match:
+            details = match.groupdict()
+            ext_details = {
+                'ext': details['ext'],
+                'def': [],
+                'undef': [],
+                'for': []
+            }
+
+            # Determine 'for' based on the 'name' prefix
+            if details['name'][0] in ['s', 'd']:
+                ext_details['for'] = ['s', 'd']
+            elif details['name'][0] in ['c', 'z', 'x']:
+                ext_details['for'] = ['c', 'z', 'x']
+            elif details['name'][0] == 'q':
+                ext_details['for'] = ['q']
+
+            # Parse flags
+            flags = details['flags'].split()
+            for flag in flags:
+                if flag.startswith('-D') and flag[2:] not in ['DOUBLE', 'COMPLEX']:
+                    ext_details['def'].append(flag[2:])
+                elif flag.startswith('-U') and flag[2:] not in ['DOUBLE', 'COMPLEX']:
+                    ext_details['undef'].append(flag[2:])
+
+            ext_mappings_l3.append(ext_details)
+
+    return ext_mappings_l3
+
+# Example usage
+makefile_lines = [
+    'strmm_LNUU.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT $< -o $(@F)',
+    'strmm_LNUN.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT $< -o $(@F)',
+    'strmm_LNLU.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT $< -o $(@F)',
+    'strmm_LNLN.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT $< -o $(@F)',
+    'strmm_LTUU.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT $< -o $(@F)',
+    'strmm_LTUN.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT $< -o $(@F)',
+    'strmm_LTLU.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT $< -o $(@F)',
+    'strmm_LTLN.$(SUFFIX) : trmm_L.c\n\t$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT $< -o $(@F)',
+]
+
+# Parse the makefile lines
+parsed_ext_mappings = parse_makefile_lines(makefile_lines)
+
+# Display the parsed mappings
+for entry in parsed_ext_mappings:
+    print(entry)
+
+```
+
+```python
+from openblas_buildsys_snips import _utils
+```
+
+```python
+makefile_string = """
+strmm_LNUU.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT $< -o $(@F)
+
+strmm_LNUN.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT $< -o $(@F)
+
+strmm_LNLU.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT $< -o $(@F)
+
+strmm_LNLN.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT $< -o $(@F)
+
+strmm_LTUU.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT $< -o $(@F)
+
+strmm_LTUN.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT $< -o $(@F)
+
+strmm_LTLU.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT $< -o $(@F)
+
+strmm_LTLN.$(SUFFIX) : trmm_L.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT $< -o $(@F)
+
+strmm_RNUU.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT $< -o $(@F)
+
+strmm_RNUN.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT $< -o $(@F)
+
+strmm_RNLU.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT $< -o $(@F)
+
+strmm_RNLN.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT $< -o $(@F)
+
+strmm_RTUU.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT $< -o $(@F)
+
+strmm_RTUN.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT $< -o $(@F)
+
+strmm_RTLU.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT $< -o $(@F)
+
+strmm_RTLN.$(SUFFIX) : trmm_R.c
+	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT $< -o $(@F)
+"""
+
+for x in parse_makefile_lines(_utils.pair_suffix_lines(makefile_string.split("\n"))):
+    print(x)
+```
+
+```python
+makefile_string = """
+ctrmm_LNUU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LNUN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LNLU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LNLN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LTUU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LTUN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LTLU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LTLN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_LRUU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LRUN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LRLU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LRLN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LCUU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LCUN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LCLU.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_LCLN.$(PSUFFIX) : trmm_L.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RNUU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RNUN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RNLU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RNLN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RTUU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RTUN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RTLU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RTLN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -UCONJ $< -o $(@F)
+
+ctrmm_RRUU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RRUN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RRLU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RRLN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RCUU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RCUN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RCLU.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -DCONJ $< -o $(@F)
+
+ctrmm_RCLN.$(PSUFFIX) : trmm_R.c
+	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -DCONJ $< -o $(@F)
+"""
+
+for x in parse_makefile_lines(_utils.pair_suffix_lines(makefile_string.split("\n"))):
+    print(x)
+```
+
+```python
+
+def parse_makefile_lines(lines: List[str]) -> List[Dict[str, Any]]:
+    ext_mappings_l3 = []
+    pattern = re.compile(
+        r'^(?P<name>[a-z]+)(?P<ext>_[A-Z]+)\.\$\(\w+\) : (?P<file>[\w.]+)\s*\n?'
+        r'\s*\$\(CC\) -c \$\(PFLAGS\) (?P<flags>.*) \$< -o \$\(@F\)'
+    )
+
+    for line in lines:
+        match = pattern.match(line)
+        if match:
+            details = match.groupdict()
+            ext_details = {
+                'ext': details['ext'],
+                'def': [],
+                'undef': [],
+                'for': []
+            }
+
+            # Determine 'for' based on the 'name' prefix
+            if details['name'][0] in ['s', 'd']:
+                ext_details['for'] = ['s', 'd']
+            elif details['name'][0] in ['c', 'z', 'x']:
+                ext_details['for'] = ['c', 'z', 'x']
+            elif details['name'][0] == 'q':
+                ext_details['for'] = ['q']
+
+            # Parse flags
+            flags = details['flags'].split()
+            for flag in flags:
+                if flag.startswith('-D') and flag[2:] not in ['DOUBLE', 'COMPLEX']:
+                    ext_details['def'].append(flag[2:])
+                elif flag.startswith('-U') and flag[2:] not in ['DOUBLE', 'COMPLEX']:
+                    ext_details['undef'].append(flag[2:])
+
+            ext_mappings_l3.append(ext_details)
+
+    return ext_mappings_l3
+
+
+for x in parse_makefile_lines(_utils.pair_suffix_lines(makefile_string.split("\n"))):
+    print(f'{x},')
+```
+
+```python
 
 ```

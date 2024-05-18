@@ -166,6 +166,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.log_parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.make.blas_kernel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
 </ul>
@@ -455,6 +456,272 @@ discussion on porting <code class="docutils literal notranslate"><span class="pr
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;?rot&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="k">def</span> <span class="nf">parse_makefile_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="n">ext_mappings_l3</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s1">&#39;^(?P&lt;name&gt;[a-z]+)(?P&lt;ext&gt;_[A-Z]+)\.\$\(\w+\) : (?P&lt;file&gt;[\w.]+)\s*\n?&#39;</span>
+        <span class="sa">r</span><span class="s1">&#39;\s*\$\(CC\) -c \$\(CFLAGS\) (?P&lt;flags&gt;.*) \$&lt; -o \$\(@F\)&#39;</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">details</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+            <span class="n">ext_details</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;ext&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;ext&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;def&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s1">&#39;undef&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s1">&#39;for&#39;</span><span class="p">:</span> <span class="p">[]</span>
+            <span class="p">}</span>
+
+            <span class="c1"># Determine &#39;for&#39; based on the &#39;name&#39; prefix</span>
+            <span class="k">if</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]:</span>
+                <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]:</span>
+                <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
+                <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Parse flags</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;flags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">flag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-D&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DOUBLE&#39;</span><span class="p">,</span> <span class="s1">&#39;COMPLEX&#39;</span><span class="p">]:</span>
+                    <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+                <span class="k">elif</span> <span class="n">flag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-U&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DOUBLE&#39;</span><span class="p">,</span> <span class="s1">&#39;COMPLEX&#39;</span><span class="p">]:</span>
+                    <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+
+            <span class="n">ext_mappings_l3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext_details</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ext_mappings_l3</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">makefile_lines</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;strmm_LNUU.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LNUN.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LNLU.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LNLN.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LTUU.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LTUN.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LTLU.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;strmm_LTLN.$(SUFFIX) : trmm_L.c</span><span class="se">\n\t</span><span class="s1">$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT $&lt; -o $(@F)&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Parse the makefile lines</span>
+<span class="n">parsed_ext_mappings</span> <span class="o">=</span> <span class="n">parse_makefile_lines</span><span class="p">(</span><span class="n">makefile_lines</span><span class="p">)</span>
+
+<span class="c1"># Display the parsed mappings</span>
+<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">parsed_ext_mappings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openblas_buildsys_snips</span> <span class="kn">import</span> <span class="n">_utils</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">makefile_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">strmm_LNUU.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LNUN.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LNLU.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LNLN.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LTUU.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LTUN.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LTLU.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_LTLN.$(SUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RNUU.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RNUN.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RNLU.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RNLN.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RTUU.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RTUN.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RTLU.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT $&lt; -o $(@F)</span>
+
+<span class="s2">strmm_RTLN.$(SUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(CFLAGS) -UCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT $&lt; -o $(@F)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parse_makefile_lines</span><span class="p">(</span><span class="n">_utils</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">makefile_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">makefile_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ctrmm_LNUU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LNUN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LNLU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LNLN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LTUU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LTUN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LTLU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LTLN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LRUU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LRUN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LRLU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LRLN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LCUU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LCUN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LCLU.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_LCLN.$(PSUFFIX) : trmm_L.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RNUU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RNUN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RNLU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RNLN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RTUU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RTUN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RTLU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RTLN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -UCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RRUU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RRUN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -DUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RRLU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RRLN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -UTRANSA -UUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RCUU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RCUN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -DUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RCLU.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -DUNIT -DCONJ $&lt; -o $(@F)</span>
+
+<span class="s2">ctrmm_RCLN.$(PSUFFIX) : trmm_R.c</span>
+<span class="s2">	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DTRANSA -UUPPER -UUNIT -DCONJ $&lt; -o $(@F)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parse_makefile_lines</span><span class="p">(</span><span class="n">_utils</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">makefile_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">parse_makefile_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="n">ext_mappings_l3</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s1">&#39;^(?P&lt;name&gt;[a-z]+)(?P&lt;ext&gt;_[A-Z]+)\.\$\(\w+\) : (?P&lt;file&gt;[\w.]+)\s*\n?&#39;</span>
+        <span class="sa">r</span><span class="s1">&#39;\s*\$\(CC\) -c \$\(PFLAGS\) (?P&lt;flags&gt;.*) \$&lt; -o \$\(@F\)&#39;</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">details</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+            <span class="n">ext_details</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;ext&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;ext&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;def&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s1">&#39;undef&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s1">&#39;for&#39;</span><span class="p">:</span> <span class="p">[]</span>
+            <span class="p">}</span>
+
+            <span class="c1"># Determine &#39;for&#39; based on the &#39;name&#39; prefix</span>
+            <span class="k">if</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]:</span>
+                <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]:</span>
+                <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
+                <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;for&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Parse flags</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;flags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">flag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-D&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DOUBLE&#39;</span><span class="p">,</span> <span class="s1">&#39;COMPLEX&#39;</span><span class="p">]:</span>
+                    <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+                <span class="k">elif</span> <span class="n">flag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-U&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DOUBLE&#39;</span><span class="p">,</span> <span class="s1">&#39;COMPLEX&#39;</span><span class="p">]:</span>
+                    <span class="n">ext_details</span><span class="p">[</span><span class="s1">&#39;undef&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+
+            <span class="n">ext_mappings_l3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext_details</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ext_mappings_l3</span>
+
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parse_makefile_lines</span><span class="p">(</span><span class="n">_utils</span><span class="o">.</span><span class="n">pair_suffix_lines</span><span class="p">(</span><span class="n">makefile_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">,&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>

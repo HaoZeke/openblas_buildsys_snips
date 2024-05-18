@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips._utils" href="openblas_buildsys_snips._utils.html" /><link rel="prev" title="openblas_buildsys_snips.make.interface" href="openblas_buildsys_snips.make.interface.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips.make.interface" href="openblas_buildsys_snips.make.interface.html" /><link rel="prev" title="openblas_buildsys_snips.make" href="openblas_buildsys_snips.make.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>openblas_buildsys_snips.make.blas_kernel - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>openblas_buildsys_snips.make.log_parser - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
@@ -166,9 +166,9 @@
 </ul>
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.log_parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.blas_kernel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></a></li>
@@ -220,21 +220,32 @@
           </label>
         </div>
         <article role="main">
-          <section id="module-openblas_buildsys_snips.make.blas_kernel">
-<span id="openblas-buildsys-snips-make-blas-kernel"></span><h1><a class="reference internal" href="#module-openblas_buildsys_snips.make.blas_kernel" title="openblas_buildsys_snips.make.blas_kernel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a><a class="headerlink" href="#module-openblas_buildsys_snips.make.blas_kernel" title="Link to this heading">#</a></h1>
+          <section id="module-openblas_buildsys_snips.make.log_parser">
+<span id="openblas-buildsys-snips-make-log-parser"></span><h1><a class="reference internal" href="#module-openblas_buildsys_snips.make.log_parser" title="openblas_buildsys_snips.make.log_parser"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a><a class="headerlink" href="#module-openblas_buildsys_snips.make.log_parser" title="Link to this heading">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define" title="openblas_buildsys_snips.make.log_parser.Define"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Define</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo" title="openblas_buildsys_snips.make.log_parser.CompilationInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CompilationInfo</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym" title="openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_makefile_to_sym</span></code></a></p></td>
-<td><p>Parses makefile lines to extract symbols and their corresponding
-configurations.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands" title="openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_compilation_commands</span></code></a></p></td>
-<td><p>Parse compilation commands to extract configuration details.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.parse_cc_makelog" title="openblas_buildsys_snips.make.log_parser.parse_cc_makelog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_cc_makelog</span></code></a></p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -242,128 +253,67 @@ configurations.</p></td>
 </section>
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
-<dl class="py function">
-<dt class="sig sig-object py" id="openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym">
-<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.blas_kernel.</span></span><span class="sig-name descname"><span class="pre">parse_makefile_to_sym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym" title="Link to this definition">#</a></dt>
-<dd><p>Parses makefile lines to extract symbols and their corresponding
-configurations.</p>
-<p>This function iterates over a sequence of lines from a makefile, extracting
-information based on the presence of a base symbol.  It categorizes each
-line into modes based on the symbol’s prefix and collects extensions and
-configurations for each mode.  The function allows for dynamic determination
-of the base symbol if not provided.</p>
-<h2 class="rubric" id="id4">Parameters</h2>
-<p><strong>lines</strong> : iterable of str</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>An iterable sequence of lines (strings) from a makefile to be processed.
-</pre></div>
-</div>
-<p><strong>directory</strong> : str</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The directory associated with the symbols being parsed.
-</pre></div>
-</div>
-<p><strong>kernel_file</strong> : str</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The kernel file associated with the symbols.
-</pre></div>
-</div>
-<p><strong>base</strong> : str, optional</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The base symbol to look for in the lines. If not provided, the base is
-determined dynamically from the lines.
-</pre></div>
-</div>
-<h2 class="rubric" id="id5">Returns</h2>
-<p><strong>dict</strong></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>A dictionary representing the parsed symbol configurations. It includes
-the base symbol, modes, their directories, kernel files, and extensions.
-The structure is:
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span>
-        <span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;base_symbol&gt;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;modes&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;&lt;mode&gt;&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;directory&gt;&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;kernel_file&gt;&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;exts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;extension1&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;extension2&gt;&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-            <span class="p">},</span>
-            <span class="o">...</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-</pre></div>
-</div>
-<h2 class="rubric" id="id6">Examples</h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
-<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_U$(TSUFFIX).$(SUFFIX)  : $(KERNELDIR)/symv_U_kernel $(SOME_DEPENDENCY)&quot;</span><span class="p">,</span>
-<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_L$(TSUFFIX).$(SUFFIX)  : $(KERNELDIR)/symv_L_kernel $(SOME_DEPENDENCY)&quot;</span>
-<span class="gp">... </span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">directory</span> <span class="o">=</span> <span class="s2">&quot;generic&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel_file</span> <span class="o">=</span> <span class="s2">&quot;symv_k.c&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_makefile_to_sym</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">kernel_file</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="s2">&quot;symv&quot;</span><span class="p">)</span>
-<span class="go">{</span>
-<span class="go">    &quot;base&quot;: &quot;symv&quot;,</span>
-<span class="go">    &quot;modes&quot;: {</span>
-<span class="go">        &quot;s&quot;: {</span>
-<span class="go">            &quot;dir&quot;: &quot;generic&quot;,</span>
-<span class="go">            &quot;kernel&quot;: &quot;symv_k.c&quot;,</span>
-<span class="go">            &quot;exts&quot;: [&quot;_U&quot;, &quot;_L&quot;]</span>
-<span class="go">        }</span>
-<span class="go">    }</span>
-<span class="go">}</span>
-</pre></div>
-</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.Define">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">Define</span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.NamedTuple</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.Define.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define.key" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.Define.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define.value" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">CompilationInfo</span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo" title="Link to this definition">#</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.defines">
+<span class="sig-name descname"><span class="pre">defines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define" title="openblas_buildsys_snips.make.log_parser.Define"><span class="pre">openblas_buildsys_snips.make.log_parser.Define</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.defines" title="Link to this definition">#</a></dt>
+<dd><p>‘field(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines">
+<span class="sig-name descname"><span class="pre">undefines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines" title="Link to this definition">#</a></dt>
+<dd><p>‘field(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.flags">
+<span class="sig-name descname"><span class="pre">flags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.flags" title="Link to this definition">#</a></dt>
+<dd><p>‘field(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files">
+<span class="sig-name descname"><span class="pre">input_files</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files" title="Link to this definition">#</a></dt>
+<dd><p>‘field(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.directory">
+<span class="sig-name descname"><span class="pre">directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.directory" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol">
+<span class="sig-name descname"><span class="pre">output_symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands">
-<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.blas_kernel.</span></span><span class="sig-name descname"><span class="pre">parse_compilation_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands" title="Link to this definition">#</a></dt>
-<dd><p>Parse compilation commands to extract configuration details.</p>
-<p>This function iterates over a list of compilation commands, extracting key
-configuration details such as mode, base, extensions, defined macros
-(<code class="docutils literal notranslate"><span class="pre">def</span></code>), undefined macros (<code class="docutils literal notranslate"><span class="pre">undef</span></code>), and additional flags (<code class="docutils literal notranslate"><span class="pre">addl</span></code>). The
-function utilizes regular expressions to parse each command according to a
-specified pattern, which is dynamically constructed using the provided
-<code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
-<h2 class="rubric" id="id7">Parameters</h2>
-<p><strong>commands</strong> : list of str</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>A list of compilation command strings to be parsed.
-</pre></div>
-</div>
-<p><strong>base</strong> : str</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The base identifier used to construct the regular expression pattern for
-parsing the commands. It is used to identify the relevant part of each
-command.
-</pre></div>
-</div>
-<h2 class="rubric" id="id8">Returns</h2>
-<p><strong>list of dict</strong></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>A list of dictionaries, each representing the parsed configuration from
-a command.  Each dictionary contains the following keys:
-- &#39;name&#39;: A string combining the mode, base, and extension identifier.
-- &#39;undef&#39;: A list of strings representing macros that are undefined in
-  the command.
-- &#39;def&#39;: A list of strings representing macros that are defined in the
-  command.
-- &#39;addl&#39;: A list of additional flags extracted from the command.
-</pre></div>
-</div>
-<h2 class="rubric" id="id9">Examples</h2>
-<p>Suppose <code class="docutils literal notranslate"><span class="pre">commands</span></code> is a list of strings, each representing a command in the
-makefile, and <code class="docutils literal notranslate"><span class="pre">base</span></code> is a string like ‘symv’. The function will parse these
-commands to extract the configuration details based on the specified <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
-<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_U$(TSUFFIX).$(SUFFIX) : $(KERNELDIR)/symv_U_kernel -DUSE_UPPER -UDOUBLE&quot;</span><span class="p">,</span>
-<span class="gp">... </span><span class="s2">&quot;$(KDIR)symv_L$(TSUFFIX).$(SUFFIX) : $(KERNELDIR)/symv_L_kernel -DUSE_LOWER -UDOUBLE&quot;</span>
-<span class="gp">... </span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;symv&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configs</span> <span class="o">=</span> <span class="n">parse_compilation_commands</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span>
-<span class="go">[{&#39;name&#39;: &#39;symv_U&#39;, &#39;undef&#39;: [&#39;DOUBLE&#39;], &#39;def&#39;: [&#39;USE_UPPER&#39;], &#39;addl&#39;: []},</span>
-<span class="go"> {&#39;name&#39;: &#39;symv_L&#39;, &#39;undef&#39;: [&#39;DOUBLE&#39;], &#39;def&#39;: [&#39;USE_LOWER&#39;], &#39;addl&#39;: []}]</span>
-</pre></div>
-</div>
-<p>This illustrates how each command is broken down into its components, aiding
-in the configuration and management of compilation settings in a more
-structured format.</p>
-</dd></dl>
+<dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.parse_cc_makelog">
+<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">parse_cc_makelog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo" title="openblas_buildsys_snips.make.log_parser.CompilationInfo"><span class="pre">openblas_buildsys_snips.make.log_parser.CompilationInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.parse_cc_makelog" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </section>
 </section>
@@ -374,23 +324,23 @@ structured format.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="openblas_buildsys_snips._utils.html">
+          <a class="next-page" href="openblas_buildsys_snips.make.interface.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="openblas_buildsys_snips.make.interface.html">
+          <a class="prev-page" href="openblas_buildsys_snips.make.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></div>
                 
               </div>
             </a>
@@ -424,12 +374,26 @@ structured format.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#functions">Functions</a></li>
 <li><a class="reference internal" href="#api">API</a><ul>
-<li><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_makefile_to_sym"><code class="docutils literal notranslate"><span class="pre">parse_makefile_to_sym()</span></code></a></li>
-<li><a class="reference internal" href="#openblas_buildsys_snips.make.blas_kernel.parse_compilation_commands"><code class="docutils literal notranslate"><span class="pre">parse_compilation_commands()</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define"><code class="docutils literal notranslate"><span class="pre">Define</span></code></a><ul>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define.key"><code class="docutils literal notranslate"><span class="pre">Define.key</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define.value"><code class="docutils literal notranslate"><span class="pre">Define.value</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo"><code class="docutils literal notranslate"><span class="pre">CompilationInfo</span></code></a><ul>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.defines"><code class="docutils literal notranslate"><span class="pre">CompilationInfo.defines</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines"><code class="docutils literal notranslate"><span class="pre">CompilationInfo.undefines</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.flags"><code class="docutils literal notranslate"><span class="pre">CompilationInfo.flags</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files"><code class="docutils literal notranslate"><span class="pre">CompilationInfo.input_files</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.directory"><code class="docutils literal notranslate"><span class="pre">CompilationInfo.directory</span></code></a></li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol"><code class="docutils literal notranslate"><span class="pre">CompilationInfo.output_symbol</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.parse_cc_makelog"><code class="docutils literal notranslate"><span class="pre">parse_cc_makelog()</span></code></a></li>
 </ul>
 </li>
 </ul>

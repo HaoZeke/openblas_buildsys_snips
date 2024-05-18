@@ -1,0 +1,151 @@
+# {py:mod}`openblas_buildsys_snips.make.log_parser`
+
+```{py:module} openblas_buildsys_snips.make.log_parser
+```
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`Define <openblas_buildsys_snips.make.log_parser.Define>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.Define
+    :summary:
+    ```
+* - {py:obj}`CompilationInfo <openblas_buildsys_snips.make.log_parser.CompilationInfo>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`parse_cc_makelog <openblas_buildsys_snips.make.log_parser.parse_cc_makelog>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.parse_cc_makelog
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} Define
+:canonical: openblas_buildsys_snips.make.log_parser.Define
+
+Bases: {py:obj}`typing.NamedTuple`
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.Define
+```
+
+````{py:attribute} key
+:canonical: openblas_buildsys_snips.make.log_parser.Define.key
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.Define.key
+```
+
+````
+
+````{py:attribute} value
+:canonical: openblas_buildsys_snips.make.log_parser.Define.value
+:type: typing.Optional[str]
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.Define.value
+```
+
+````
+
+`````
+
+`````{py:class} CompilationInfo
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo
+```
+
+````{py:attribute} defines
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo.defines
+:type: typing.List[openblas_buildsys_snips.make.log_parser.Define]
+:value: >
+   'field(...)'
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo.defines
+```
+
+````
+
+````{py:attribute} undefines
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines
+:type: typing.List[str]
+:value: >
+   'field(...)'
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines
+```
+
+````
+
+````{py:attribute} flags
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo.flags
+:type: typing.List[str]
+:value: >
+   'field(...)'
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo.flags
+```
+
+````
+
+````{py:attribute} input_files
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files
+:type: typing.List[str]
+:value: >
+   'field(...)'
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files
+```
+
+````
+
+````{py:attribute} directory
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo.directory
+:type: str
+:value: <Multiline-String>
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo.directory
+```
+
+````
+
+````{py:attribute} output_symbol
+:canonical: openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol
+:type: str
+:value: <Multiline-String>
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol
+```
+
+````
+
+`````
+
+````{py:function} parse_cc_makelog(log: str) -> typing.List[openblas_buildsys_snips.make.log_parser.CompilationInfo]
+:canonical: openblas_buildsys_snips.make.log_parser.parse_cc_makelog
+
+```{autodoc2-docstring} openblas_buildsys_snips.make.log_parser.parse_cc_makelog
+```
+````
