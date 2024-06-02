@@ -287,6 +287,38 @@ Libs: -L${libdir} -lopenblas
 <p>Note that unfortunately, the <code class="docutils literal notranslate"><span class="pre">build</span></code> and <code class="docutils literal notranslate"><span class="pre">build-install</span></code> directories need to be
 fully wiped between runs<a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> .</p>
 </section>
+</section>
+<section id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Link to this heading">#</a></h2>
+<p>One of the simpler tests which should call OpenBLAS is simply:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>spin<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-t<span class="w"> </span>numpy<span class="w"> </span>-m<span class="w"> </span>full<span class="w"> </span>--<span class="w"> </span>-vvvvvv<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;dotmatmat&quot;</span>
+</pre></div>
+</div>
+<p>Which can be coupled with the debug build:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g&quot;</span><span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g&quot;</span><span class="w"> </span>spin<span class="w"> </span>build<span class="w"> </span>--clean<span class="w"> </span>--<span class="w"> </span>-Dblas<span class="o">=</span><span class="s2">&quot;openblas&quot;</span><span class="w"> </span>-Dblas-order<span class="o">=</span>openblas,mkl,blis<span class="w"> </span>-Dlapack-order<span class="o">=</span>openblas,mkl,lapack<span class="w"> </span>-Dallow-noblas<span class="o">=</span><span class="nb">false</span><span class="w"> </span>-Dpkg_config_path<span class="o">=</span><span class="s2">&quot;/</span><span class="nv">$HOME</span><span class="s2">/Git/OpenBLAS&quot;</span><span class="w"> </span>-Dbuildtype<span class="o">=</span>debug<span class="w"> </span>-Ddisable-optimization<span class="o">=</span><span class="nb">true</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>The relevant breakpoint should be <code class="docutils literal notranslate"><span class="pre">cblas_matrixproduct</span></code> which should be called
+by <code class="docutils literal notranslate"><span class="pre">PyArray_MatrixProduct2</span></code> when <code class="docutils literal notranslate"><span class="pre">np.dot</span></code> is used in a script.</p>
+<p>For example, extracting a test from the repo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># optest.py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.testing</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="n">A</span><span class="p">)</span>
+<span class="n">tgt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.45046013</span><span class="p">,</span> <span class="mf">0.86323640</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.86323640</span><span class="p">,</span> <span class="mf">0.84934569</span><span class="p">]])</span>
+
+<span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>spin<span class="w"> </span>gdb<span class="w"> </span>optest.py
+</pre></div>
+</div>
 <section id="baseline-tests">
 <h3>Baseline tests<a class="headerlink" href="#baseline-tests" title="Link to this heading">#</a></h3>
 <p>Despite the elegance of using <code class="docutils literal notranslate"><span class="pre">np.show_config</span></code><a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> to figure out what was
@@ -432,6 +464,9 @@ with <code class="docutils literal notranslate"><span class="pre">meson</span></
 <li><a class="reference internal" href="#">Testing OpenBLAS</a><ul>
 <li><a class="reference internal" href="#numpy-and-openblas">NumPy and OpenBLAS</a><ul>
 <li><a class="reference internal" href="#relevant-build-flags">Relevant build flags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugging">Debugging</a><ul>
 <li><a class="reference internal" href="#baseline-tests">Baseline tests</a></li>
 <li><a class="reference internal" href="#gotchas-and-notes">Gotchas and Notes</a><ul>
 <li><a class="reference internal" href="#meson-smoke-tests"><code class="docutils literal notranslate"><span class="pre">meson</span></code> smoke tests</a><ul>

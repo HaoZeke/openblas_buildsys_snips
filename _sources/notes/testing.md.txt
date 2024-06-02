@@ -69,6 +69,45 @@ Where for the `pkg_config_path` contains something like this `openblas.pc` file:
 Note that unfortunately, the `build` and `build-install` directories need to be
 fully wiped between runs[^2] .
 
+## Debugging
+
+One of the simpler tests which should call OpenBLAS is simply:
+
+```bash
+spin test -t numpy -m full -- -vvvvvv -k "dotmatmat"
+```
+
+Which can be coupled with the debug build:
+
+```bash
+CFLAGS="-O0 -g" CXXFLAGS="-O0 -g" spin build --clean -- -Dblas="openblas" -Dblas-order=openblas,mkl,blis -Dlapack-order=openblas,mkl,lapack -Dallow-noblas=false -Dpkg_config_path="/$HOME/Git/OpenBLAS" -Dbuildtype=debug -Ddisable-optimization=true 
+```
+
+The relevant breakpoint should be `cblas_matrixproduct` which should be called
+by `PyArray_MatrixProduct2` when `np.dot` is used in a script.
+
+For example, extracting a test from the repo:
+
+```python
+# optest.py
+import numpy as np
+from numpy.testing import assert_almost_equal
+
+np.random.seed(128)
+A = np.random.rand(4, 2)
+N = 7
+
+res = np.dot(A.transpose(), A)
+tgt = np.array([[1.45046013, 0.86323640],
+                [0.86323640, 0.84934569]])
+
+assert_almost_equal(res, tgt, decimal=N)
+```
+
+```bash
+spin gdb optest.py
+```
+
 ### Baseline tests
 
 Despite the elegance of using `np.show_config`[^3] to figure out what was
