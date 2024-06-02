@@ -5,6 +5,7 @@ import argparse
 from numpy.testing import assert_almost_equal
 from dataclasses import dataclass
 
+
 @dataclass
 class ExpectedOutputs:
     matrix_matrix: np.ndarray
@@ -56,6 +57,7 @@ class ExpectedOutputs:
             gemm_case=np.array(data["gemm_case"]),
         )
 
+
 def test_dot_operations(expected_outputs):
     np.random.seed(128)
     N = 7
@@ -72,61 +74,86 @@ def test_dot_operations(expected_outputs):
     # Matrix-Matrix multiplication
     res = np.dot(A, B)
     tgt = expected_outputs.matrix_matrix
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="Matrix-Matrix multiplication failed", verbose=True
+    )
 
     # Matrix-Vector multiplication
     res = np.dot(A, v)
     tgt = expected_outputs.matrix_vector
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="Matrix-Vector multiplication failed", verbose=True
+    )
 
     # Vector-Matrix multiplication
     res = np.dot(v1, A)
     tgt = expected_outputs.vector_matrix
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="Vector-Matrix multiplication failed", verbose=True
+    )
 
     # Vector-Vector multiplication (dot product)
     res = np.dot(v1, v2)
     tgt = expected_outputs.vector_vector
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="Vector-Vector multiplication failed", verbose=True
+    )
 
     # SYRK float cases
     res = np.dot(C_float, C_float.T)
     tgt = expected_outputs.syrk_float_un
-    assert_almost_equal(res, tgt, decimal=N, err_msg="syrk_float_un failed", verbose=True)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_float_un failed", verbose=True
+    )
 
     res = np.dot(C_float.T, C_float)
     tgt = expected_outputs.syrk_float_ut
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_float_ut failed", verbose=True
+    )
 
     res = np.dot(C_float.T, C_float.T)
     tgt = expected_outputs.syrk_float_ln
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_float_ln failed", verbose=True
+    )
 
     res = np.dot(C_float, C_float)
     tgt = expected_outputs.syrk_float_lt
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_float_lt failed", verbose=True
+    )
 
     # SYRK double cases
     res = np.dot(C_double, C_double.T)
     tgt = expected_outputs.syrk_double_un
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_double_un failed", verbose=True
+    )
 
     res = np.dot(C_double.T, C_double)
     tgt = expected_outputs.syrk_double_ut
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_double_ut failed", verbose=True
+    )
 
     res = np.dot(C_double.T, C_double.T)
     tgt = expected_outputs.syrk_double_ln
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_double_ln failed", verbose=True
+    )
 
     res = np.dot(C_double, C_double)
     tgt = expected_outputs.syrk_double_lt
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_double_lt failed", verbose=True
+    )
 
     # GEMM case
     res = np.dot(A, A.T)
     tgt = expected_outputs.gemm_case
-    assert_almost_equal(res, tgt, decimal=N)
+    assert_almost_equal(res, tgt, decimal=N, err_msg="GEMM case failed", verbose=True)
+
 
 def generate_expected_outputs():
     np.random.seed(128)
@@ -158,6 +185,7 @@ def generate_expected_outputs():
     )
 
     return expected_outputs
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -191,6 +219,7 @@ def main():
             print(f"Test failed: {e}")
     else:
         parser.print_help()
+
 
 if __name__ == "__main__":
     main()
