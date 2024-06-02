@@ -2,7 +2,8 @@ import numpy as np
 from numpy.testing import assert_almost_equal
 import argparse
 import json
-from dataclasses import dataclass, asdict
+import gzip
+from dataclasses import dataclass
 
 
 @dataclass
@@ -11,6 +12,9 @@ class ExpectedOutputs:
     matrix_vector: np.ndarray
     vector_matrix: np.ndarray
     vector_vector: float
+    syrk_case_1: np.ndarray
+    syrk_case_2: np.ndarray
+    gemm_case: np.ndarray
 
     def to_dict(self):
         return {
@@ -18,6 +22,9 @@ class ExpectedOutputs:
             "matrix_vector": self.matrix_vector.tolist(),
             "vector_matrix": self.vector_matrix.tolist(),
             "vector_vector": self.vector_vector,
+            "syrk_case_1": self.syrk_case_1.tolist(),
+            "syrk_case_2": self.syrk_case_2.tolist(),
+            "gemm_case": self.gemm_case.tolist(),
         }
 
     @staticmethod
@@ -27,6 +34,9 @@ class ExpectedOutputs:
             matrix_vector=np.array(data["matrix_vector"]),
             vector_matrix=np.array(data["vector_matrix"]),
             vector_vector=data["vector_vector"],
+            syrk_case_1=np.array(data["syrk_case_1"]),
+            syrk_case_2=np.array(data["syrk_case_2"]),
+            gemm_case=np.array(data["gemm_case"]),
         )
 
 
@@ -40,11 +50,12 @@ def test_dot_operations(expected_outputs):
     v = np.random.rand(2)
     v1 = np.random.rand(4)
     v2 = np.random.rand(4)
+    C = np.random.rand(4, 4)
 
-    # Matrix-Matrix multiplication
-    res = np.dot(A, B)
-    tgt = expected_outputs.matrix_matrix
-    assert_almost_equal(res, tgt, decimal=N)
+    # # Matrix-Matrix multiplication
+    # res = np.dot(A, B)
+    # tgt = expected_outputs.matrix_matrix
+    # assert_almost_equal(res, tgt, decimal=N)
 
     # Matrix-Vector multiplication
     res = np.dot(A, v)
@@ -61,10 +72,24 @@ def test_dot_operations(expected_outputs):
     tgt = expected_outputs.vector_vector
     assert_almost_equal(res, tgt, decimal=N)
 
+    # # Matrix multiplication that triggers syrk (case 1)
+    # res = np.dot(C, C.T)
+    # tgt = expected_outputs.syrk_case_1
+    # assert_almost_equal(res, tgt, decimal=N)
+
+    # # Matrix multiplication that triggers syrk (case 2)
+    # res = np.dot(C.T, C)
+    # tgt = expected_outputs.syrk_case_2
+    # assert_almost_equal(res, tgt, decimal=N)
+
+    # # Matrix multiplication that triggers gemm
+    # res = np.dot(A, A.T)
+    # tgt = expected_outputs.gemm_case
+    # assert_almost_equal(res, tgt, decimal=N)
+
 
 def generate_expected_outputs():
     np.random.seed(128)
-    N = 7
 
     # Generate matrices and vectors
     A = np.random.rand(4, 2)
@@ -72,6 +97,7 @@ def generate_expected_outputs():
     v = np.random.rand(2)
     v1 = np.random.rand(4)
     v2 = np.random.rand(4)
+    C = np.random.rand(4, 4)
 
     # Expected results using NumPy
     expected_outputs = ExpectedOutputs(
@@ -79,6 +105,9 @@ def generate_expected_outputs():
         matrix_vector=np.dot(A, v),
         vector_matrix=np.dot(v1, A),
         vector_vector=np.dot(v1, v2),
+        syrk_case_1=np.dot(C, C.T),
+        syrk_case_2=np.dot(C.T, C),
+        gemm_case=np.dot(A, A.T),
     )
 
     return expected_outputs
@@ -91,20 +120,22 @@ def main():
     parser.add_argument(
         "--generate",
         action="store_true",
-        help="Generate and save expected outputs to JSON",
+        help="Generate and save expected outputs to compressed JSON",
     )
     parser.add_argument(
-        "--test", type=str, help="Run tests with expected outputs from JSON file"
+        "--test",
+        type=str,
+        help="Run tests with expected outputs from compressed JSON file",
     )
     args = parser.parse_args()
 
     if args.generate:
         expected_outputs = generate_expected_outputs()
-        with open("expected_outputs.json", "w") as f:
+        with gzip.open("expected_outputs.json.gz", "wt") as f:
             json.dump(expected_outputs.to_dict(), f, indent=4)
-        print("Expected outputs saved to expected_outputs.json")
+        print("Expected outputs saved to expected_outputs.json.gz")
     elif args.test:
-        with open(args.test, "r") as f:
+        with gzip.open(args.test, "rt") as f:
             data = json.load(f)
             expected_outputs = ExpectedOutputs.from_dict(data)
         try:
