@@ -495,6 +495,82 @@ for x in parse_makefile_lines(_utils.pair_suffix_lines(makefile_string.split("\n
 ```
 
 ```python
+makefile_string = """
+ssymm_LU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -UCOMPLEX -ULOWER -URSIDE -DNN $< -o $(@F)
+
+ssymm_LL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -UCOMPLEX -DLOWER -URSIDE -DNN $< -o $(@F)
+
+ssymm_RU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -UCOMPLEX -ULOWER -DRSIDE -DNN $< -o $(@F)
+
+ssymm_RL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -UCOMPLEX -DLOWER -DRSIDE -DNN $< -o $(@F)
+
+dsymm_LU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -UCOMPLEX -ULOWER -URSIDE -DNN $< -o $(@F)
+
+dsymm_LL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -UCOMPLEX -DLOWER -URSIDE -DNN $< -o $(@F)
+
+dsymm_RU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -UCOMPLEX -ULOWER -DRSIDE -DNN $< -o $(@F)
+
+dsymm_RL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -UCOMPLEX -DLOWER -DRSIDE -DNN $< -o $(@F)
+
+qsymm_LU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -UCOMPLEX -ULOWER -URSIDE -DNN $< -o $(@F)
+
+qsymm_LL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -UCOMPLEX -DLOWER -URSIDE -DNN $< -o $(@F)
+
+qsymm_RU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -UCOMPLEX -ULOWER -DRSIDE -DNN $< -o $(@F)
+
+qsymm_RL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -UCOMPLEX -DLOWER -DRSIDE -DNN $< -o $(@F)
+
+csymm_LU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -DCOMPLEX -ULOWER -URSIDE -DNN $< -o $(@F)
+
+csymm_LL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -DCOMPLEX -DLOWER -URSIDE -DNN $< -o $(@F)
+
+csymm_RU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -DCOMPLEX -ULOWER -DRSIDE -DNN $< -o $(@F)
+
+csymm_RL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -UDOUBLE -DCOMPLEX -DLOWER -DRSIDE -DNN $< -o $(@F)
+
+zsymm_LU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -DCOMPLEX -ULOWER -URSIDE -DNN $< -o $(@F)
+
+zsymm_LL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -DCOMPLEX -DLOWER -URSIDE -DNN $< -o $(@F)
+
+zsymm_RU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -DCOMPLEX -ULOWER -DRSIDE -DNN $< -o $(@F)
+
+zsymm_RL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DDOUBLE -DCOMPLEX -DLOWER -DRSIDE -DNN $< -o $(@F)
+
+xsymm_LU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -DCOMPLEX -ULOWER -URSIDE -DNN $< -o $(@F)
+
+xsymm_LL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -DCOMPLEX -DLOWER -URSIDE -DNN $< -o $(@F)
+
+xsymm_RU.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -DCOMPLEX -ULOWER -DRSIDE -DNN $< -o $(@F)
+
+xsymm_RL.$(SUFFIX) : symm_k.c level3.c ../../param.h
+	$(CC) -c $(CFLAGS) -DXDOUBLE -DCOMPLEX -DLOWER -DRSIDE -DNN $< -o $(@F)
+"""
+```
+
+```python
 
 def parse_makefile_lines(lines: List[str]) -> List[Dict[str, Any]]:
     ext_mappings_l3 = []
@@ -537,6 +613,10 @@ def parse_makefile_lines(lines: List[str]) -> List[Dict[str, Any]]:
 
 for x in parse_makefile_lines(_utils.pair_suffix_lines(makefile_string.split("\n"))):
     print(f'{x},')
+```
+
+```python
+list(_utils.pair_suffix_lines(makefile_string.split("\n")))
 ```
 
 ```python

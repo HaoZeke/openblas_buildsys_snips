@@ -227,6 +227,37 @@
 <li><p>The OpenBLAS tests</p></li>
 <li><p>Integration tests through NumPy</p></li>
 </ul>
+<section id="openblas-tests">
+<h2>OpenBLAS tests<a class="headerlink" href="#openblas-tests" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cblas</span></code> tests are of primary interest. So:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>meson<span class="w"> </span>setup<span class="w"> </span>bbdir<span class="w"> </span>--prefix<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/local
+meson<span class="w"> </span>install<span class="w"> </span>-C<span class="w"> </span>bbdir
+</pre></div>
+</div>
+<p>Coupled with a simple patch for the <code class="docutils literal notranslate"><span class="pre">ctest/Makefile</span></code>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gh">diff --git i/ctest/Makefile w/ctest/Makefile</span>
+<span class="gh">index 6c7cc1ed5..1e58e49af 100644</span>
+<span class="gd">--- i/ctest/Makefile</span>
+<span class="gi">+++ w/ctest/Makefile</span>
+<span class="gu">@@ -30,7 +30,7 @@ endif</span>
+<span class="w"> </span>override TARGET_ARCH=
+<span class="w"> </span>override TARGET_MACH=
+<span class="w"> </span>
+<span class="gd">-LIB = $(TOPDIR)/$(LIBNAME)</span>
+<span class="gi">+LIB = $(TOPDIR)/local/lib/libopenblas.a</span>
+<span class="w"> </span>
+<span class="w"> </span>stestl1o = c_sblas1.o
+</pre></div>
+</div>
+<p>Which lets us run the tests via <code class="docutils literal notranslate"><span class="pre">make</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ctest
+make<span class="w"> </span>clean
+make
+</pre></div>
+</div>
+<p>In the early stages, this should bring up a bunch of undefined reference to
+symbols, all of which need to be fixed before moving on.</p>
+</section>
 <section id="numpy-and-openblas">
 <h2>NumPy and OpenBLAS<a class="headerlink" href="#numpy-and-openblas" title="Link to this heading">#</a></h2>
 <p>To check what is already present, <code class="docutils literal notranslate"><span class="pre">numpy.show_config()</span></code> can be used <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
@@ -462,6 +493,7 @@ with <code class="docutils literal notranslate"><span class="pre">meson</span></
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Testing OpenBLAS</a><ul>
+<li><a class="reference internal" href="#openblas-tests">OpenBLAS tests</a></li>
 <li><a class="reference internal" href="#numpy-and-openblas">NumPy and OpenBLAS</a><ul>
 <li><a class="reference internal" href="#relevant-build-flags">Relevant build flags</a></li>
 </ul>
