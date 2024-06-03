@@ -227,6 +227,41 @@ subproject is to ease its integration with NumPy it makes sense to cover some of
 the mechanics of NumPy and BLAS calls.</p>
 <p>Before starting with this, it is instructive to recall that NumPy only uses a
 <a class="reference external" href="https://mail.python.org/archives/list/numpy-discussion&#64;python.org/thread/PYB2JQH7GCCH5EIBNZFUXITH4LL5U72B/#YFKHWGXE3AWY3TLIUBJU5E33TZ34JD5S">subset of LAPACK/BLAS</a> in the first place.</p>
+<p>These are basically <code class="docutils literal notranslate"><span class="pre">f2c</span></code>’d versions of LAPACK, so they’re not exactly LAPACKE.</p>
+<p>Essentially, only 48 symbols defining 16 operations are necessary:</p>
+<ul class="simple">
+<li><p>{c,d,s,z}copy</p></li>
+</ul>
+<ul class="simple">
+<li><p>Copies a vector</p></li>
+<li><p>BLAS L1</p></li>
+</ul>
+<ul class="simple">
+<li><p>{c,d,s,z}geev</p></li>
+</ul>
+<ul class="simple">
+<li><p>Compute eigenvalues, optionally right and/or left eigenvectors</p></li>
+<li><p>(ge)neral matrix (ev) –&gt; eigenvalues</p></li>
+<li><p>LAPACK</p></li>
+</ul>
+<ul class="simple">
+<li><p>{c,d,s,z}gelsd</p></li>
+<li><p>{c,d,s,z}gemm</p></li>
+<li><p>{c,d,s,z}gesdd</p></li>
+<li><p>{c,d,s,z}gesv</p></li>
+<li><p>{c,d,s,z}getrf</p></li>
+<li><p>{c,v}heevd</p></li>
+<li><p>{c,d,s,z}potrf</p></li>
+<li><p>{c,d,s,z}potri</p></li>
+<li><p>{c,d,s,z}potrs</p></li>
+<li><p>{d,z}geqrf</p></li>
+<li><p>{d}orgqr</p></li>
+<li><p>{d,s}syevd</p></li>
+<li><p>{z}ungqr</p></li>
+<li><p>{d}cabs1</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">cblas</span></code> wrappers also dispatch into <code class="docutils literal notranslate"><span class="pre">syrk</span></code> or <code class="docutils literal notranslate"><span class="pre">gemm</span></code> so it makes sense to look
+into them a bit more.</p>
 <section id="dot-products">
 <h2>Dot products<a class="headerlink" href="#dot-products" title="Link to this heading">#</a></h2>
 <p>Probably the easiest entry-point is the <code class="docutils literal notranslate"><span class="pre">PyArray_MatrixProduct</span></code>, which in turn
