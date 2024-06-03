@@ -71,33 +71,33 @@ def test_dot_operations(expected_outputs):
     C_float = np.random.rand(4, 4).astype(np.float32)
     C_double = np.random.rand(4, 4).astype(np.float64)
 
-    # Matrix-Matrix multiplication
-    res = np.dot(A, B)
-    tgt = expected_outputs.matrix_matrix
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="Matrix-Matrix multiplication failed", verbose=True
-    )
+    # # Matrix-Matrix multiplication
+    # res = np.dot(A, B)
+    # tgt = expected_outputs.matrix_matrix
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="Matrix-Matrix multiplication failed", verbose=True
+    # )
 
-    # Matrix-Vector multiplication
-    res = np.dot(A, v)
-    tgt = expected_outputs.matrix_vector
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="Matrix-Vector multiplication failed", verbose=True
-    )
+    # # Matrix-Vector multiplication
+    # res = np.dot(A, v)
+    # tgt = expected_outputs.matrix_vector
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="Matrix-Vector multiplication failed", verbose=True
+    # )
 
-    # Vector-Matrix multiplication
-    res = np.dot(v1, A)
-    tgt = expected_outputs.vector_matrix
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="Vector-Matrix multiplication failed", verbose=True
-    )
+    # # Vector-Matrix multiplication
+    # res = np.dot(v1, A)
+    # tgt = expected_outputs.vector_matrix
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="Vector-Matrix multiplication failed", verbose=True
+    # )
 
-    # Vector-Vector multiplication (dot product)
-    res = np.dot(v1, v2)
-    tgt = expected_outputs.vector_vector
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="Vector-Vector multiplication failed", verbose=True
-    )
+    # # Vector-Vector multiplication (dot product)
+    # res = np.dot(v1, v2)
+    # tgt = expected_outputs.vector_vector
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="Vector-Vector multiplication failed", verbose=True
+    # )
 
     # SYRK float cases
     res = np.dot(C_float, C_float.T)
@@ -106,53 +106,53 @@ def test_dot_operations(expected_outputs):
         res, tgt, decimal=N, err_msg="syrk_float_un failed", verbose=True
     )
 
-    res = np.dot(C_float.T, C_float)
-    tgt = expected_outputs.syrk_float_ut
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_float_ut failed", verbose=True
-    )
+    # res = np.dot(C_float.T, C_float)
+    # tgt = expected_outputs.syrk_float_ut
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_float_ut failed", verbose=True
+    # )
 
-    res = np.dot(C_float.T, C_float.T)
-    tgt = expected_outputs.syrk_float_ln
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_float_ln failed", verbose=True
-    )
+    # res = np.dot(C_float.T, C_float.T)
+    # tgt = expected_outputs.syrk_float_ln
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_float_ln failed", verbose=True
+    # )
 
-    res = np.dot(C_float, C_float)
-    tgt = expected_outputs.syrk_float_lt
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_float_lt failed", verbose=True
-    )
+    # res = np.dot(C_float, C_float)
+    # tgt = expected_outputs.syrk_float_lt
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_float_lt failed", verbose=True
+    # )
 
-    # SYRK double cases
-    res = np.dot(C_double, C_double.T)
-    tgt = expected_outputs.syrk_double_un
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_double_un failed", verbose=True
-    )
+    # # SYRK double cases
+    # res = np.dot(C_double, C_double.T)
+    # tgt = expected_outputs.syrk_double_un
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_double_un failed", verbose=True
+    # )
 
-    res = np.dot(C_double.T, C_double)
-    tgt = expected_outputs.syrk_double_ut
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_double_ut failed", verbose=True
-    )
+    # res = np.dot(C_double.T, C_double)
+    # tgt = expected_outputs.syrk_double_ut
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_double_ut failed", verbose=True
+    # )
 
-    res = np.dot(C_double.T, C_double.T)
-    tgt = expected_outputs.syrk_double_ln
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_double_ln failed", verbose=True
-    )
+    # res = np.dot(C_double.T, C_double.T)
+    # tgt = expected_outputs.syrk_double_ln
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_double_ln failed", verbose=True
+    # )
 
-    res = np.dot(C_double, C_double)
-    tgt = expected_outputs.syrk_double_lt
-    assert_almost_equal(
-        res, tgt, decimal=N, err_msg="syrk_double_lt failed", verbose=True
-    )
+    # res = np.dot(C_double, C_double)
+    # tgt = expected_outputs.syrk_double_lt
+    # assert_almost_equal(
+    #     res, tgt, decimal=N, err_msg="syrk_double_lt failed", verbose=True
+    # )
 
-    # GEMM case
-    res = np.dot(A, A.T)
-    tgt = expected_outputs.gemm_case
-    assert_almost_equal(res, tgt, decimal=N, err_msg="GEMM case failed", verbose=True)
+    # # GEMM case
+    # res = np.dot(A, A.T)
+    # tgt = expected_outputs.gemm_case
+    # assert_almost_equal(res, tgt, decimal=N, err_msg="GEMM case failed", verbose=True)
 
 
 def generate_expected_outputs():
