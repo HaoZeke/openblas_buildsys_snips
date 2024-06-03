@@ -5,6 +5,43 @@ To test the OpenBLAS build, we will focus on
 - The OpenBLAS tests
 - Integration tests through NumPy
 
+## OpenBLAS tests
+
+The `cblas` tests are of primary interest. So:
+
+```bash
+meson setup bbdir --prefix $(pwd)/local
+meson install -C bbdir
+```
+
+Coupled with a simple patch for the `ctest/Makefile`:
+
+```diff
+diff --git i/ctest/Makefile w/ctest/Makefile
+index 6c7cc1ed5..1e58e49af 100644
+--- i/ctest/Makefile
++++ w/ctest/Makefile
+@@ -30,7 +30,7 @@ endif
+ override TARGET_ARCH=
+ override TARGET_MACH=
+ 
+-LIB = $(TOPDIR)/$(LIBNAME)
++LIB = $(TOPDIR)/local/lib/libopenblas.a
+ 
+ stestl1o = c_sblas1.o
+```
+
+Which lets us run the tests via `make`:
+
+```bash
+cd ctest
+make clean
+make
+```
+
+In the early stages, this should bring up a bunch of undefined reference to
+symbols, all of which need to be fixed before moving on.
+
 ## NumPy and OpenBLAS
 
 To check what is already present, `numpy.show_config()` can be used [^1]:
