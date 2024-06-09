@@ -1,8 +1,10 @@
 * ~perf~ listing
 
-It is pretty painful to guess what is being called, and stepping through via ~gdb~ is a bit timestaking. The simplest approach is to use ~perf~.
+It is pretty painful to guess what is being called, and stepping through via
+~gdb~ is a bit timestaking. The simplest approach is to use ~perf~.
 
-To ensure the calls are traced, we will need to [[https://stackoverflow.com/a/74474213/1895378][temporarily disable]] some of kernel restrictions.
+To ensure the calls are traced, we will need to [[https://stackoverflow.com/a/74474213/1895378][temporarily disable]] some of
+kernel restrictions.
 
 #+begin_src bash
 sudo sh -c 'echo 0 >/proc/sys/kernel/kptr_restrict'
@@ -12,17 +14,12 @@ sudo sh -c 'echo 0 >/proc/sys/kernel/yama/ptrace_scope'
 
 Which we can then use with the standard [[https://docs.python.org/3/howto/perf_profiling.html][CPython instructions]].
 
-#+begin_src bash
-perf record -F 9999 -g -o perf.data \
-    python -c "import numpy as np; np.random.seed(128); C_float = np.random.rand(4,4).astype(np.float32); np.dot(C_float, C_float.T)"
-perf report --stdio -n -g > callgraph
-cat callgraph | grep syrk
-#+end_src
-
 ** ~make~ output
 
 For ~make~ (or system ~numpy~) the output should be something like:
 #+begin_src bash
+➜ perf record -F 9999 -g -o perf.data \
+    python -c "import numpy as np; np.random.seed(128); C_float = np.random.rand(4,4).astype(np.float32); np.dot(C_float, C_float.T)"
 ➜ perf report -n -g | grep openblas | sed 's/---//'
 
      2.93%     0.00%             0  python   libopenblas.so.0.3    [.] gotoblas_init

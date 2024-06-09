@@ -35,6 +35,9 @@ spin build --clean \
 
 Where we need ~noblas~ to be allowed since LAPACK won't be found otherwise.
 
+Additionally, remember to set ~LD_LIBRARY_PATH~ to prevent inadvertently picking
+up system ~openblas~.
+
 ** ~make~ variant
 The working ~make~ variant is basically built with:
 
@@ -44,6 +47,7 @@ make PREFIX=$(pwd)/tmpmake install
 make clean # to remove .o files
 #+end_src
 
+With the following ~openblas.pc~ file:
 
 #+begin_src conf
 Name: openblas
@@ -56,7 +60,15 @@ Cflags: -I${includedir}/
 Libs: -L${libdir} -lopenblas
 #+end_src
 
+While running anything within ~spin run $SHELL~ we need to first setup the dynamic loading location:
+
+#+begin_src bash
+export LD_LIBRARY_PATH="${OBPATH}/tmpmake/lib"
+#+end_src
+
 ** ~meson~ variant
+
+
 
 #+begin_src conf
 Name: openblas
