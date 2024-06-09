@@ -28,5 +28,9 @@ pandoc --reference-links -f gfm $MDFILE -t gfm
 
 These should also always be formatted using ~prettier~, for which a style file
 is present in ~$GITROOT~.
+*** Generate ~org~ to ~md~
+#+begin_src bash
+emacs --script ./scripts/clean_and_convert.el
+#+end_src
 * License
 MIT.
