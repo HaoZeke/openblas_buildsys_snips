@@ -1,5 +1,20 @@
 ;; Emacs script to clean and convert all Org mode files in docs/source to Markdown without generating TOC
 
+(defun ensure-package-installed (&rest packages)
+  "Ensure PACKAGES are installed. If not, install them."
+  (mapcar
+   (lambda (package)
+     (unless (package-installed-p package)
+       (package-refresh-contents)
+       (package-install package)))
+   packages))
+
+;; Initialize package system and ensure org is installed
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+(ensure-package-installed 'org)
+
 (defun my-org-md-export-to-markdown-no-toc ()
   "Export the current Org buffer to a Markdown file without a TOC."
   (let ((org-export-with-toc nil))
