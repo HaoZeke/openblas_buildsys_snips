@@ -1,0 +1,68 @@
+
+# `printf` debugging
+
+Not the most elegant, but certainly the fastest, the easiest approach is to
+figure out what code path and function call is expected.
+
+Here's a simple example, focusing on `syrk`, which of course applies to updates of the form:
+
+For the `make` build:
+
+    python optest.py --test expected_outputs.json.gz
+    TRANS: DEFINED
+    syrk_beta called with parameters:
+    m_from: 0, m_to: 4, n_from: 0, n_to: 4
+    alpha: 0.000000
+    ldc: 4
+    COMPLEX: NOT DEFINED
+    LOWER: DEFINED
+    After adjusting:
+    m_to: 4, n_to: 4
+    Iteration 0: Entering SCAL_K with MIN(4, 4)
+    Updated c pointer
+    Iteration 1: Entering SCAL_K with MIN(3, 4)
+    Updated c pointer
+    Iteration 2: Entering SCAL_K with MIN(2, 4)
+    Updated c pointer
+    Iteration 3: Entering SCAL_K with MIN(1, 4)
+    Updated c pointer
+    All tests passed.
+
+For the `meson` build we might get an error, perhaps:
+
+    python optest.py --test expected_outputs.json.gz
+    TRANS: DEFINED
+    syrk_beta called with parameters:
+    m_from: 0, m_to: 4, n_from: 0, n_to: 4
+    alpha: 0.000000
+    ldc: 4
+    COMPLEX: NOT DEFINED
+    LOWER: DEFINED
+    After adjusting:
+    m_to: 4, n_to: 4
+    Iteration 0: Entering SCAL_K with MIN(4, 4)
+    Updated c pointer
+    Iteration 1: Entering SCAL_K with MIN(3, 4)
+    Updated c pointer
+    Iteration 2: Entering SCAL_K with MIN(2, 4)
+    Updated c pointer
+    Iteration 3: Entering SCAL_K with MIN(1, 4)
+    Updated c pointer
+    Test failed:
+    Arrays are not almost equal to 7 decimals
+    syrk_float_lt failed
+    Mismatched elements: 16 / 16 (100%)
+    Max absolute difference among violations: 0.66221637
+    Max relative difference among violations: 1.47376618
+     ACTUAL: array([[1.6686409, 0.9301083, 1.3368366, 0.6689696],
+           [0.9301083, 1.029747 , 1.6231705, 0.7711107],
+           [1.3368366, 1.6231705, 1.8134217, 1.1115525],
+           [0.6689696, 0.7711107, 1.1115525, 0.5235946]], dtype=float32)
+     DESIRED: array([[1.7940524, 1.4645438, 1.3868896, 0.6206155],
+           [1.4645438, 1.591244 , 1.6009721, 0.3527319],
+           [1.3868896, 1.6009721, 1.7777048, 0.4493361],
+           [0.6206155, 0.3527319, 0.4493361, 0.4791749]])
+
+Which is not super helpful here, given that the `printf` statements show no
+differences other than the actual test failure.
+

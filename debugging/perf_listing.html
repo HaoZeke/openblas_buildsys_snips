@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="printf debugging" href="printf_debugging.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>Interface - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>perf listing - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_contributors.css?v=f079e67e" />
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -158,7 +158,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.cmake.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.cmake</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -186,11 +186,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../nb/kernel_blas.html">BLAS Kernels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addl_design_issues.html">Additional Design Issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../debugging/index.html">Debugging</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Debugging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/baseline_setup.html">Baseline setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/path_tracing.html">Tracing function calls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/perf_listing.html"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Debugging</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Debugging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="baseline_setup.html">Baseline setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path_tracing.html">Tracing function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
 </ul>
 </li>
 </ul>
@@ -221,23 +221,89 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="interface">
-<h1>Interface<a class="headerlink" href="#interface" title="Link to this heading">#</a></h1>
-<p>This is where the high level wrappers to the kernel functions are implemented.
-This is a unifying layer with very little in the way of numerical
-implementation.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cblas_</span></code> wrappers are not generated for symbols which use <code class="docutils literal notranslate"><span class="pre">q</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span></code>, i.e.
-which define <code class="docutils literal notranslate"><span class="pre">XDOUBLE</span></code>, a.k.a <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p></li>
-<li><p>Some of the <code class="docutils literal notranslate"><span class="pre">BLAS</span> <span class="pre">Extensions</span></code> in the Makefile are not defined within the
-<code class="docutils literal notranslate"><span class="pre">interface</span></code> folder (as of <a class="reference external" href="https://github.com/HaoZeke/OpenBLAS/commit/a107c63894475bcbaf31de46537eb088e2ad547d">this commit</a>)</p></li>
-</ul>
+          <section id="perf-listing">
+<h1><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing<a class="headerlink" href="#perf-listing" title="Link to this heading">#</a></h1>
+<p>It is pretty painful to guess what is being called, and stepping through via
+<code class="docutils literal notranslate"><span class="pre">gdb</span></code> is a bit timestaking. The simplest approach is to use <code class="docutils literal notranslate"><span class="pre">perf</span></code>.</p>
+<p>To ensure the calls are traced, we will need to <a class="reference external" href="https://stackoverflow.com/a/74474213/1895378">temporarily disable</a> some of
+kernel restrictions.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo sh -c &#39;echo 0 &gt;/proc/sys/kernel/kptr_restrict&#39;
+sudo sh -c &#39;echo 0 &gt;/proc/sys/kernel/perf_event_paranoid&#39;
+sudo sh -c &#39;echo 0 &gt;/proc/sys/kernel/yama/ptrace_scope&#39;
+</pre></div>
+</div>
+<p>Which we can then use with the standard <a class="reference external" href="https://docs.python.org/3/howto/perf_profiling.html">CPython instructions</a>.</p>
+<section id="make-output">
+<h2><code class="docutils literal notranslate"><span class="pre">make</span></code> output<a class="headerlink" href="#make-output" title="Link to this heading">#</a></h2>
+<p>For <code class="docutils literal notranslate"><span class="pre">make</span></code> (or system <code class="docutils literal notranslate"><span class="pre">numpy</span></code>) the output should be something like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>➜ perf record -F 9999 -g -o perf.data \
+    python -c &quot;import numpy as np; np.random.seed(128); C_float = np.random.rand(4,4).astype(np.float32); np.dot(C_float, C_float.T)&quot;
+➜ perf report -n -g | grep openblas | sed &#39;s/---//&#39;
+
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] gotoblas_init
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] blas_thread_init
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] 0x000071c858f34167
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] blas_memory_alloc
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] 0x000071c858f320f7
+     0.53%     0.00%             0  python   libopenblas.so.0.3                                 [.] ssyrk_LT
+     0.35%     0.00%             0  python   libopenblas.so.0.3                                 [.] cblas_ssyrk
+     0.35%     0.00%             0  python   libopenblas.so.0.3                                 [.] sgemm_incopy_HASWELL
+</pre></div>
+</div>
+<p>Where the columns are basically:</p>
+<ol class="arabic simple">
+<li><p>the overall percentage of samples,</p></li>
+<li><p>the time taken within each function not including child calls,</p></li>
+<li><p>the number of samples collected directly,</p></li>
+<li><p>the executable,</p></li>
+<li><p>the library or location of the definition, and,</p></li>
+<li><p>finally the symbol iteself, with the spaces showing where in the call stack it is supposed to be.</p></li>
+</ol>
+<p>Perhaps more illuminating are the calls to OpenBLAS itself, while also filtering
+out the noise to leave only the overall percentage and the symbol itself:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>➜ perf report --stdio -n -g | grep openblas | awk &#39;{printf &quot;%-10s %s\n&quot;, $1, $7}&#39;
+2.93%      gotoblas_init
+2.93%      blas_thread_init
+2.93%      0x000071c858f34167
+2.93%      blas_memory_alloc
+2.93%      0x000071c858f320f7
+0.53%      ssyrk_LT
+0.35%      cblas_ssyrk
+0.35%      sgemm_incopy_HASWELL
+</pre></div>
+</div>
+<p>This makes it pretty easy to figure out what is called and when:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>➜ perf record -F 9999 -g -o perf.data python -c &quot;import numpy as np; np.random.seed(128); C_float = np.random.rand(4,4).astype(np.float32); np.dot(C_float, C_float)&quot;
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.132 MB perf.data (714 samples) ]
+</pre></div>
+</div>
+<p>Which will then correspond to <code class="docutils literal notranslate"><span class="pre">sgemm_nn</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>➜ perf report --stdio -n -g | grep openblas | awk &#39;{printf &quot;%-10s %s\n&quot;, $1, $7}&#39;
+0.38%      cblas_sgemm
+0.38%      sgemm_nn
+0.38%      sgemm_itcopy_HASWELL
+0.19%      gotoblas_init
+0.19%      blas_thread_init
+0.19%      0x000072c4f4134167
+0.19%      blas_memory_alloc
+0.19%      gotoblas_quit
+0.19%      blas_shutdown
+</pre></div>
+</div>
+<div class="note">
+Remember to wipe the older `perf.data` and `perf.data.old` files between new
+calls to `record`, i.e. one call to `record` can be coupled with any number of
+`report` calls, but wipe the files between changes to the functions being
+called.
+</div>
+</section>
 </section>
 
         </article>
@@ -246,7 +312,17 @@ which define <code class="docutils literal notranslate"><span class="pre">XDOUBL
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="printf_debugging.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -265,8 +341,27 @@ which define <code class="docutils literal notranslate"><span class="pre">XDOUBL
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a><ul>
+<li><a class="reference internal" href="#make-output"><code class="docutils literal notranslate"><span class="pre">make</span></code> output</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

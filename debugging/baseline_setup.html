@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Tracing function calls" href="path_tracing.html" /><link rel="prev" title="Debugging" href="index.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>Interface - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>Baseline setup - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_contributors.css?v=f079e67e" />
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -158,7 +158,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.cmake.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.cmake</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -186,11 +186,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../nb/kernel_blas.html">BLAS Kernels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addl_design_issues.html">Additional Design Issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../debugging/index.html">Debugging</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Debugging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/baseline_setup.html">Baseline setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/path_tracing.html">Tracing function calls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/perf_listing.html"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Debugging</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Debugging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Baseline setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path_tracing.html">Tracing function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_listing.html"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
 </ul>
 </li>
 </ul>
@@ -221,23 +221,83 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="interface">
-<h1>Interface<a class="headerlink" href="#interface" title="Link to this heading">#</a></h1>
-<p>This is where the high level wrappers to the kernel functions are implemented.
-This is a unifying layer with very little in the way of numerical
-implementation.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cblas_</span></code> wrappers are not generated for symbols which use <code class="docutils literal notranslate"><span class="pre">q</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span></code>, i.e.
-which define <code class="docutils literal notranslate"><span class="pre">XDOUBLE</span></code>, a.k.a <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p></li>
-<li><p>Some of the <code class="docutils literal notranslate"><span class="pre">BLAS</span> <span class="pre">Extensions</span></code> in the Makefile are not defined within the
-<code class="docutils literal notranslate"><span class="pre">interface</span></code> folder (as of <a class="reference external" href="https://github.com/HaoZeke/OpenBLAS/commit/a107c63894475bcbaf31de46537eb088e2ad547d">this commit</a>)</p></li>
-</ul>
+          <section id="baseline-setup">
+<h1>Baseline setup<a class="headerlink" href="#baseline-setup" title="Link to this heading">#</a></h1>
+<p>Lets start with the basics.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd &quot;$NUMPY_DIR&quot;
+micromamba create -f environment.yml
+micromamba activate numpy-dev
+micromamba remove openblas scipy numpy
+micromamba install pyyaml # prettier show_config()
+</pre></div>
+</div>
+<p>Now we can setup the OpenBLAS unencumbered by the tainetd <code class="docutils literal notranslate"><span class="pre">conda</span></code> variant.</p>
+<div class="note">
+Replace "$OBPATH" with the actual path to the OpenBLAS source.
+</div>
+<section id="numpy-setup">
+<h2>NumPy setup<a class="headerlink" href="#numpy-setup" title="Link to this heading">#</a></h2>
+<p>Having setup the <code class="docutils literal notranslate"><span class="pre">.pc</span></code> file with any of those above..
+Which works with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CFLAGS=&quot;-O0 -g -ggdb3&quot; \
+CXXFLAGS=&quot;-O0 -g -ggdb3&quot; \
+spin build --clean \
+-- -Dblas=&quot;openblas&quot; \
+-Dblas-order=openblas,mkl,blis \
+-Dlapack-order=openblas,mkl,lapack \
+-Dallow-noblas=true \
+-Dpkg_config_path=&quot;${OBPATH}&quot; \
+-Dbuildtype=debug \
+-Ddisable-optimization=true
+</pre></div>
+</div>
+<p>Where we need <code class="docutils literal notranslate"><span class="pre">noblas</span></code> to be allowed since LAPACK won’t be found otherwise.</p>
+<p>Additionally, remember to set <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> to prevent inadvertently picking
+up system <code class="docutils literal notranslate"><span class="pre">openblas</span></code>.</p>
+</section>
+<section id="make-variant">
+<h2><code class="docutils literal notranslate"><span class="pre">make</span></code> variant<a class="headerlink" href="#make-variant" title="Link to this heading">#</a></h2>
+<p>The working <code class="docutils literal notranslate"><span class="pre">make</span></code> variant is basically built with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make -j$(nproc)
+make PREFIX=$(pwd)/tmpmake install
+make clean # to remove .o files
+</pre></div>
+</div>
+<p>With the following <code class="docutils literal notranslate"><span class="pre">openblas.pc</span></code> file:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Name: openblas
+Description: OpenBLAS make
+Version: 0.3.26.dev_make
+prefix=${OBPATH}/tmpmake
+includedir=${prefix}/include
+libdir=${prefix}/lib
+Cflags: -I${includedir}/
+Libs: -L${libdir} -lopenblas
+</pre></div>
+</div>
+<p>While running anything within <code class="docutils literal notranslate"><span class="pre">spin</span> <span class="pre">run</span> <span class="pre">$SHELL</span></code> we need to first setup the dynamic loading location:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LD_LIBRARY_PATH=&quot;${OBPATH}/tmpmake/lib&quot;
+</pre></div>
+</div>
+</section>
+<section id="meson-variant">
+<h2><code class="docutils literal notranslate"><span class="pre">meson</span></code> variant<a class="headerlink" href="#meson-variant" title="Link to this heading">#</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Name: openblas
+Description: OpenBLAS meson
+Version: 0.3.26.dev_meson
+prefix=${OBPATH}
+includedir=${prefix}/tmpmake/include
+libdir=${prefix}/local/lib
+Cflags: -I${includedir}/
+Libs: -L${libdir} -lopenblas
+</pre></div>
+</div>
+</section>
 </section>
 
         </article>
@@ -245,8 +305,26 @@ which define <code class="docutils literal notranslate"><span class="pre">XDOUBL
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="path_tracing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Tracing function calls</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Debugging</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -265,8 +343,29 @@ which define <code class="docutils literal notranslate"><span class="pre">XDOUBL
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Baseline setup</a><ul>
+<li><a class="reference internal" href="#numpy-setup">NumPy setup</a></li>
+<li><a class="reference internal" href="#make-variant"><code class="docutils literal notranslate"><span class="pre">make</span></code> variant</a></li>
+<li><a class="reference internal" href="#meson-variant"><code class="docutils literal notranslate"><span class="pre">meson</span></code> variant</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

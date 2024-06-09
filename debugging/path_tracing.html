@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="printf debugging" href="printf_debugging.html" /><link rel="prev" title="Baseline setup" href="baseline_setup.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>Interface - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>Tracing function calls - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_contributors.css?v=f079e67e" />
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -158,7 +158,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/openblas_buildsys_snips/openblas_buildsys_snips.cmake.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.cmake</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -186,11 +186,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../nb/kernel_blas.html">BLAS Kernels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addl_resources.html">Additional Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addl_design_issues.html">Additional Design Issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../debugging/index.html">Debugging</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Debugging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/baseline_setup.html">Baseline setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/path_tracing.html">Tracing function calls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../debugging/perf_listing.html"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Debugging</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Debugging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="baseline_setup.html">Baseline setup</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Tracing function calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_listing.html"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
 </ul>
 </li>
 </ul>
@@ -221,23 +221,70 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="interface">
-<h1>Interface<a class="headerlink" href="#interface" title="Link to this heading">#</a></h1>
-<p>This is where the high level wrappers to the kernel functions are implemented.
-This is a unifying layer with very little in the way of numerical
-implementation.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cblas_</span></code> wrappers are not generated for symbols which use <code class="docutils literal notranslate"><span class="pre">q</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span></code>, i.e.
-which define <code class="docutils literal notranslate"><span class="pre">XDOUBLE</span></code>, a.k.a <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>.</p></li>
-<li><p>Some of the <code class="docutils literal notranslate"><span class="pre">BLAS</span> <span class="pre">Extensions</span></code> in the Makefile are not defined within the
-<code class="docutils literal notranslate"><span class="pre">interface</span></code> folder (as of <a class="reference external" href="https://github.com/HaoZeke/OpenBLAS/commit/a107c63894475bcbaf31de46537eb088e2ad547d">this commit</a>)</p></li>
-</ul>
+          <section id="tracing-function-calls">
+<h1>Tracing function calls<a class="headerlink" href="#tracing-function-calls" title="Link to this heading">#</a></h1>
+<p>Quick refresher, generally the entry point for matrix products is going
+to be <code class="docutils literal notranslate"><span class="pre">PyArray_MatrixProduct2</span></code> which in turn (for everything we care
+about) will call <code class="docutils literal notranslate"><span class="pre">cblas_matrixproduct</span></code> and dispatch from there on out.</p>
+<p>Also, since we are not really interested in debugging the CPython extension
+itself (some <a class="reference external" href="https://willayd.com/fundamental-python-debugging-part-2-python-extensions.html">notes here</a>), just the <code class="docutils literal notranslate"><span class="pre">cblas_</span></code> calls, we will not require a debug
+variant of Python.</p>
+<section id="gdb-stepthrough">
+<h2>GDB Stepthrough<a class="headerlink" href="#gdb-stepthrough" title="Link to this heading">#</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gdb --args python optest.py --test expected_outputs.json.gz
+</pre></div>
+</div>
+<p>Where we are focusing on the <code class="docutils literal notranslate"><span class="pre">syrk</span></code> test within <code class="docutils literal notranslate"><span class="pre">optest</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>np.random.seed(128)
+N = 7
+C_float = np.random.rand(4, 4).astype(np.float32)
+
+res = np.dot(C_float, C_float.T)
+tgt = expected_outputs.syrk_float_un
+assert_almost_equal(
+    res, tgt, decimal=N, err_msg=&quot;syrk_float_un failed&quot;, verbose=True
+)
+</pre></div>
+</div>
+<p>From here we will start with a few breakpoints.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>b cblas_matrixproduct
+tui enable
+run
+</pre></div>
+</div>
+<p>It is easier to see where we are with the TUI enabled.</p>
+<p><img alt="img" src="../_images/2024-06-09_13-39-19_screenshot.png" /></p>
+<p>Now we want to focus on the <code class="docutils literal notranslate"><span class="pre">syrk</span></code> call so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>b syrk
+continue
+# After another hit for cblas_matrixproduct it will reach the syrk breakpoint then
+next
+</pre></div>
+</div>
+<p><img alt="img" src="../_images/2024-06-09_13-48-44_screenshot.png" /></p>
+<p>So far so good, now we will step through (<code class="docutils literal notranslate"><span class="pre">next</span></code> and then enter to repeat the
+previous command) a bit to get to the actual call, which should be the <code class="docutils literal notranslate"><span class="pre">NPY_FLOAT</span></code> case since we have defined the <code class="docutils literal notranslate"><span class="pre">dtype</span></code>.</p>
+<p><img alt="img" src="../_images/2024-06-09_13-43-00_screenshot.png" /></p>
+<p>We need to step into this call, however it is a macro so <code class="docutils literal notranslate"><span class="pre">s</span></code> doesn’t do what we
+want (it will skip to the for loop). The macro itself is defined in <code class="docutils literal notranslate"><span class="pre">npy_cblas.h</span></code> to be:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define BLAS_FUNC_CONCAT(name,prefix,suffix,suffix2) prefix ## name ## suffix ## suffix2
+#define BLAS_FUNC_EXPAND(name,prefix,suffix,suffix2) BLAS_FUNC_CONCAT(name,prefix,suffix,suffix2)
+#define BLAS_FUNC(name) BLAS_FUNC_EXPAND(name,BLAS_SYMBOL_PREFIX,BLAS_SYMBOL_SUFFIX,BLAS_FORTRAN_SUFFIX)
+#define CBLAS_FUNC(name) BLAS_FUNC_EXPAND(name,BLAS_SYMBOL_PREFIX,,BLAS_SYMBOL_SUFFIX)
+</pre></div>
+</div>
+<p>Where some comments and the <code class="docutils literal notranslate"><span class="pre">ILP64</span></code> naming branch is omitted. Since we’re in the
+business of compiling everything by hand right now, we probably already have
+macro information for <code class="docutils literal notranslate"><span class="pre">gdb</span></code> since we set <code class="docutils literal notranslate"><span class="pre">-ggdb3</span></code> in <code class="docutils literal notranslate"><span class="pre">CFLAGS</span></code> (if not, recompile
+with it).</p>
+<p>What we need is to set a breakpoint on the underlying call… Which we can tell is going to be..</p>
+</section>
 </section>
 
         </article>
@@ -245,8 +292,26 @@ which define <code class="docutils literal notranslate"><span class="pre">XDOUBL
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="printf_debugging.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="baseline_setup.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Baseline setup</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -265,8 +330,27 @@ which define <code class="docutils literal notranslate"><span class="pre">XDOUBL
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Tracing function calls</a><ul>
+<li><a class="reference internal" href="#gdb-stepthrough">GDB Stepthrough</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
