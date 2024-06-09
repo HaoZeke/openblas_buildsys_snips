@@ -1,0 +1,9 @@
+* ~printf~ debugging
+
+Not the most elegant, but certainly the fastest, the easiest approach is to
+figure out what code path and function call is expected.
+
+Here's a simple example, focusing on ~syrk~, which of course applies to updates of the form:
+
+#+begin_export latex
+#+end_export

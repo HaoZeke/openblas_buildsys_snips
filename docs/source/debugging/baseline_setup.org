@@ -1,0 +1,70 @@
+* Baseline setup
+
+Lets start with the basics.
+
+#+begin_src bash
+cd "$NUMPY_DIR"
+micromamba create -f environment.yml
+micromamba activate numpy-dev
+micromamba remove openblas scipy numpy
+micromamba install pyyaml # prettier show_config()
+#+end_src
+
+Now we can setup the OpenBLAS unencumbered by the tainetd ~conda~ variant.
+
+#+begin_note
+Replace "$OBPATH" with the actual path to the OpenBLAS source.
+#+end_note
+
+** NumPy setup
+
+Having setup the ~.pc~ file with any of those above..
+Which works with:
+#+begin_src bash
+CFLAGS="-O0 -g -ggdb3" \
+CXXFLAGS="-O0 -g -ggdb3" \
+spin build --clean \
+-- -Dblas="openblas" \
+-Dblas-order=openblas,mkl,blis \
+-Dlapack-order=openblas,mkl,lapack \
+-Dallow-noblas=true \
+-Dpkg_config_path="${OBPATH}" \
+-Dbuildtype=debug \
+-Ddisable-optimization=true
+#+end_src
+
+Where we need ~noblas~ to be allowed since LAPACK won't be found otherwise.
+
+** ~make~ variant
+The working ~make~ variant is basically built with:
+
+#+begin_src bash
+make -j$(nproc)
+make PREFIX=$(pwd)/tmpmake install
+make clean # to remove .o files
+#+end_src
+
+
+#+begin_src conf
+Name: openblas
+Description: OpenBLAS make
+Version: 0.3.26.dev_make
+prefix=${OBPATH}/tmpmake
+includedir=${prefix}/include
+libdir=${prefix}/lib
+Cflags: -I${includedir}/
+Libs: -L${libdir} -lopenblas
+#+end_src
+
+** ~meson~ variant
+
+#+begin_src conf
+Name: openblas
+Description: OpenBLAS meson
+Version: 0.3.26.dev_meson
+prefix=${OBPATH}
+includedir=${prefix}/tmpmake/include
+libdir=${prefix}/local/lib
+Cflags: -I${includedir}/
+Libs: -L${libdir} -lopenblas
+#+end_src

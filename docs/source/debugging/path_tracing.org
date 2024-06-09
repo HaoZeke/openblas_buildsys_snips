@@ -1,0 +1,81 @@
+* Tracing function calls
+:PROPERTIES:
+:CUSTOM_ID: tracing-function-calls
+:END:
+Quick refresher, generally the entry point for matrix products is going
+to be ~PyArray_MatrixProduct2~ which in turn (for everything we care
+about) will call ~cblas_matrixproduct~ and dispatch from there on out.
+
+** GDB Stepthrough
+:PROPERTIES:
+:CUSTOM_ID: gdb-stepthrough
+:END:
+#+begin_src sh
+gdb --args python optest.py --test expected_outputs.json.gz
+#+end_src
+
+Where we are focusing on the ~syrk~ test within ~optest~:
+
+#+begin_src python
+np.random.seed(128)
+N = 7
+C_float = np.random.rand(4, 4).astype(np.float32)
+
+res = np.dot(C_float, C_float.T)
+tgt = expected_outputs.syrk_float_un
+assert_almost_equal(
+    res, tgt, decimal=N, err_msg="syrk_float_un failed", verbose=True
+)
+#+end_src
+
+From here we will start with a few breakpoints.
+
+#+begin_example
+b cblas_matrixproduct
+tui enable
+run
+#+end_example
+
+It is easier to see where we are with the TUI enabled.
+
+#+DOWNLOADED: screenshot @ 2024-06-09 13:39:19
+[[file:images/GDB_Stepthrough/2024-06-09_13-39-19_screenshot.png]]
+
+Now we want to focus on the ~syrk~ call so:
+
+#+begin_src bash
+b syrk
+continue
+# After another hit for cblas_matrixproduct it will reach the syrk breakpoint then
+next
+#+end_src
+
+
+#+DOWNLOADED: screenshot @ 2024-06-09 13:48:44
+[[file:images/GDB_Stepthrough/2024-06-09_13-48-44_screenshot.png]]
+
+
+
+So far so good, now we will step through (~next~ and then enter to repeat the
+previous command) a bit to get to the actual call, which should be the ~NPY_FLOAT~ case since we have defined the ~dtype~.
+
+
+#+DOWNLOADED: screenshot @ 2024-06-09 13:43:00
+[[file:images/GDB_Stepthrough/2024-06-09_13-43-00_screenshot.png]]
+
+We need to step into this call, however it is a macro so ~s~ doesn't do what we
+want (it will skip to the for loop). The macro itself is defined in ~npy_cblas.h~ to be:
+
+#+begin_src c
+#define BLAS_FUNC_CONCAT(name,prefix,suffix,suffix2) prefix ## name ## suffix ## suffix2
+#define BLAS_FUNC_EXPAND(name,prefix,suffix,suffix2) BLAS_FUNC_CONCAT(name,prefix,suffix,suffix2)
+#define BLAS_FUNC(name) BLAS_FUNC_EXPAND(name,BLAS_SYMBOL_PREFIX,BLAS_SYMBOL_SUFFIX,BLAS_FORTRAN_SUFFIX)
+#define CBLAS_FUNC(name) BLAS_FUNC_EXPAND(name,BLAS_SYMBOL_PREFIX,,BLAS_SYMBOL_SUFFIX)
+#+end_src
+
+Where some comments and the ~ILP64~ naming branch is omitted. Since we're in the
+business of compiling everything by hand right now, we probably already have
+macro information for ~gdb~ since we set ~-ggdb3~ in ~CFLAGS~ (if not, recompile
+with it).
+
+What we need is to set a breakpoint on the underlying call... Which we can tell is going to be..

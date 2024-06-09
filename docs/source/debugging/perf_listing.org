@@ -1,0 +1,88 @@
+* ~perf~ listing
+
+It is pretty painful to guess what is being called, and stepping through via ~gdb~ is a bit timestaking. The simplest approach is to use ~perf~.
+
+To ensure the calls are traced, we will need to [[https://stackoverflow.com/a/74474213/1895378][temporarily disable]] some of kernel restrictions.
+
+#+begin_src bash
+sudo sh -c 'echo 0 >/proc/sys/kernel/kptr_restrict'
+sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
+sudo sh -c 'echo 0 >/proc/sys/kernel/yama/ptrace_scope'
+#+end_src
+
+Which we can then use with the standard [[https://docs.python.org/3/howto/perf_profiling.html][CPython instructions]].
+
+#+begin_src bash
+perf record -F 9999 -g -o perf.data \
+    python -c "import numpy as np; np.random.seed(128); C_float = np.random.rand(4,4).astype(np.float32); np.dot(C_float, C_float.T)"
+perf report --stdio -n -g > callgraph
+cat callgraph | grep syrk
+#+end_src
+
+** ~make~ output
+
+For ~make~ (or system ~numpy~) the output should be something like:
+#+begin_src bash
+➜ perf report -n -g | grep openblas | sed 's/---//'
+
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] gotoblas_init
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] blas_thread_init
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] 0x000071c858f34167
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] blas_memory_alloc
+     2.93%     0.00%             0  python   libopenblas.so.0.3    [.] 0x000071c858f320f7
+     0.53%     0.00%             0  python   libopenblas.so.0.3                                 [.] ssyrk_LT
+     0.35%     0.00%             0  python   libopenblas.so.0.3                                 [.] cblas_ssyrk
+     0.35%     0.00%             0  python   libopenblas.so.0.3                                 [.] sgemm_incopy_HASWELL
+#+end_src
+
+Where the columns are basically:
+1. the overall percentage of samples,
+2. the time taken within each function not including child calls,
+3. the number of samples collected directly,
+4. the executable,
+5. the library or location of the definition, and,
+6. finally the symbol iteself, with the spaces showing where in the call stack it is supposed to be.
+
+Perhaps more illuminating are the calls to OpenBLAS itself, while also filtering
+out the noise to leave only the overall percentage and the symbol itself:
+#+begin_src bash
+➜ perf report --stdio -n -g | grep openblas | awk '{printf "%-10s %s\n", $1, $7}'
+2.93%      gotoblas_init
+2.93%      blas_thread_init
+2.93%      0x000071c858f34167
+2.93%      blas_memory_alloc
+2.93%      0x000071c858f320f7
+0.53%      ssyrk_LT
+0.35%      cblas_ssyrk
+0.35%      sgemm_incopy_HASWELL
+#+end_src
+
+This makes it pretty easy to figure out what is called and when:
+
+#+begin_src bash
+➜ perf record -F 9999 -g -o perf.data python -c "import numpy as np; np.random.seed(128); C_float = np.random.rand(4,4).astype(np.float32); np.dot(C_float, C_float)"
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.132 MB perf.data (714 samples) ]
+#+end_src
+
+Which will then correspond to ~sgemm_nn~:
+
+#+begin_src bash
+➜ perf report --stdio -n -g | grep openblas | awk '{printf "%-10s %s\n", $1, $7}'
+0.38%      cblas_sgemm
+0.38%      sgemm_nn
+0.38%      sgemm_itcopy_HASWELL
+0.19%      gotoblas_init
+0.19%      blas_thread_init
+0.19%      0x000072c4f4134167
+0.19%      blas_memory_alloc
+0.19%      gotoblas_quit
+0.19%      blas_shutdown
+#+end_src
+
+#+begin_note
+Remember to wipe the older ~perf.data~ and ~perf.data.old~ files between new
+calls to ~record~, i.e. one call to ~record~ can be coupled with any number of
+~report~ calls, but wipe the files between changes to the functions being
+called.
+#+end_note
