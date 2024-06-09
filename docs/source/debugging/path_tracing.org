@@ -6,6 +6,10 @@ Quick refresher, generally the entry point for matrix products is going
 to be ~PyArray_MatrixProduct2~ which in turn (for everything we care
 about) will call ~cblas_matrixproduct~ and dispatch from there on out.
 
+Also, since we are not really interested in debugging the CPython extension
+itself (some [[https://willayd.com/fundamental-python-debugging-part-2-python-extensions.html][notes here]]), just the ~cblas_~ calls, we will not require a debug
+variant of Python.
+
 ** GDB Stepthrough
 :PROPERTIES:
 :CUSTOM_ID: gdb-stepthrough
