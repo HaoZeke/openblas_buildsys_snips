@@ -1,0 +1,18 @@
+* Debugging
+
+We will focus on tracing and debugging calls from NumPy, though much of this
+section is also applicable to simpler C or Fortran tests.
+
+#+begin_export markdown
+```{toctree}
+:maxdepth: 1
+:name: debugging
+:caption: Contents
+:titlesonly: True
+
+baseline_setup
+path_tracing
+printf_debugging
+perf_listing
+```
+#+end_export
