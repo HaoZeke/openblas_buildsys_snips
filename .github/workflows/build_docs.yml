@@ -14,8 +14,14 @@ jobs:
         with:
           python-version: 3.12
           cache: true
+      - name: Install system packages
+        run: |
+          sudo apt-get install -y emacs pandoc
       - name: Install dependencies
         run: pdm install -dG docs
+      - name: Generate markdown from orgmode
+        run: |
+          emacs --script scripts/clean_and_convert.el
       - name: Generate documentation
         run: pdm run mkdoc
       - name: Deploy documentation
