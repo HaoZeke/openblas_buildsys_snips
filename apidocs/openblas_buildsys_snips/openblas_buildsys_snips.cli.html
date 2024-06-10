@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips.make.blas_kernel" href="openblas_buildsys_snips.make.blas_kernel.html" /><link rel="prev" title="openblas_buildsys_snips.make.log_parser" href="openblas_buildsys_snips.make.log_parser.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips._data" href="openblas_buildsys_snips._data.html" /><link rel="prev" title="openblas_buildsys_snips._utils" href="openblas_buildsys_snips._utils.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>openblas_buildsys_snips.make.interface - openblas_buildsys_snips 0.1.0 documentation</title>
+        <title>openblas_buildsys_snips.cli - openblas_buildsys_snips 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -165,14 +165,14 @@
 <li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.cmake.netlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake.netlib</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.log_parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.blas_kernel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cli</span></code></a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cli</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._data.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._data</span></code></a></li>
 </ul>
 </li>
@@ -223,14 +223,37 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="module-openblas_buildsys_snips.make.interface">
-<span id="openblas-buildsys-snips-make-interface"></span><h1><a class="reference internal" href="#module-openblas_buildsys_snips.make.interface" title="openblas_buildsys_snips.make.interface"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a><a class="headerlink" href="#module-openblas_buildsys_snips.make.interface" title="Link to this heading">#</a></h1>
+          <section id="module-openblas_buildsys_snips.cli">
+<span id="openblas-buildsys-snips-cli"></span><h1><a class="reference internal" href="#module-openblas_buildsys_snips.cli" title="openblas_buildsys_snips.cli"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cli</span></code></a><a class="headerlink" href="#module-openblas_buildsys_snips.cli" title="Link to this heading">#</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#openblas_buildsys_snips.cli.main" title="openblas_buildsys_snips.cli.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="openblas_buildsys_snips.cli.main">
+<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#openblas_buildsys_snips.cli.main" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
 </section>
 
         </article>
@@ -238,23 +261,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="openblas_buildsys_snips.make.blas_kernel.html">
+          <a class="next-page" href="openblas_buildsys_snips._data.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._data</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="openblas_buildsys_snips.make.log_parser.html">
+          <a class="prev-page" href="openblas_buildsys_snips._utils.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></div>
                 
               </div>
             </a>
@@ -276,8 +299,34 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cli</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#api">API</a><ul>
+<li><a class="reference internal" href="#openblas_buildsys_snips.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

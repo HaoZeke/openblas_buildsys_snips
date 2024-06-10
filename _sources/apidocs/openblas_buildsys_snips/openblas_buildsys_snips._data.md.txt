@@ -1,0 +1,145 @@
+# {py:mod}`openblas_buildsys_snips._data`
+
+```{py:module} openblas_buildsys_snips._data
+```
+
+```{autodoc2-docstring} openblas_buildsys_snips._data
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`MatrixOperationTest <openblas_buildsys_snips._data.MatrixOperationTest>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`run_test <openblas_buildsys_snips._data.run_test>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips._data.run_test
+    :summary:
+    ```
+* - {py:obj}`generate_tests <openblas_buildsys_snips._data.generate_tests>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips._data.generate_tests
+    :summary:
+    ```
+* - {py:obj}`save_tests <openblas_buildsys_snips._data.save_tests>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips._data.save_tests
+    :summary:
+    ```
+* - {py:obj}`load_tests <openblas_buildsys_snips._data.load_tests>`
+  - ```{autodoc2-docstring} openblas_buildsys_snips._data.load_tests
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} MatrixOperationTest
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest
+```
+
+````{py:attribute} label
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest.label
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest.label
+```
+
+````
+
+````{py:attribute} inputs
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest.inputs
+:type: typing.List[numpy.ndarray]
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest.inputs
+```
+
+````
+
+````{py:attribute} expression
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest.expression
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest.expression
+```
+
+````
+
+````{py:attribute} expected_output
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest.expected_output
+:type: numpy.ndarray
+:value: >
+   None
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest.expected_output
+```
+
+````
+
+````{py:method} to_dict()
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest.to_dict
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest.to_dict
+```
+
+````
+
+````{py:method} from_dict(data)
+:canonical: openblas_buildsys_snips._data.MatrixOperationTest.from_dict
+:staticmethod:
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.MatrixOperationTest.from_dict
+```
+
+````
+
+`````
+
+````{py:function} run_test(test: openblas_buildsys_snips._data.MatrixOperationTest)
+:canonical: openblas_buildsys_snips._data.run_test
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.run_test
+```
+````
+
+````{py:function} generate_tests() -> typing.List[openblas_buildsys_snips._data.MatrixOperationTest]
+:canonical: openblas_buildsys_snips._data.generate_tests
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.generate_tests
+```
+````
+
+````{py:function} save_tests(tests: typing.List[openblas_buildsys_snips._data.MatrixOperationTest], filename: str)
+:canonical: openblas_buildsys_snips._data.save_tests
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.save_tests
+```
+````
+
+````{py:function} load_tests(filename: str) -> typing.List[openblas_buildsys_snips._data.MatrixOperationTest]
+:canonical: openblas_buildsys_snips._data.load_tests
+
+```{autodoc2-docstring} openblas_buildsys_snips._data.load_tests
+```
+````

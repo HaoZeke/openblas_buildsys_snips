@@ -24,6 +24,8 @@ openblas_buildsys_snips.make
 :maxdepth: 1
 
 openblas_buildsys_snips._utils
+openblas_buildsys_snips.cli
+openblas_buildsys_snips._data
 ```
 
 ## Package Contents
