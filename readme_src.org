@@ -12,6 +12,21 @@ While the library can be installed via ~pip~ and then used in scripts, that
 would be rather odd at this point in its developement. The idea is to mostly
 generate snippets and copy them into ~meson.build~ files by hand for now, later
 these can form the basis of a templated system for automating updates further.
+
+** Test generation
+#+begin_src bash
+pip install -e .
+# For the generation
+pip install numpy
+python -m openblas_buildsys_snips.cli --generate
+# Running
+pip uninstall numpy
+# Get it via the spin run $SHELL
+# Run all
+python -m openblas_buildsys_snips.cli --test all --filename tests.json.gz
+# Run one
+python -m openblas_buildsys_snips.cli --test ssyrk_lt --filename tests.json.gz
+#+end_src
 ** Documentation
 *** Readme
 The ~readme~ can be constructed via:
