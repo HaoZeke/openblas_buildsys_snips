@@ -13,8 +13,8 @@
 :titlesonly:
 :maxdepth: 3
 
-openblas_buildsys_snips.cmake
 openblas_buildsys_snips.make
+openblas_buildsys_snips.cmake
 ```
 
 ## Submodules
@@ -23,8 +23,8 @@ openblas_buildsys_snips.make
 :titlesonly:
 :maxdepth: 1
 
-openblas_buildsys_snips._utils
 openblas_buildsys_snips.cli
+openblas_buildsys_snips._utils
 openblas_buildsys_snips._data
 ```
 
