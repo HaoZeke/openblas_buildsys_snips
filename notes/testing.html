@@ -335,7 +335,28 @@ fully wiped between runs<a class="footnote-reference brackets" href="#id6" id="i
 </pre></div>
 </div>
 <p>Which can be coupled with the debug build:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g&quot;</span><span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g&quot;</span><span class="w"> </span>spin<span class="w"> </span>build<span class="w"> </span>--clean<span class="w"> </span>--<span class="w"> </span>-Dblas<span class="o">=</span><span class="s2">&quot;openblas&quot;</span><span class="w"> </span>-Dblas-order<span class="o">=</span>openblas,mkl,blis<span class="w"> </span>-Dlapack-order<span class="o">=</span>openblas,mkl,lapack<span class="w"> </span>-Dallow-noblas<span class="o">=</span><span class="nb">false</span><span class="w"> </span>-Dpkg_config_path<span class="o">=</span><span class="s2">&quot;/</span><span class="nv">$HOME</span><span class="s2">/Git/OpenBLAS&quot;</span><span class="w"> </span>-Dbuildtype<span class="o">=</span>debug<span class="w"> </span>-Ddisable-optimization<span class="o">=</span><span class="nb">true</span><span class="w"> </span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make build</span>
+<span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g -ggdb3&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g -ggdb3&quot;</span><span class="w"> </span><span class="se">\</span>
+spin<span class="w"> </span>build<span class="w"> </span>--clean<span class="w"> </span><span class="se">\</span>
+--<span class="w"> </span>-Dblas<span class="o">=</span><span class="s2">&quot;openblas&quot;</span><span class="w"> </span><span class="se">\</span>
+-Dblas-order<span class="o">=</span>openblas,mkl,blis<span class="w"> </span><span class="se">\</span>
+-Dlapack-order<span class="o">=</span>openblas,mkl,lapack<span class="w"> </span><span class="se">\</span>
+-Dallow-noblas<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+-Dpkg_config_path<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/OpenBLAS/tmpmake/lib/pkgconfig&quot;</span><span class="w"> </span><span class="se">\</span>
+-Dbuildtype<span class="o">=</span>debug<span class="w"> </span><span class="se">\</span>
+-Ddisable-optimization<span class="o">=</span><span class="nb">true</span>
+<span class="c1"># meson build</span>
+<span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g -ggdb3&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-O0 -g -ggdb3&quot;</span><span class="w"> </span><span class="se">\</span>
+spin<span class="w"> </span>build<span class="w"> </span>--clean<span class="w"> </span><span class="se">\</span>
+--<span class="w"> </span>-Dblas<span class="o">=</span><span class="s2">&quot;openblas&quot;</span><span class="w"> </span><span class="se">\</span>
+-Dblas-order<span class="o">=</span>openblas,mkl,blis<span class="w"> </span><span class="se">\</span>
+-Dlapack-order<span class="o">=</span>openblas,mkl,lapack<span class="w"> </span><span class="se">\</span>
+-Dallow-noblas<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+-Dpkg_config_path<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/OpenBLAS&quot;</span><span class="w"> </span><span class="se">\</span>
+-Dbuildtype<span class="o">=</span>debug<span class="w"> </span><span class="se">\</span>
+-Ddisable-optimization<span class="o">=</span><span class="nb">true</span><span class="w"> </span>
 </pre></div>
 </div>
 <p>The relevant breakpoint should be <code class="docutils literal notranslate"><span class="pre">cblas_matrixproduct</span></code> which should be called

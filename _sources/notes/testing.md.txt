@@ -117,7 +117,28 @@ spin test -t numpy -m full -- -vvvvvv -k "dotmatmat"
 Which can be coupled with the debug build:
 
 ```bash
-CFLAGS="-O0 -g" CXXFLAGS="-O0 -g" spin build --clean -- -Dblas="openblas" -Dblas-order=openblas,mkl,blis -Dlapack-order=openblas,mkl,lapack -Dallow-noblas=false -Dpkg_config_path="/$HOME/Git/OpenBLAS" -Dbuildtype=debug -Ddisable-optimization=true 
+# Make build
+CFLAGS="-O0 -g -ggdb3" \
+CXXFLAGS="-O0 -g -ggdb3" \
+spin build --clean \
+-- -Dblas="openblas" \
+-Dblas-order=openblas,mkl,blis \
+-Dlapack-order=openblas,mkl,lapack \
+-Dallow-noblas=true \
+-Dpkg_config_path="$HOME/OpenBLAS/tmpmake/lib/pkgconfig" \
+-Dbuildtype=debug \
+-Ddisable-optimization=true
+# meson build
+CFLAGS="-O0 -g -ggdb3" \
+CXXFLAGS="-O0 -g -ggdb3" \
+spin build --clean \
+-- -Dblas="openblas" \
+-Dblas-order=openblas,mkl,blis \
+-Dlapack-order=openblas,mkl,lapack \
+-Dallow-noblas=true \
+-Dpkg_config_path="$HOME/OpenBLAS" \
+-Dbuildtype=debug \
+-Ddisable-optimization=true 
 ```
 
 The relevant breakpoint should be `cblas_matrixproduct` which should be called
