@@ -1,0 +1,1 @@
+(np.float32(0.0831561), 0, array([1.+0.j], dtype=complex64), array([4.613082+0.j], dtype=complex64))
