@@ -106,11 +106,11 @@ def test_dot_operations(expected_outputs):
         res, tgt, decimal=N, err_msg="syrk_float_un failed", verbose=True
     )
 
-    # res = np.dot(C_float.T, C_float)
-    # tgt = expected_outputs.syrk_float_ut
-    # assert_almost_equal(
-    #     res, tgt, decimal=N, err_msg="syrk_float_ut failed", verbose=True
-    # )
+    res = np.dot(C_float.T, C_float)
+    tgt = expected_outputs.syrk_float_ut
+    assert_almost_equal(
+        res, tgt, decimal=N, err_msg="syrk_float_ut failed", verbose=True
+    )
 
     res = np.dot(C_float.T, C_float.T)
     tgt = expected_outputs.syrk_float_ln
