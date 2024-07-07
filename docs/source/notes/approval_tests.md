@@ -12,3 +12,9 @@ pytest -vvv  --approvaltests-use-reporter='PythonNativeReporter'
 # Or check results with meld
 pytest -vvv  --approvaltests-add-reporter='meld' 
 ```
+
+Often it is simpler to move everything together.
+
+```{code-block} bash
+for file in ${GITROOT}/tests/approved_files/*.received.txt; do mv "$file" "${file/received.txt/approved.txt}"; done
+```
