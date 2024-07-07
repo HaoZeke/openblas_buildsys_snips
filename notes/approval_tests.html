@@ -242,6 +242,10 @@ pytest<span class="w"> </span>-vvv<span class="w">  </span>--approvaltests-use-r
 pytest<span class="w"> </span>-vvv<span class="w">  </span>--approvaltests-add-reporter<span class="o">=</span><span class="s1">&#39;meld&#39;</span><span class="w"> </span>
 </pre></div>
 </div>
+<p>Often it is simpler to move everything together.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">GITROOT</span><span class="si">}</span>/tests/approved_files/*.received.txt<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>mv<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">file</span><span class="p">/received.txt/approved.txt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</pre></div>
+</div>
 </section>
 </section>
 
