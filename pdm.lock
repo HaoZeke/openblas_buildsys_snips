@@ -4,8 +4,8 @@
 [metadata]
 groups = ["default", "testing", "docs", "lint"]
 strategy = ["cross_platform", "inherit_metadata"]
-lock_version = "4.4.1"
-content_hash = "sha256:99cb4f06994ade522f92d70a0f6f021b22a66d534ea6e5c9b69f61d54e88225a"
+lock_version = "4.4.2"
+content_hash = "sha256:adfeab4c424cbba49b75f28da79c6a36163e3705c627d8149fc0408d37506748"
 
 [[package]]
 name = "alabaster"
@@ -16,6 +16,51 @@ groups = ["docs"]
 files = [
     {file = "alabaster-0.7.16-py3-none-any.whl", hash = "sha256:b46733c07dce03ae4e150330b975c75737fa60f0a7c591b6c8bf4928a28e2c92"},
     {file = "alabaster-0.7.16.tar.gz", hash = "sha256:75a8b99c28a5dad50dd7f8ccdd447a121ddb3892da9e53d1ca5cca3106d58d65"},
+]
+
+[[package]]
+name = "allpairspy"
+version = "2.5.1"
+requires_python = ">=3.7"
+summary = "Pairwise test combinations generator"
+groups = ["testing"]
+files = [
+    {file = "allpairspy-2.5.1-py3-none-any.whl", hash = "sha256:3f97cbac2bbee86f4bfceffd0fd91dca740a120c78e9368af2bad81a2b3426e2"},
+    {file = "allpairspy-2.5.1.tar.gz", hash = "sha256:f69d31a3b56eee119d1ec6063e9c732dd44fbba352ef738cb22d9699fc4009fe"},
+]
+
+[[package]]
+name = "approval-utilities"
+version = "12.2.1"
+requires_python = ">=3.8"
+summary = "Utilities for your production code that work well with approvaltests"
+groups = ["testing"]
+files = [
+    {file = "approval_utilities-12.2.1-py3-none-any.whl", hash = "sha256:9543f98a978f70e9250aae2373df420178375bc4735f3bb92e747eda12e846c4"},
+    {file = "approval_utilities-12.2.1.tar.gz", hash = "sha256:b69772f813f892cee0cf8652df8e0f24faa2adbf5ce493c1adbccafe2464650b"},
+]
+
+[[package]]
+name = "approvaltests"
+version = "12.2.1"
+requires_python = ">=3.8"
+summary = "Assertion/verification library to aid testing"
+groups = ["testing"]
+dependencies = [
+    "allpairspy>=2.1.0",
+    "approval-utilities==12.2.1",
+    "beautifulsoup4>=4.4.0",
+    "empty-files>=0.0.3",
+    "mock>=5.1.0",
+    "mrjob>=0.7.4",
+    "pyperclip>=1.5.29",
+    "pytest>=4.0.0",
+    "testfixtures>=7.1.0",
+    "typing-extensions>=3.6.2",
+]
+files = [
+    {file = "approvaltests-12.2.1-py3-none-any.whl", hash = "sha256:a284561de839daff34ed329a42e26f118bd3441991eaf5786fff4c350a9f1558"},
+    {file = "approvaltests-12.2.1.tar.gz", hash = "sha256:3648a7cec689fbd59bb290ad6a963498ecc8fe02f33de7435aae4b537cac5c98"},
 ]
 
 [[package]]
@@ -48,7 +93,7 @@ name = "beautifulsoup4"
 version = "4.12.3"
 requires_python = ">=3.6.0"
 summary = "Screen-scraping library"
-groups = ["docs"]
+groups = ["docs", "testing"]
 dependencies = [
     "soupsieve>1.2",
 ]
@@ -62,7 +107,7 @@ name = "certifi"
 version = "2024.2.2"
 requires_python = ">=3.6"
 summary = "Python package for providing Mozilla's CA Bundle."
-groups = ["docs"]
+groups = ["docs", "testing"]
 files = [
     {file = "certifi-2024.2.2-py3-none-any.whl", hash = "sha256:dc383c07b76109f368f6106eee2b593b04a011ea4d55f652c6ca24a754d1cdd1"},
     {file = "certifi-2024.2.2.tar.gz", hash = "sha256:0569859f95fc761b18b45ef421b1290a0f65f147e92a1e5eb3e635f9a5e4e66f"},
@@ -73,7 +118,7 @@ name = "charset-normalizer"
 version = "3.3.2"
 requires_python = ">=3.7.0"
 summary = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
-groups = ["docs"]
+groups = ["docs", "testing"]
 files = [
     {file = "charset-normalizer-3.3.2.tar.gz", hash = "sha256:f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"},
     {file = "charset_normalizer-3.3.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:0b2b64d2bb6d3fb9112bafa732def486049e63de9618b5843bcdd081d8144cd8"},
@@ -164,6 +209,20 @@ files = [
 ]
 
 [[package]]
+name = "empty-files"
+version = "0.0.9"
+requires_python = ">=3.7.1"
+summary = "Serves empty files of many types"
+groups = ["testing"]
+dependencies = [
+    "requests",
+]
+files = [
+    {file = "empty-files-0.0.9.tar.gz", hash = "sha256:22e74de327271ef9592a661aaa53bb1d5fa6cfd539dac7315625c8b30b7292ae"},
+    {file = "empty_files-0.0.9-py3-none-any.whl", hash = "sha256:9af04feacd5858d1255a00e76926a2d760f6d05c3c5a8df58abd6be21da742c2"},
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.1"
 requires_python = ">=3.7"
@@ -197,7 +256,7 @@ name = "idna"
 version = "3.6"
 requires_python = ">=3.5"
 summary = "Internationalized Domain Names in Applications (IDNA)"
-groups = ["docs"]
+groups = ["docs", "testing"]
 files = [
     {file = "idna-3.6-py3-none-any.whl", hash = "sha256:c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f"},
     {file = "idna-3.6.tar.gz", hash = "sha256:9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca"},
@@ -379,6 +438,30 @@ files = [
 ]
 
 [[package]]
+name = "mock"
+version = "5.1.0"
+requires_python = ">=3.6"
+summary = "Rolling backport of unittest.mock for all Pythons"
+groups = ["testing"]
+files = [
+    {file = "mock-5.1.0-py3-none-any.whl", hash = "sha256:18c694e5ae8a208cdb3d2c20a993ca1a7b0efa258c247a1e565150f477f83744"},
+    {file = "mock-5.1.0.tar.gz", hash = "sha256:5e96aad5ccda4718e0a229ed94b2024df75cc2d55575ba5762d31f5767b8767d"},
+]
+
+[[package]]
+name = "mrjob"
+version = "0.7.4"
+summary = "Python MapReduce framework"
+groups = ["testing"]
+dependencies = [
+    "PyYAML>=3.10",
+]
+files = [
+    {file = "mrjob-0.7.4-py2.py3-none-any.whl", hash = "sha256:d8fa1bafcada0ffe3e7166896a27e996815e2cb835088aec025e3dd12c7146ce"},
+    {file = "mrjob-0.7.4.tar.gz", hash = "sha256:2c8d8dc8aa4b354a97de18d0260f551f018693af74af104b3d41daf165eebdd4"},
+]
+
+[[package]]
 name = "myst-parser"
 version = "2.0.0"
 requires_python = ">=3.8"
@@ -454,6 +537,15 @@ files = [
 ]
 
 [[package]]
+name = "pyperclip"
+version = "1.9.0"
+summary = "A cross-platform clipboard module for Python. (Only handles plain text for now.)"
+groups = ["testing"]
+files = [
+    {file = "pyperclip-1.9.0.tar.gz", hash = "sha256:b7de0142ddc81bfc5c7507eea19da920b92252b548b96186caf94a5e2527d310"},
+]
+
+[[package]]
 name = "pytest"
 version = "8.1.1"
 requires_python = ">=3.8"
@@ -521,7 +613,7 @@ name = "pyyaml"
 version = "6.0.1"
 requires_python = ">=3.6"
 summary = "YAML parser and emitter for Python"
-groups = ["docs"]
+groups = ["docs", "testing"]
 files = [
     {file = "PyYAML-6.0.1-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:855fb52b0dc35af121542a76b9a84f8d1cd886ea97c84703eaa6d88e37a2ad28"},
     {file = "PyYAML-6.0.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:40df9b996c2b73138957fe23a16a4f0ba614f4c0efce1e9406a184b6d07fa3a9"},
@@ -538,7 +630,7 @@ name = "requests"
 version = "2.31.0"
 requires_python = ">=3.7"
 summary = "Python HTTP for Humans."
-groups = ["docs"]
+groups = ["docs", "testing"]
 dependencies = [
     "certifi>=2017.4.17",
     "charset-normalizer<4,>=2",
@@ -617,7 +709,7 @@ name = "soupsieve"
 version = "2.5"
 requires_python = ">=3.8"
 summary = "A modern CSS selector implementation for Beautiful Soup."
-groups = ["docs"]
+groups = ["docs", "testing"]
 files = [
     {file = "soupsieve-2.5-py3-none-any.whl", hash = "sha256:eaa337ff55a1579b6549dc679565eac1e3d000563bcb1c8ab0d0fefbc0c2cdc7"},
     {file = "soupsieve-2.5.tar.gz", hash = "sha256:5663d5a7b3bfaeee0bc4372e7fc48f9cff4940b3eec54a6451cc5299f1097690"},
@@ -822,6 +914,17 @@ files = [
 ]
 
 [[package]]
+name = "testfixtures"
+version = "8.3.0"
+requires_python = ">=3.7"
+summary = "A collection of helpers and mock objects for unit tests and doc tests."
+groups = ["testing"]
+files = [
+    {file = "testfixtures-8.3.0-py3-none-any.whl", hash = "sha256:3d1e0e0005c4d6ac2a2ab27916704c6471047f0d2f78f2e54adf20abdacc7b10"},
+    {file = "testfixtures-8.3.0.tar.gz", hash = "sha256:d4c0b84af2f267610f908009b50d6f983a4e58ade22c67bab6787b5a402d59c0"},
+]
+
+[[package]]
 name = "textual"
 version = "0.58.0"
 requires_python = "<4.0,>=3.8"
@@ -875,7 +978,7 @@ name = "typing-extensions"
 version = "4.10.0"
 requires_python = ">=3.8"
 summary = "Backported and Experimental Type Hints for Python 3.8+"
-groups = ["default", "docs"]
+groups = ["default", "docs", "testing"]
 files = [
     {file = "typing_extensions-4.10.0-py3-none-any.whl", hash = "sha256:69b1a937c3a517342112fb4c6df7e72fc39a38e7891a5730ed4985b5214b5475"},
     {file = "typing_extensions-4.10.0.tar.gz", hash = "sha256:b0abd7c89e8fb96f98db18d86106ff1d90ab692004eb746cf6eda2682f91b3cb"},
@@ -897,7 +1000,7 @@ name = "urllib3"
 version = "2.2.1"
 requires_python = ">=3.8"
 summary = "HTTP library with thread-safe connection pooling, file post, and more."
-groups = ["docs"]
+groups = ["docs", "testing"]
 files = [
     {file = "urllib3-2.2.1-py3-none-any.whl", hash = "sha256:450b20ec296a467077128bff42b73080516e71b56ff59a60a02bef2232c4fa9d"},
     {file = "urllib3-2.2.1.tar.gz", hash = "sha256:d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19"},
