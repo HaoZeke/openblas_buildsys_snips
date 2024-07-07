@@ -1,0 +1,66 @@
+* ~pyspy~ tracing
+
+Similar to ~perf~ usage, but with more context on the Python side, the sampling
+profiler ~py-spy~ ([[https://github.com/benfred/py-spy][Git Repo]]) supports tracing native extension calls.
+
+However, as a sampling profiler a lag is needed.
+
+Consider:
+
+#+begin_src python
+import numpy as np
+import time
+np.random.seed(128)
+C_float = np.random.rand(4,4).astype(np.float32)
+np.dot(C_float, C_float.T)
+#+end_src
+
+This will not generate any samples in the region of interest, since it is over
+too quickly. Adding ~time.sleep(0.01)~ will allow for some samples, which is
+good enough.
+
+#+begin_src bash
+py-spy record --native -o profile.svg python tinytest.py
+#+end_src
+
+
+However, only the SVG format actually generates the trace needed, which can be
+interactively viewed. The view itself is nice and clear on what gets called
+when, so that's nice.
+
+#+DOWNLOADED: screenshot @ 2024-06-20 17:14:58
+[[file:images/~pyspy~_tracing/2024-06-20_17-14-58_screenshot.png]]
+
+
+It is easier to visually diff two builds:
+
+#+begin_src bash
+py-spy record --native -o profile_meson.svg python tinytest.py
+py-spy record --native -o profile_std.svg python tinytest.py
+#+end_src
+
+With:
+#+begin_src python
+#!/usr/bin/env python3
+
+import numpy as np
+import time
+np.random.seed(128)
+C_float = np.random.rand(4,4).astype(np.float32)
+time.sleep(1)
+for _ in range(50000):
+    np.dot(C_float, C_float.T)
+#+end_src
+
+Yields
+
+
+#+DOWNLOADED: screenshot @ 2024-06-20 17:46:31
+[[file:images/~pyspy~_tracing/2024-06-20_17-46-31_screenshot.png]]
+
+Or zoomed into the appropriate region:
+
+#+DOWNLOADED: screenshot @ 2024-06-20 17:47:40
+[[file:images/~pyspy~_tracing/2024-06-20_17-47-40_screenshot.png]]
+
+Where the cruft is because of ~printf~ debugging.
