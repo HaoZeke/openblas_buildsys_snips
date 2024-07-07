@@ -5,7 +5,7 @@
 groups = ["default", "testing", "docs", "lint"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:adfeab4c424cbba49b75f28da79c6a36163e3705c627d8149fc0408d37506748"
+content_hash = "sha256:737f8ebca6458d590377d39c242c87a66c345110e6a63759a9650bcf06f3a3d2"
 
 [[package]]
 name = "alabaster"
@@ -562,6 +562,21 @@ dependencies = [
 files = [
     {file = "pytest-8.1.1-py3-none-any.whl", hash = "sha256:2a8386cfc11fa9d2c50ee7b2a57e7d898ef90470a7a34c4b949ff59662bb78b7"},
     {file = "pytest-8.1.1.tar.gz", hash = "sha256:ac978141a75948948817d360297b7aae0fcb9d6ff6bc9ec6d514b85d5a65c044"},
+]
+
+[[package]]
+name = "pytest-approvaltests"
+version = "0.2.4"
+requires_python = ">=3.6.1"
+summary = "A plugin to use approvaltests with pytest"
+groups = ["testing"]
+dependencies = [
+    "approvaltests",
+    "pytest>=7.0.1",
+]
+files = [
+    {file = "pytest-approvaltests-0.2.4.tar.gz", hash = "sha256:325fafdc1ed49d10f88f072c3305b3d35557cbc15748d835be3020db4092e9a6"},
+    {file = "pytest_approvaltests-0.2.4-py3-none-any.whl", hash = "sha256:199ad1cac8ebcbf681f4876d07bf3bbb8bdfa49396e16747027f6bac2fa0a075"},
 ]
 
 [[package]]
