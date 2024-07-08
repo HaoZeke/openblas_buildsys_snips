@@ -193,6 +193,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../debugging/path_tracing.html">Tracing function calls</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../debugging/printf_debugging.html"><code class="docutils literal notranslate"><span class="pre">printf</span></code> debugging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../debugging/perf_listing.html"><code class="docutils literal notranslate"><span class="pre">perf</span></code> listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../debugging/pyspy_tracer.html"><code class="docutils literal notranslate"><span class="pre">pyspy</span></code> tracing</a></li>
 </ul>
 </li>
 </ul>
@@ -243,7 +244,7 @@ pytest<span class="w"> </span>-vvv<span class="w">  </span>--approvaltests-add-r
 </pre></div>
 </div>
 <p>Often it is simpler to move everything together.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">GITROOT</span><span class="si">}</span>/tests/approved_files/*.received.txt<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>mv<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">file</span><span class="p">/received.txt/approved.txt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">GITROOT</span><span class="si">}</span>/tests/approved_files/*.received.txt<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>mv<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">file</span><span class="p">/received.txt/approved.txt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
 </pre></div>
 </div>
 </section>

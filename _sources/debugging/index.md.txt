@@ -14,5 +14,6 @@ baseline_setup
 path_tracing
 printf_debugging
 perf_listing
+pyspy_tracer
 ```
 
