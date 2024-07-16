@@ -13,9 +13,9 @@
 :titlesonly:
 :maxdepth: 1
 
+openblas_buildsys_snips.make.interface
 openblas_buildsys_snips.make.blas_kernel
 openblas_buildsys_snips.make.log_parser
-openblas_buildsys_snips.make.interface
 ```
 
 ## Package Contents
