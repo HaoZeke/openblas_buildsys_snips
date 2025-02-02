@@ -16,5 +16,6 @@ pytest -vvv  --approvaltests-add-reporter='meld'
 Often it is simpler to move everything together.
 
 ```{code-block} bash
+export GITROOT=$(git rev-parse --show-toplevel) 
 for file in ${GITROOT}/tests/approved_files/*.received.txt; do mv -f "$file" "${file/received.txt/approved.txt}"; done
 ```
