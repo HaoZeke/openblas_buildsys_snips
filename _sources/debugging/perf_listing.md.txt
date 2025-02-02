@@ -72,7 +72,7 @@ Which will then correspond to `sgemm_nn`:
     0.19%      gotoblas_quit
     0.19%      blas_shutdown
 
-<div class="note" id="org42975f4">
+<div class="note" id="org0d064e2">
 <p>
 Remember to wipe the older <code>perf.data</code> and <code>perf.data.old</code> files between new
 calls to <code>record</code>, i.e. one call to <code>record</code> can be coupled with any number of
