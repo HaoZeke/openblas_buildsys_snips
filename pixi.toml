@@ -14,8 +14,6 @@ jupytext = "1.16.1.*"
 pdm = "2.12.4.*"
 pip = "24.0.*"
 spin = ">=0.13,<0.14"
-approvaltests = ">=14.3.0,<15"
-pytest-datadir = ">=1.5.0,<2"
 
 [pypi-dependencies]
 openblas_buildsys_snips = { path = "./", editable = true}
