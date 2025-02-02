@@ -1,19 +1,7 @@
-import random
-import os
 import numpy as np
 import pytest
 from approvaltests import verify
 from approvaltests.namer import NamerFactory
-
-
-@pytest.fixture(autouse=True)
-def set_random():
-    sval = 128
-    rng = np.random.default_rng(sval)
-    np.random.seed(sval)
-    os.environ["PYTHONHASHSEED"] = str(sval)
-    random.seed(sval)
-    return rng
 
 
 blas_l3_symbols = {

@@ -5,15 +5,6 @@ import pytest
 from approvaltests.approvals import verify
 
 
-@pytest.fixture(scope="module", autouse=True)
-def set_random():
-    sval = 128
-    rng = np.random.default_rng(seed=sval)
-    os.environ["PYTHONHASHSEED"] = str(sval)
-    random.seed(sval)
-    return rng
-
-
 # Dot product functions
 def test_sdot_k(set_random):
     x = set_random.random(4).astype(np.float32)
