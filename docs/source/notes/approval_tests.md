@@ -7,7 +7,9 @@ golden-master tests.
 
 ```{code-block} bash
 # First time
+pip install numpy
 pytest -vvv  --approvaltests-use-reporter='PythonNativeReporter'
+pip uninstall numpy
 # Move things as per the report
 # Or check results with meld
 pytest -vvv  --approvaltests-add-reporter='meld' 
