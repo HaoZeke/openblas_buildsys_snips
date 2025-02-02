@@ -11,7 +11,7 @@ def set_printopts():
         infstr="inf",
         linewidth=75,
         nanstr="nan",
-        precision=8,
+        precision=4,
         suppress=False,
         threshold=1000,
         formatter=None,
@@ -19,7 +19,7 @@ def set_printopts():
 
 
 @pytest.fixture(scope="session", autouse=True)
-def set_random():
+def set_random(set_printopts):
     sval = 128
     rng = np.random.default_rng(sval)
     np.random.seed(sval)
