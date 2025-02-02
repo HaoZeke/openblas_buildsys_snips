@@ -10,21 +10,21 @@ def test_sdot_k(set_random):
     x = set_random.random(4).astype(np.float32)
     y = set_random.random(4).astype(np.float32)
     res = np.dot(x, y)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_ddot_k(set_random):
     x = set_random.random(4).astype(np.float64)
     y = set_random.random(4).astype(np.float64)
     res = np.dot(x, y)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_dsdot_k(set_random):
     x = set_random.random(4).astype(np.float32)
     y = set_random.random(4).astype(np.float32)
     res = np.dot(x, y).astype(np.float64)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # Bfloat16 dot product (simulate with float16)
@@ -32,7 +32,7 @@ def test_sbdot_k(set_random):
     x = set_random.random(4).astype(np.float16)
     y = set_random.random(4).astype(np.float16)
     res = np.dot(x, y).astype(np.float32)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # Conversion functions
@@ -65,28 +65,28 @@ def test_cdotc_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     y = set_random.random(4).astype(np.complex64)
     res = np.vdot(x, y)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_cdotu_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     y = set_random.random(4).astype(np.complex64)
     res = np.dot(x, y)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_zdotc_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     y = set_random.random(4).astype(np.complex128)
     res = np.vdot(x, y)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_zdotu_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     y = set_random.random(4).astype(np.complex128)
     res = np.dot(x, y)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # AXPY operations
@@ -185,150 +185,150 @@ def test_zswap_k(set_random):
 def test_sasum_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.sum(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_dasum_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.sum(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_casum_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.sum(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_zasum_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.sum(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # SUM operations
 def test_ssum_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.sum(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_dsum_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.sum(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_csum_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.sum(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_zsum_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.sum(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # AMAX operations
 def test_samax_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.amax(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_damax_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.amax(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_camax_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.amax(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_zamax_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.amax(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # AMIN operations
 def test_samin_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.amin(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_damin_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.amin(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_camin_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.amin(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_zamin_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.amin(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # IAMAX operations
 def test_isamax_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.argmax(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_idamax_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.argmax(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_icamax_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.argmax(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_izamax_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.argmax(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # IAMIN operations
 def test_isamin_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.argmin(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_idamin_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.argmin(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_icamin_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.argmin(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_izamin_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.argmin(np.abs(x))
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # SCAL operations
@@ -364,25 +364,25 @@ def test_zscal_k(set_random):
 def test_snrm2_k(set_random):
     x = set_random.random(4).astype(np.float32)
     res = np.linalg.norm(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_dnrm2_k(set_random):
     x = set_random.random(4).astype(np.float64)
     res = np.linalg.norm(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_cnrm2_k(set_random):
     x = set_random.random(4).astype(np.complex64)
     res = np.linalg.norm(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 def test_znrm2_k(set_random):
     x = set_random.random(4).astype(np.complex128)
     res = np.linalg.norm(x)
-    verify(res)
+    verify(f"{res:.4f}")
 
 
 # ROT operations
