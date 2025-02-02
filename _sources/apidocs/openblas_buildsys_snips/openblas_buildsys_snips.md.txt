@@ -23,9 +23,9 @@ openblas_buildsys_snips.cmake
 :titlesonly:
 :maxdepth: 1
 
-openblas_buildsys_snips.cli
-openblas_buildsys_snips._utils
 openblas_buildsys_snips._data
+openblas_buildsys_snips._utils
+openblas_buildsys_snips.cli
 ```
 
 ## Package Contents

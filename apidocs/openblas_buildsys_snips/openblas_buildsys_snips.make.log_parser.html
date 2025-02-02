@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips.cmake" href="openblas_buildsys_snips.cmake.html" /><link rel="prev" title="openblas_buildsys_snips.make.blas_kernel" href="openblas_buildsys_snips.make.blas_kernel.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="openblas_buildsys_snips.cmake" href="openblas_buildsys_snips.cmake.html" /><link rel="prev" title="openblas_buildsys_snips.make.interface" href="openblas_buildsys_snips.make.interface.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
         <title>openblas_buildsys_snips.make.log_parser - openblas_buildsys_snips 0.1.0 documentation</title>
@@ -162,8 +162,8 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="openblas_buildsys_snips.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3 current has-children"><a class="reference internal" href="openblas_buildsys_snips.make.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of openblas_buildsys_snips.make</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.blas_kernel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.make.interface.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.log_parser</span></code></a></li>
 </ul>
 </li>
@@ -171,9 +171,9 @@
 <li class="toctree-l4"><a class="reference internal" href="openblas_buildsys_snips.cmake.netlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cmake.netlib</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cli</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._data.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips._utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips._utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="openblas_buildsys_snips.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.cli</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -266,16 +266,16 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.Define">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">Define</span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.NamedTuple</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.NamedTuple</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.Define.key">
-<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define.key" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define.key" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.Define.value">
-<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define.value" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.13)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.Define.value" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
@@ -286,43 +286,43 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">CompilationInfo</span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo" title="Link to this definition">#</a></dt>
 <dd><dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.defines">
-<span class="sig-name descname"><span class="pre">defines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define" title="openblas_buildsys_snips.make.log_parser.Define"><span class="pre">openblas_buildsys_snips.make.log_parser.Define</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.defines" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">defines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.Define" title="openblas_buildsys_snips.make.log_parser.Define"><span class="pre">openblas_buildsys_snips.make.log_parser.Define</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.defines" title="Link to this definition">#</a></dt>
 <dd><p>‘field(…)’</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines">
-<span class="sig-name descname"><span class="pre">undefines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">undefines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.undefines" title="Link to this definition">#</a></dt>
 <dd><p>‘field(…)’</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.flags">
-<span class="sig-name descname"><span class="pre">flags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.flags" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">flags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.flags" title="Link to this definition">#</a></dt>
 <dd><p>‘field(…)’</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files">
-<span class="sig-name descname"><span class="pre">input_files</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">input_files</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.input_files" title="Link to this definition">#</a></dt>
 <dd><p>‘field(…)’</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.directory">
-<span class="sig-name descname"><span class="pre">directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.directory" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.directory" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol">
-<span class="sig-name descname"><span class="pre">output_symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">output_symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo.output_symbol" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="openblas_buildsys_snips.make.log_parser.parse_cc_makelog">
-<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">parse_cc_makelog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo" title="openblas_buildsys_snips.make.log_parser.CompilationInfo"><span class="pre">openblas_buildsys_snips.make.log_parser.CompilationInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.parse_cc_makelog" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">openblas_buildsys_snips.make.log_parser.</span></span><span class="sig-name descname"><span class="pre">parse_cc_makelog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#openblas_buildsys_snips.make.log_parser.CompilationInfo" title="openblas_buildsys_snips.make.log_parser.CompilationInfo"><span class="pre">openblas_buildsys_snips.make.log_parser.CompilationInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#openblas_buildsys_snips.make.log_parser.parse_cc_makelog" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -343,14 +343,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="openblas_buildsys_snips.make.blas_kernel.html">
+          <a class="prev-page" href="openblas_buildsys_snips.make.interface.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.blas_kernel</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openblas_buildsys_snips.make.interface</span></code></div>
                 
               </div>
             </a>

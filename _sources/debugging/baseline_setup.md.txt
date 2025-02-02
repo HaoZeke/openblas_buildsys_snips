@@ -11,8 +11,10 @@ Lets start with the basics.
 
 Now we can setup the OpenBLAS unencumbered by the tainetd `conda` variant.
 
-<div class="note">
+<div class="note" id="org3bc14ab">
+<p>
 Replace "$OBPATH" with the actual path to the OpenBLAS source.
+</p>
 
 </div>
 
