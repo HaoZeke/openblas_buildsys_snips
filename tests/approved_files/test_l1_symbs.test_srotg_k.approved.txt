@@ -1,1 +1,1 @@
-(np.float32(0.43567657), 0, array([1.], dtype=float32), array([0.25423214], dtype=float32))
+(np.float32(0.43567657), 0, array([1.], dtype=float32), array([0.2542], dtype=float32))
