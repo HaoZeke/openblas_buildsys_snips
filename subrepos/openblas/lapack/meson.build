@@ -131,6 +131,17 @@ _lapack_roots = [
     },
 ]
 
+foreach par : ['parallel', 'single']
+    foreach meth : ['U', 'L']
+        _lapack_roots += {
+            'base': f'?lauum_@meth@_@par@',
+            '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
+            'fdir': 'lauum',
+            'fname': f'lauum_@meth@_@par@.c',
+        }
+    endforeach
+endforeach
+
 _lapack_libs = []
 foreach conf : _lapack_roots
     foreach type : conf['_types']
