@@ -602,6 +602,7 @@ subdir('driver/level2')
 subdir('driver/level3')
 subdir('driver/others')
 subdir('kernel')
+subdir('lapack')
 
 threads_dep = dependency('threads')
 
@@ -612,6 +613,7 @@ openblas = library('openblas',
                            _l3_driver,
                            _others,
                            _kern,
+                           _lapack,
                           ],
                           dependencies: [threads_dep, quadmath_dep],
                           override_options: ['b_lundef=false', 'b_asneeded=false'],
