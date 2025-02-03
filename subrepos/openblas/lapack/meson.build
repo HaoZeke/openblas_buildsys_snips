@@ -64,6 +64,46 @@ _lapack_roots = [
         'def': ['UNIT'],
         'addl_srcs': ['../param.h'],
     },
+    {
+        'base': '?getrs_*_single',
+        '_types': ['s', 'd', 'q'],
+        '_meth': {'N': ['-UTRANS'], 'T': ['-DTRANS']},
+        'fdir': 'getrs',
+        'fname': 'getrs_single.c',
+    },
+    {
+        'base': '?getrs_*_single',
+        '_types': ['c', 'z', 'x'],
+        '_meth': {
+            'N': ['-DTRANS=1'],
+            'T': ['-DTRANS=2'],
+            'R': ['-DTRANS=3'],
+            'C': ['-DTRANS=4'],
+        },
+        'fdir': 'getrs',
+        'fname': 'zgetrs_single.c',
+    },
+    {
+        'base': '?getrs_*_parallel',
+        '_types': ['s', 'd', 'q'],
+        '_meth': {'N': ['-UTRANS'], 'T': ['-DTRANS']},
+        'fdir': 'getrs',
+        'fname': 'getrs_parallel.c',
+        # 'onlyif': ['SMP']
+    },
+    {
+        'base': '?getrs_*_parallel',
+        '_types': ['c', 'z', 'x'],
+        '_meth': {
+            'N': ['-DTRANS=1'],
+            'T': ['-DTRANS=2'],
+            'R': ['-DTRANS=3'],
+            'C': ['-DTRANS=4'],
+        },
+        'fdir': 'getrs',
+        'fname': 'zgetrs_parallel.c',
+        # 'onlyif': ['SMP']
+    },
     # XXX: laswp has CPU based dispatch.. needs the kern approach
 ]
 
@@ -109,11 +149,6 @@ foreach conf : _lapack_roots
             compiler_args += conf['addl']
         endif
 
-        # Construct the actual symbol names, and mangled symbols
-        # TODO: This might be conditional on other options
-        sym_name = conf['base'].replace('?', type)
-        sym_underscored = f'@sym_name@_'
-
         # Construct conditionals
         # If specific to the symbol
         if conf.has_key('def')
@@ -134,21 +169,46 @@ foreach conf : _lapack_roots
         if conf.has_key('addl_srcs')
             all_srcs += conf['addl_srcs']
         endif
-        # Create the static library for each symbol
-        lib = static_library(
-            sym_name,
-            sources: all_srcs,
-            include_directories: _inc,
-            c_args: compiler_args + [
-                f'-DASMNAME=@asm_name_prefix@@sym_name@',
-                f'-DASMFNAME=@asm_name_prefix@@sym_underscored@',
-                f'-DNAME=@sym_underscored@',
-                f'-DCNAME=@sym_name@',
-                f'-DCHAR_NAME="@sym_underscored@"',
-                f'-DCHAR_CNAME="@sym_name@"',
-            ],
-        )
-        _lapack_libs += lib
+
+        if conf.has_key('_meth')
+            foreach ckey : conf['_meth'].keys()
+                sym_name = conf['base'].replace('?', type)
+                sym_name = sym_name.replace('*', ckey)
+                sym_underscored = f'@sym_name@_'
+                compiler_args += conf['_meth'][ckey]
+                lib = static_library(
+                    sym_name,
+                    sources: all_srcs,
+                    include_directories: _inc,
+                    c_args: compiler_args + [
+                        f'-DASMNAME=@asm_name_prefix@@sym_name@',
+                        f'-DASMFNAME=@asm_name_prefix@@sym_underscored@',
+                        f'-DNAME=@sym_underscored@',
+                        f'-DCNAME=@sym_name@',
+                        f'-DCHAR_NAME="@sym_underscored@"',
+                        f'-DCHAR_CNAME="@sym_name@"',
+                    ],
+                )
+                _lapack_libs += lib
+            endforeach
+        else
+            sym_name = conf['base'].replace('?', type)
+            sym_underscored = f'@sym_name@_'
+            lib = static_library(
+                sym_name,
+                sources: all_srcs,
+                include_directories: _inc,
+                c_args: compiler_args + [
+                    f'-DASMNAME=@asm_name_prefix@@sym_name@',
+                    f'-DASMFNAME=@asm_name_prefix@@sym_underscored@',
+                    f'-DNAME=@sym_underscored@',
+                    f'-DCNAME=@sym_name@',
+                    f'-DCHAR_NAME="@sym_underscored@"',
+                    f'-DCHAR_CNAME="@sym_name@"',
+                ],
+            )
+            _lapack_libs += lib
+        endif
     endforeach
 endforeach
 
