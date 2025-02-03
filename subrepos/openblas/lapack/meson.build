@@ -133,6 +133,34 @@ _lapack_roots = [
         'fdir': 'trti2',
         'fname': 'ztrti2_L.c',
     },
+    {
+        'base': '?trtri_*_single',
+        '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
+        '_meth': {'UU': ['-DUNIT'], 'UN': ['-UUNIT']},
+        'fdir': 'trtri',
+        'fname': 'trtri_U_single.c',
+    },
+    {
+        'base': '?trtri_*_single',
+        '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
+        '_meth': {'LU': ['-DUNIT'], 'LN': ['-UUNIT']},
+        'fdir': 'trtri',
+        'fname': 'trtri_L_single.c',
+    },
+    {
+        'base': '?trtri_*_parallel',
+        '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
+        '_meth': {'UU': ['-DUNIT'], 'UN': ['-UUNIT']},
+        'fdir': 'trtri',
+        'fname': 'trtri_U_parallel.c',
+    },
+    {
+        'base': '?trtri_*_parallel',
+        '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
+        '_meth': {'LU': ['-DUNIT'], 'LN': ['-UUNIT']},
+        'fdir': 'trtri',
+        'fname': 'trtri_L_parallel.c',
+    },
 ]
 
 foreach base_name : ['lauu2', 'potf2']
