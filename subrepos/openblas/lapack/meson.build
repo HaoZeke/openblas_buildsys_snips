@@ -127,14 +127,16 @@ foreach base_name : ['lauu2', 'potf2']
     endforeach
 endforeach
 
-foreach par : ['parallel', 'single']
-    foreach uplo : ['U', 'L']
-        _lapack_roots += {
-            'base': f'?lauum_@uplo@_@par@',
-            '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
-            'fdir': 'lauum',
-            'fname': f'lauum_@uplo@_@par@.c',
-        }
+foreach base_name : ['lauum', 'potrf']
+    foreach par : ['parallel', 'single']
+        foreach uplo : ['U', 'L']
+            _lapack_roots += {
+                'base': f'?@base_name@_@uplo@_@par@',
+                '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
+                'fdir': base_name,
+                'fname': f'@base_name@_@uplo@_@par@.c',
+            }
+        endforeach
     endforeach
 endforeach
 
