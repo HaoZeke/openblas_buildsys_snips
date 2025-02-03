@@ -166,13 +166,13 @@ _lapack_roots = [
         '_types': ['s', 'd', 'q'],
         '_meth': {
             'UNU': ['-UUPLO', '-UTRANS', '-UDIAG'],
-            'UNN': ['-UUPLO', '-UTRANS', '-DDIAG']
-            'UTU': ['-UUPLO', '-DTRANS', '-UDIAG']
-            'UTN': ['-UUPLO', '-DTRANS', '-DDIAG']
+            'UNN': ['-UUPLO', '-UTRANS', '-DDIAG'],
+            'UTU': ['-UUPLO', '-DTRANS', '-UDIAG'],
+            'UTN': ['-UUPLO', '-DTRANS', '-DDIAG'],
             'LNU': ['-DUPLO', '-UTRANS', '-UDIAG'],
-            'LNN': ['-DUPLO', '-UTRANS', '-DDIAG']
-            'LTU': ['-DUPLO', '-DTRANS', '-UDIAG']
-            'LTN': ['-DUPLO', '-DTRANS', '-DDIAG']
+            'LNN': ['-DUPLO', '-UTRANS', '-DDIAG'],
+            'LTU': ['-DUPLO', '-DTRANS', '-UDIAG'],
+            'LTN': ['-DUPLO', '-DTRANS', '-DDIAG'],
         },
         'fdir': 'trtrs',
         'fname': 'trtrs_single.c',
@@ -182,21 +182,21 @@ _lapack_roots = [
         '_types': ['c', 'z', 'x'],
         '_meth': {
             'UNU': ['-UUPLO', '-DTRANS=1', '-UDIAG'],
-            'UNN': ['-UUPLO', '-DTRANS=1', '-DDIAG']
-            'UTU': ['-UUPLO', '-DTRANS=2', '-UDIAG']
-            'UTN': ['-UUPLO', '-DTRANS=2', '-DDIAG']
-            'URU': ['-UUPLO', '-DTRANS=3', '-UDIAG']
-            'URN': ['-UUPLO', '-DTRANS=3', '-DDIAG']
-            'UCU': ['-UUPLO', '-DTRANS=4', '-UDIAG']
-            'UCN': ['-UUPLO', '-DTRANS=4', '-DDIAG']
+            'UNN': ['-UUPLO', '-DTRANS=1', '-DDIAG'],
+            'UTU': ['-UUPLO', '-DTRANS=2', '-UDIAG'],
+            'UTN': ['-UUPLO', '-DTRANS=2', '-DDIAG'],
+            'URU': ['-UUPLO', '-DTRANS=3', '-UDIAG'],
+            'URN': ['-UUPLO', '-DTRANS=3', '-DDIAG'],
+            'UCU': ['-UUPLO', '-DTRANS=4', '-UDIAG'],
+            'UCN': ['-UUPLO', '-DTRANS=4', '-DDIAG'],
             'LNU': ['-DUPLO', '-DTRANS=1', '-UDIAG'],
-            'LNN': ['-DUPLO', '-DTRANS=1', '-DDIAG']
-            'LTU': ['-DUPLO', '-DTRANS=2', '-UDIAG']
-            'LTN': ['-DUPLO', '-DTRANS=2', '-DDIAG']
-            'LRU': ['-DUPLO', '-DTRANS=3', '-UDIAG']
-            'LRN': ['-DUPLO', '-DTRANS=3', '-DDIAG']
-            'LCU': ['-DUPLO', '-DTRANS=4', '-UDIAG']
-            'LCN': ['-DUPLO', '-DTRANS=4', '-DDIAG']
+            'LNN': ['-DUPLO', '-DTRANS=1', '-DDIAG'],
+            'LTU': ['-DUPLO', '-DTRANS=2', '-UDIAG'],
+            'LTN': ['-DUPLO', '-DTRANS=2', '-DDIAG'],
+            'LRU': ['-DUPLO', '-DTRANS=3', '-UDIAG'],
+            'LRN': ['-DUPLO', '-DTRANS=3', '-DDIAG'],
+            'LCU': ['-DUPLO', '-DTRANS=4', '-UDIAG'],
+            'LCN': ['-DUPLO', '-DTRANS=4', '-DDIAG'],
         },
         'fdir': 'trtrs',
         'fname': 'ztrtrs_single.c',
@@ -206,13 +206,13 @@ _lapack_roots = [
         '_types': ['s', 'd', 'q'],
         '_meth': {
             'UNU': ['-UUPLO', '-UTRANS', '-UDIAG'],
-            'UNN': ['-UUPLO', '-UTRANS', '-DDIAG']
-            'UTU': ['-UUPLO', '-DTRANS', '-UDIAG']
-            'UTN': ['-UUPLO', '-DTRANS', '-DDIAG']
+            'UNN': ['-UUPLO', '-UTRANS', '-DDIAG'],
+            'UTU': ['-UUPLO', '-DTRANS', '-UDIAG'],
+            'UTN': ['-UUPLO', '-DTRANS', '-DDIAG'],
             'LNU': ['-DUPLO', '-UTRANS', '-UDIAG'],
-            'LNN': ['-DUPLO', '-UTRANS', '-DDIAG']
-            'LTU': ['-DUPLO', '-DTRANS', '-UDIAG']
-            'LTN': ['-DUPLO', '-DTRANS', '-DDIAG']
+            'LNN': ['-DUPLO', '-UTRANS', '-DDIAG'],
+            'LTU': ['-DUPLO', '-DTRANS', '-UDIAG'],
+            'LTN': ['-DUPLO', '-DTRANS', '-DDIAG'],
         },
         'fdir': 'trtrs',
         'fname': 'trtrs_parallel.c',
@@ -222,21 +222,21 @@ _lapack_roots = [
         '_types': ['c', 'z', 'x'],
         '_meth': {
             'UNU': ['-UUPLO', '-DTRANS=1', '-UDIAG'],
-            'UNN': ['-UUPLO', '-DTRANS=1', '-DDIAG']
-            'UTU': ['-UUPLO', '-DTRANS=2', '-UDIAG']
-            'UTN': ['-UUPLO', '-DTRANS=2', '-DDIAG']
-            'URU': ['-UUPLO', '-DTRANS=3', '-UDIAG']
-            'URN': ['-UUPLO', '-DTRANS=3', '-DDIAG']
-            'UCU': ['-UUPLO', '-DTRANS=4', '-UDIAG']
-            'UCN': ['-UUPLO', '-DTRANS=4', '-DDIAG']
+            'UNN': ['-UUPLO', '-DTRANS=1', '-DDIAG'],
+            'UTU': ['-UUPLO', '-DTRANS=2', '-UDIAG'],
+            'UTN': ['-UUPLO', '-DTRANS=2', '-DDIAG'],
+            'URU': ['-UUPLO', '-DTRANS=3', '-UDIAG'],
+            'URN': ['-UUPLO', '-DTRANS=3', '-DDIAG'],
+            'UCU': ['-UUPLO', '-DTRANS=4', '-UDIAG'],
+            'UCN': ['-UUPLO', '-DTRANS=4', '-DDIAG'],
             'LNU': ['-DUPLO', '-DTRANS=1', '-UDIAG'],
-            'LNN': ['-DUPLO', '-DTRANS=1', '-DDIAG']
-            'LTU': ['-DUPLO', '-DTRANS=2', '-UDIAG']
-            'LTN': ['-DUPLO', '-DTRANS=2', '-DDIAG']
-            'LRU': ['-DUPLO', '-DTRANS=3', '-UDIAG']
-            'LRN': ['-DUPLO', '-DTRANS=3', '-DDIAG']
-            'LCU': ['-DUPLO', '-DTRANS=4', '-UDIAG']
-            'LCN': ['-DUPLO', '-DTRANS=4', '-DDIAG']
+            'LNN': ['-DUPLO', '-DTRANS=1', '-DDIAG'],
+            'LTU': ['-DUPLO', '-DTRANS=2', '-UDIAG'],
+            'LTN': ['-DUPLO', '-DTRANS=2', '-DDIAG'],
+            'LRU': ['-DUPLO', '-DTRANS=3', '-UDIAG'],
+            'LRN': ['-DUPLO', '-DTRANS=3', '-DDIAG'],
+            'LCU': ['-DUPLO', '-DTRANS=4', '-UDIAG'],
+            'LCN': ['-DUPLO', '-DTRANS=4', '-DDIAG'],
         },
         'fdir': 'trtrs',
         'fname': 'ztrtrs_parallel.c',
