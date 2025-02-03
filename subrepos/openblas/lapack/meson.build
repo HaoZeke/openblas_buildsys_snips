@@ -114,6 +114,12 @@ foreach uplo : ['U', 'L']
         'fdir': 'lauu2',
         'fname': f'lauu2_@uplo@.c',
     }
+    _lapack_roots += {
+        'base': f'?potf2_@uplo@',
+        '_types': ['s', 'd', 'q'],
+        'fdir': 'potf2',
+        'fname': f'potf2_@uplo@.c',
+    }
 endforeach
 
 foreach uplo : ['U', 'L']
@@ -123,15 +129,21 @@ foreach uplo : ['U', 'L']
         'fdir': 'lauu2',
         'fname': f'zlauu2_@uplo@.c',
     }
+    _lapack_roots += {
+        'base': f'?potf2_@uplo@',
+        '_types': ['c', 'z', 'x'],
+        'fdir': 'potf2',
+        'fname': f'zpotf2_@uplo@.c',
+    }
 endforeach
 
 foreach par : ['parallel', 'single']
-    foreach meth : ['U', 'L']
+    foreach uplo : ['U', 'L']
         _lapack_roots += {
-            'base': f'?lauum_@meth@_@par@',
+            'base': f'?lauum_@uplo@_@par@',
             '_types': ['s', 'd', 'q', 'c', 'z', 'x'],
             'fdir': 'lauum',
-            'fname': f'lauum_@meth@_@par@.c',
+            'fname': f'lauum_@uplo@_@par@.c',
         }
     endforeach
 endforeach
