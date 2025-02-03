@@ -6,7 +6,7 @@
 [subrepo]
 	remote = git@github.com:HaoZeke/openblas
 	branch = addLAPACK
-	commit = 8f1d143810d9308b83d831e751c15defaaabf394
-	parent = 3724af01653f0eef7ba60832edcf8fb693352b8b
+	commit = 9d583142b8c1eff08a5b04e53a35f7eb8ec9b664
+	parent = 407d6ff8d678be22a3be28c6d20cc82c8e0791e7
 	method = merge
 	cmdver = 0.4.9
