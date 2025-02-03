@@ -107,34 +107,24 @@ _lapack_roots = [
     # XXX: laswp has CPU based dispatch.. needs the kern approach
 ]
 
-foreach uplo : ['U', 'L']
-    _lapack_roots += {
-        'base': f'?lauu2_@uplo@',
-        '_types': ['s', 'd', 'q'],
-        'fdir': 'lauu2',
-        'fname': f'lauu2_@uplo@.c',
-    }
-    _lapack_roots += {
-        'base': f'?potf2_@uplo@',
-        '_types': ['s', 'd', 'q'],
-        'fdir': 'potf2',
-        'fname': f'potf2_@uplo@.c',
-    }
-endforeach
+foreach base_name : ['lauu2', 'potf2']
+    foreach uplo : ['U', 'L']
+        # Real types
+        _lapack_roots += {
+            'base': f'?@base_name@_@uplo@',
+            '_types': ['s', 'd', 'q'],
+            'fdir': base_name,
+            'fname': f'@base_name@_@uplo@.c',
+        }
 
-foreach uplo : ['U', 'L']
-    _lapack_roots += {
-        'base': f'?lauu2_@uplo@',
-        '_types': ['c', 'z', 'x'],
-        'fdir': 'lauu2',
-        'fname': f'zlauu2_@uplo@.c',
-    }
-    _lapack_roots += {
-        'base': f'?potf2_@uplo@',
-        '_types': ['c', 'z', 'x'],
-        'fdir': 'potf2',
-        'fname': f'zpotf2_@uplo@.c',
-    }
+        # Complex types
+        _lapack_roots += {
+            'base': f'?@base_name@_@uplo@',
+            '_types': ['c', 'z', 'x'],
+            'fdir': base_name,
+            'fname': f'z@base_name@_@uplo@.c',
+        }
+    endforeach
 endforeach
 
 foreach par : ['parallel', 'single']
