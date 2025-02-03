@@ -119,20 +119,6 @@ foreach conf : _lapack_roots
         compiler_args = _cargs + lapack_args
         # Generate the symbol flags
         base = conf['base']
-        # From the root meson.build
-        if symb_defs.has_key(base)
-            symb_base = symb_defs[base]
-            if symb_base.has_key('def')
-                foreach _d : symb_base['def']
-                    compiler_args += ('-D' + _d)
-                endforeach
-            endif
-            if symb_base.has_key('undef')
-                foreach _u : symb_base['undef']
-                    compiler_args += ('-U' + _u)
-                endforeach
-            endif
-        endif
         # Set the type arguments
         if precision_mappings.get(type).has_key('def')
             foreach d : precision_mappings[type]['def']
@@ -172,10 +158,10 @@ foreach conf : _lapack_roots
 
         if conf.has_key('_meth')
             foreach ckey : conf['_meth'].keys()
+                __cargs = conf['_meth'][ckey]
                 sym_name = conf['base'].replace('?', type)
                 sym_name = sym_name.replace('*', ckey)
                 sym_underscored = f'@sym_name@_'
-                compiler_args += conf['_meth'][ckey]
                 lib = static_library(
                     sym_name,
                     sources: all_srcs,
@@ -187,7 +173,7 @@ foreach conf : _lapack_roots
                         f'-DCNAME=@sym_name@',
                         f'-DCHAR_NAME="@sym_underscored@"',
                         f'-DCHAR_CNAME="@sym_name@"',
-                    ],
+                    ] + __cargs,
                 )
                 _lapack_libs += lib
             endforeach
