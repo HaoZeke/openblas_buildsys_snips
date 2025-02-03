@@ -105,31 +105,25 @@ _lapack_roots = [
         # 'onlyif': ['SMP']
     },
     # XXX: laswp has CPU based dispatch.. needs the kern approach
-    {
-        'base': '?lauu2_U',
-        '_types': ['s', 'd', 'q'],
-        'fdir': 'lauu2',
-        'fname': 'lauu2_U.c',
-    },
-    {
-        'base': '?lauu2_L',
-        '_types': ['s', 'd', 'q'],
-        'fdir': 'lauu2',
-        'fname': 'lauu2_L.c',
-    },
-    {
-        'base': '?lauu2_U',
-        '_types': ['c', 'z', 'x'],
-        'fdir': 'lauu2',
-        'fname': 'zlauu2_U.c',
-    },
-    {
-        'base': '?lauu2_L',
-        '_types': ['c', 'z', 'x'],
-        'fdir': 'lauu2',
-        'fname': 'zlauu2_L.c',
-    },
 ]
+
+foreach uplo : ['U', 'L']
+    _lapack_roots += {
+        'base': f'?lauu2_@uplo@',
+        '_types': ['s', 'd', 'q'],
+        'fdir': 'lauu2',
+        'fname': f'lauu2_@uplo@.c',
+    }
+endforeach
+
+foreach uplo : ['U', 'L']
+    _lapack_roots += {
+        'base': f'?lauu2_@uplo@',
+        '_types': ['c', 'z', 'x'],
+        'fdir': 'lauu2',
+        'fname': f'zlauu2_@uplo@.c',
+    }
+endforeach
 
 foreach par : ['parallel', 'single']
     foreach meth : ['U', 'L']
