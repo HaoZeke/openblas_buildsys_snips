@@ -105,6 +105,30 @@ _lapack_roots = [
         # 'onlyif': ['SMP']
     },
     # XXX: laswp has CPU based dispatch.. needs the kern approach
+    {
+        'base': '?lauu2_U',
+        '_types': ['s', 'd', 'q'],
+        'fdir': 'lauu2',
+        'fname': 'lauu2_U.c',
+    },
+    {
+        'base': '?lauu2_L',
+        '_types': ['s', 'd', 'q'],
+        'fdir': 'lauu2',
+        'fname': 'lauu2_L.c',
+    },
+    {
+        'base': '?lauu2_U',
+        '_types': ['c', 'z', 'x'],
+        'fdir': 'lauu2',
+        'fname': 'zlauu2_U.c',
+    },
+    {
+        'base': '?lauu2_L',
+        '_types': ['c', 'z', 'x'],
+        'fdir': 'lauu2',
+        'fname': 'zlauu2_L.c',
+    },
 ]
 
 _lapack_libs = []
