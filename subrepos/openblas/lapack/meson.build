@@ -104,7 +104,9 @@ _lapack_roots = [
         'fname': 'zgetrs_parallel.c',
         # 'onlyif': ['SMP']
     },
-    # XXX: laswp has CPU based dispatch.. needs the kern approach
+    # XXX: laswp has CPU based dispatch.. needs the kern approach Actually a
+    # simpler one would suffice, all the Makefiles build variations of a single
+    # set of files in generic
     {
         'base': '?trti2_*',
         '_types': ['s', 'd', 'q'],
