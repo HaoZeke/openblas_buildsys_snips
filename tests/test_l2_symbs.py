@@ -5,16 +5,6 @@ import pytest
 from approvaltests.approvals import verify
 
 
-@pytest.fixture(scope="module", autouse=True)
-def set_random():
-    sval = 128
-    rng = np.random.default_rng(sval)
-    np.random.seed(sval)
-    os.environ["PYTHONHASHSEED"] = str(sval)
-    random.seed(sval)
-    return rng
-
-
 # ggbmv - General Band Matrix-Vector Multiply
 def test_sgbmv_n(set_random):
     rng = set_random
