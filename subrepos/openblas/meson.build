@@ -26,6 +26,7 @@ if host_machine.cpu_family() not in supported_architectures
   error(f'Building OpenBLAS with Meson is currently not supported on @cpu_family@.')
 endif
 
+# why not just  (not meson.is_subproject())
 as_subproject = get_option('as_subproject')
 
 # Skip the check for valid CC
@@ -229,7 +230,6 @@ endif
 add_project_arguments(simd_cargs, language: 'c')
 
 # Common symbol related options
-symnames = ['ASMNAME', 'ASMFNAME', 'NAME', 'CNAME', 'CHAR_NAME', 'CHAR_CNAME']
 
 # TODO(rg): Maybe make these conditional..
 _cargs += [
@@ -242,6 +242,7 @@ _cargs += [
 
 # Other common options, move later
 # Undefine to help prevent clashes
+symnames = ['ASMNAME', 'ASMFNAME', 'NAME', 'CNAME', 'CHAR_NAME', 'CHAR_CNAME']
 foreach symb : symnames
   _cargs += f'-U@symb@'
 endforeach
@@ -698,6 +699,3 @@ netlib_lapack_dep = declare_dependency(
   include_directories : _inc,
   version: meson.project_version(),
 )
-
-pkg = import('pkgconfig')
-pkg.generate(openblas)
