@@ -105,6 +105,34 @@ _lapack_roots = [
         # 'onlyif': ['SMP']
     },
     # XXX: laswp has CPU based dispatch.. needs the kern approach
+    {
+        'base': '?trti2_*',
+        '_types': ['s', 'd', 'q'],
+        '_meth': {'UU': ['-DUNIT'], 'UN': ['-UUNIT']},
+        'fdir': 'trti2',
+        'fname': 'trti2_U.c',
+    },
+    {
+        'base': '?trti2_*',
+        '_types': ['s', 'd', 'q'],
+        '_meth': {'LU': ['-DUNIT'], 'LN': ['-UUNIT']},
+        'fdir': 'trti2',
+        'fname': 'trti2_L.c',
+    },
+    {
+        'base': '?trti2_*',
+        '_types': ['c', 'z', 'x'],
+        '_meth': {'UU': ['-DUNIT'], 'UN': ['-UUNIT']},
+        'fdir': 'trti2',
+        'fname': 'ztrti2_U.c',
+    },
+    {
+        'base': '?trti2_*',
+        '_types': ['c', 'z', 'x'],
+        '_meth': {'LU': ['-DUNIT'], 'LN': ['-UUNIT']},
+        'fdir': 'trti2',
+        'fname': 'ztrti2_L.c',
+    },
 ]
 
 foreach base_name : ['lauu2', 'potf2']
