@@ -1608,10 +1608,14 @@ packages:
 - pypi: ./
   name: openblas-buildsys-snips
   version: 0.1.0
-  sha256: 9b8c6456f350ca79d09c2eda6263eae0c17b0b6731d1a562d889ea9e12581d2c
+  sha256: 8f9d6e490c86e0eb9d02ee29885ab162a30a10fdb0fed07e041a724a21c10d31
   requires_dist:
   - pytest-benchmark>=4.0.0
   - memray>=1.12.0
+  - pytest>=8.3.4 ; extra == 'test'
+  - approvaltests>=14.3.0 ; extra == 'test'
+  - pytest-datadir>=1.5.0 ; extra == 'test'
+  - numpy>=2.2.2 ; extra == 'test'
   requires_python: '>=3.10'
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/linux-64/openssl-3.2.1-hd590300_1.conda
