@@ -104,23 +104,6 @@ _lapack_roots = [
         'fname': 'zgetrs_parallel.c',
         # 'onlyif': ['SMP']
     },
-    # XXX: laswp has CPU based dispatch.. needs the kern approach Actually a
-    # simpler one would suffice, all the Makefiles build variations of a single
-    # set of files in generic
-    {
-        'base': '?laswp_*',
-        '_types': ['s', 'd'],
-        '_meth': {'plus': ['-UMINUS'], 'minus': ['-DMINUS']},
-        'fdir': 'laswp/generic',
-        'fname': 'laswp_k.c',
-    },
-    {
-        'base': '?laswp_*',
-        '_types': ['c', 'z'],
-        '_meth': {'plus': ['-UMINUS'], 'minus': ['-DMINUS']},
-        'fdir': 'laswp/generic',
-        'fname': 'zlaswp_k.c',
-    },
     {
         'base': '?trti2_*',
         '_types': ['s', 'd', 'q'],
@@ -292,6 +275,9 @@ foreach base_name : ['lauum', 'potrf']
     endforeach
 endforeach
 
+# CPU dispatch in the folder
+subdir('laswp/generic')
+
 _lapack_libs = []
 foreach conf : _lapack_roots
     foreach type : conf['_types']
@@ -336,9 +322,15 @@ foreach conf : _lapack_roots
         # Make mangled symbols
         # TODO: This might be conditional on other options
 
-        all_srcs = [conf['fdir'] + '/' + conf['fname']]
-        if conf.has_key('addl_srcs')
-            all_srcs += conf['addl_srcs']
+        all_srcs = []
+        if conf.has_key('fdir') and conf.has_key('fname')
+            all_srcs += [conf['fdir'] + '/' + conf['fname']]
+            if conf.has_key('addl_srcs')
+                all_srcs += conf['addl_srcs']
+            endif
+        endif
+        if conf.has_key('ss')
+            all_srcs += conf['ss']
         endif
 
         if conf.has_key('_meth')
