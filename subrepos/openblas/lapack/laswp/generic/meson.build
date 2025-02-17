@@ -3,6 +3,45 @@ ssmod = import('sourceset')
 laswp_ss = ssmod.source_set()
 zlaswp_ss = ssmod.source_set()
 
+laswp_ss.add(when: ['ARCH_ALPHA'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_ALPHA'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_ARM', 'CORE2'], if_true: files('laswp_k_2.c'))
+zlaswp_ss.add(when: ['ARCH_ARM', 'CORE2'], if_true: files('zlaswp_k_2.c'))
+
+laswp_ss.add(when: ['ARCH_ARM', 'OPTERON'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_ARM', 'OPTERON'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_ARM', 'PRESCOTT'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_ARM', 'PRESCOTT'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_ARM64', 'CORE2'], if_true: files('laswp_k_2.c'))
+zlaswp_ss.add(when: ['ARCH_ARM64', 'CORE2'], if_true: files('zlaswp_k_2.c'))
+
+laswp_ss.add(when: ['ARCH_ARM64', 'OPTERON'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_ARM64', 'OPTERON'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_ARM64', 'PRESCOTT'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_ARM64', 'PRESCOTT'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_MIPS64'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_MIPS64'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_POWER'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_POWER'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_SPARC'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_SPARC'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_X86', 'CORE2'], if_true: files('laswp_k_2.c'))
+zlaswp_ss.add(when: ['ARCH_X86', 'CORE2'], if_true: files('zlaswp_k_2.c'))
+
+laswp_ss.add(when: ['ARCH_X86', 'OPTERON'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_X86', 'OPTERON'], if_true: files('zlaswp_k_1.c'))
+
+laswp_ss.add(when: ['ARCH_X86', 'PRESCOTT'], if_true: files('laswp_k_1.c'))
+zlaswp_ss.add(when: ['ARCH_X86', 'PRESCOTT'], if_true: files('zlaswp_k_1.c'))
+
 laswp_ss.add(when: ['ARCH_X86_64', 'CORE2'], if_true: files('laswp_k_2.c'))
 zlaswp_ss.add(when: ['ARCH_X86_64', 'CORE2'], if_true: files('zlaswp_k_2.c'))
 
