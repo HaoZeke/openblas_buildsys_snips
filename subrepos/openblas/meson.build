@@ -113,10 +113,11 @@ endif
 
 defarch_array = [
  # {'system': ['windows', 'cygwin'], 'def': ['OS_WINDOWS']},
- {'cpu': ['aarch64'], 'def': ['ARCH_ARGM64']},
+ {'cpu': ['aarch64'], 'def': ['ARCH_ARM64']},
  {'cpu': ['alpha'], 'def': ['ARCH_ALPHA']},
  {'cpu': ['arm'], 'def': ['ARCH_ARM', 'USE_TRMM']},
- {'cpu': ['x86_64'], 'def': ['INTEL_AMD', 'USE_GEMM3M', 'USE_DIRECT_SGEMM']},
+ {'cpu': ['x86_64'], 'def': ['ARCH_X86_64', 'INTEL_AMD', 'USE_GEMM3M', 'USE_DIRECT_SGEMM']},
+ {'cpu': ['x86'], 'def': ['ARCH_X86']},
  {'cpu': ['s390x'], 'def': ['ARCH_ZARCH', 'ZARCH']},
  {'cpu': ['ia64'], 'def': ['ARCH_IA64', 'USE_GEMM3M']},
  {'cpu': ['sparc'], 'def': ['ARCH_SPARC']},
