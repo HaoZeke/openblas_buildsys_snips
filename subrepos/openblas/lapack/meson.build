@@ -108,6 +108,20 @@ _lapack_roots = [
     # simpler one would suffice, all the Makefiles build variations of a single
     # set of files in generic
     {
+        'base': '?laswp_*',
+        '_types': ['s', 'd'],
+        '_meth': {'plus': ['-UMINUS'], 'minus': ['-DMINUS']},
+        'fdir': 'laswp/generic',
+        'fname': 'laswp_k.c',
+    },
+    {
+        'base': '?laswp_*',
+        '_types': ['c', 'z'],
+        '_meth': {'plus': ['-UMINUS'], 'minus': ['-DMINUS']},
+        'fdir': 'laswp/generic',
+        'fname': 'zlaswp_k.c',
+    },
+    {
         'base': '?trti2_*',
         '_types': ['s', 'd', 'q'],
         '_meth': {'UU': ['-DUNIT'], 'UN': ['-UUNIT']},
