@@ -588,6 +588,68 @@ foreach key,val : conf_kv
   endif
 endforeach
 
+# Define target-specific data in a dictionary
+target_data = {
+    # These are from prebuild.cmake
+    'CORE2': {
+        'L1_DATA_SIZE': 32768,
+        'L1_DATA_LINESIZE': 64,
+        'L2_SIZE': 1048576,
+        'L2_LINESIZE': 64,
+        'DTB_DEFAULT_ENTRIES': 256,
+        'DTB_SIZE': 4096,
+        'HAVE_CMOV': true,
+        'HAVE_MMX': true,
+        'HAVE_SSE': true,
+        'HAVE_SSE2': true,
+        'HAVE_SSE3': true,
+        'HAVE_SSSE3': true,
+        'SLOCAL_BUFFER_SIZE': 16384,
+        'DLOCAL_BUFFER_SIZE': 16384,
+        'CLOCAL_BUFFER_SIZE': 16384,
+        'ZLOCAL_BUFFER_SIZE': 16384,
+        'SBGEMM_UNROLL_M': 8,
+        'SBGEMM_UNROLL_N': 4,
+        'SGEMM_UNROLL_M': 8,
+        'SGEMM_UNROLL_N': 4,
+        'DGEMM_UNROLL_M': 4,
+        'DGEMM_UNROLL_N': 4,
+        'CGEMM_UNROLL_M': 4,
+        'CGEMM_UNROLL_N': 2,
+        'ZGEMM_UNROLL_M': 2,
+        'ZGEMM_UNROLL_N': 2,
+        'CGEMM3M_UNROLL_M': 8,
+        'CGEMM3M_UNROLL_N': 4,
+        'ZGEMM3M_UNROLL_M': 4,
+    },
+    'HASWELL': {
+        },
+}
+
+
+_target = get_option('target')
+if _target != 'UNKNOWN'
+  tcore = _target.to_upper()
+  conf_data = target_data.get(tcore)
+  # Unset things first
+  foreach key, _ : target_data
+    conf_hdat.set(key, false)
+  endforeach
+  foreach key, _ : conf_data
+    conf_hdat.set(key, false)
+  endforeach
+  # Now we can set things
+
+    # Set CORE and related defines
+    conf_hdat.set10(tcore, true)
+    conf_hdat.set('CORE_' + tcore, true)
+    conf_hdat.set_quoted('CHAR_CORENAME', tcore)
+
+    foreach key, val: conf_data
+      conf_hdat.set(key, val)
+    endforeach
+endif
+
 makefile_conf_kv = keyval.load(f'@_mbproot@/Makefile.conf')
 makefile_conf_dat = configuration_data()
 foreach key,val : makefile_conf_kv
