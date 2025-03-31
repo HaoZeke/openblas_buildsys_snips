@@ -58,3 +58,5 @@ ruff_format = "ruff format ."
 lint        = { composite = [ "ruff_fix", "ruff_format" ] }
 test        = "pytest --cov=src tests"
 mkdoc = {composite = ["sphinx-build -b html docs/source docs/build/html"]}
+[tool.ruff]
+extend-exclude = ["subrepos"]
