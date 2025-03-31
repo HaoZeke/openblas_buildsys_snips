@@ -278,6 +278,47 @@ endforeach
 # CPU dispatch in the folder
 subdir('laswp/generic')
 
+# Handle netlib fill-in, i.e. adding all the symbols without optimized variants
+
+lapack_netlib_roots = [
+    {'base': '?gebal', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?gehrd', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?gehd2', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?larfb', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?ladiv', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?larfg', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': 'ila?lc', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?larf', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?lacpy', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?lahr2', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?isnan', '_t': ['s', 'd'], 'froot': 'SRC'},
+    {'base': '?laisnan', '_t': ['s', 'd'], 'froot': 'SRC'},
+    {'base': '?lamch', '_t': ['s', 'd'], 'froot': 'INSTALL'},
+    {'base': 'lsame', '_t': [''], 'froot': 'INSTALL'},
+    {'base': 'ilaver', '_t': [''], 'froot': 'INSTALL'},
+]
+
+foreach simple_def : lapack_netlib_roots
+  base_pattern = simple_def['base']
+  _tlist = simple_def['_t']
+  _fdir = '../lapack-netlib/' + simple_def['froot']
+
+  # Loop through each LAPACK type (s, d, c, z)
+  foreach _type : _tlist
+    # Construct the specific filename (e.g., sgebal.c, dgebal.c, etc.)
+    sym_name = base_pattern.replace('?', _type)
+    fname = _type + base_pattern.replace('?', '') + '.c'
+
+    _lapack_roots += {
+      'base': base_pattern,
+      '_types': [_type],
+      'fdir': _fdir,
+      'fname': fname
+    }
+  endforeach
+endforeach
+
+
 _lapack_libs = []
 foreach conf : _lapack_roots
     foreach type : conf['_types']

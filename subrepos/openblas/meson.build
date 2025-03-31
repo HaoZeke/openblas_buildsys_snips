@@ -1839,7 +1839,6 @@ endforeach
 
 # Ignoring other hostarch checks and conflicts for arch in BSD for now
 _inc = [include_directories('.')]
-subdir('lapack-netlib')
 subdir('interface')
 subdir('driver/level2')
 subdir('driver/level3')
@@ -1931,6 +1930,11 @@ if build_testing
   subdir('utest')
 endif
 
+# Handle LAPACK
+# This prepares:
+# netlib_lapack => complete build (including reference BLAS)
+# netlib_shim_lapack => `lapack.cmake` equivalent for folding into openblas
+subdir('lapack-netlib')
 
 # Dependency setup
 openblas_dep =  declare_dependency(
