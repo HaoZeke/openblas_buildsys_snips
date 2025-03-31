@@ -242,6 +242,20 @@
 <h2>Process<a class="headerlink" href="#process" title="Link to this heading">#</a></h2>
 <p>In practice, this means integration testing with <code class="docutils literal notranslate"><span class="pre">scipy</span></code>.</p>
 </section>
+<section id="wrapdb">
+<h2>WrapDB<a class="headerlink" href="#wrapdb" title="Link to this heading">#</a></h2>
+<p>See this original PR.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">DDIR</span><span class="o">=</span><span class="s2">&quot;/home/rgoswami/Git/Github/Quansight/wrapdb/subprojects/packagefiles/openblas&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SDIR</span><span class="o">=</span><span class="s2">&quot;/home/rgoswami/Git/Github/Quansight/OpenBLAS&quot;</span><span class="w"> </span>
+rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<span class="w"> </span>--include<span class="o">=</span><span class="s2">&quot;*/&quot;</span><span class="w"> </span>--include<span class="o">=</span><span class="s2">&quot;meson_options.txt&quot;</span><span class="w"> </span>--exclude<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="nv">$SDIR</span>/<span class="w"> </span><span class="nv">$DDIR</span>
+rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<span class="w"> </span>--include<span class="o">=</span><span class="s2">&quot;*/&quot;</span><span class="w"> </span>--include<span class="o">=</span><span class="s2">&quot;meson.build&quot;</span><span class="w"> </span>--exclude<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="nv">$SDIR</span>/<span class="w"> </span><span class="nv">$DDIR</span>
+<span class="c1"># Remove benchmarks</span>
+</pre></div>
+</div>
+</section>
+<section id="relevant-samples">
+<h2>Relevant samples<a class="headerlink" href="#relevant-samples" title="Link to this heading">#</a></h2>
+</section>
 </section>
 
         </article>
@@ -283,6 +297,8 @@
             <ul>
 <li><a class="reference internal" href="#">Upstream contribution scheme</a><ul>
 <li><a class="reference internal" href="#process">Process</a></li>
+<li><a class="reference internal" href="#wrapdb">WrapDB</a></li>
+<li><a class="reference internal" href="#relevant-samples">Relevant samples</a></li>
 </ul>
 </li>
 </ul>

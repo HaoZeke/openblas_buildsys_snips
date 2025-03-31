@@ -8,3 +8,19 @@ The general context for the `openblas` work was to integrate with `scipy`. In pr
 ## Process
 
 In practice, this means integration testing with `scipy`.
+
+## WrapDB
+
+See this original PR.
+
+```bash
+export DDIR="/home/rgoswami/Git/Github/Quansight/wrapdb/subprojects/packagefiles/openblas"
+export SDIR="/home/rgoswami/Git/Github/Quansight/OpenBLAS" 
+rsync -zarv --prune-empty-dirs --include="*/" --include="meson_options.txt" --exclude="*" $SDIR/ $DDIR
+rsync -zarv --prune-empty-dirs --include="*/" --include="meson.build" --exclude="*" $SDIR/ $DDIR
+# Remove benchmarks
+```
+
+## Relevant samples
+
+
