@@ -1608,7 +1608,7 @@ packages:
 - pypi: ./
   name: openblas-buildsys-snips
   version: 0.1.0
-  sha256: 8f9d6e490c86e0eb9d02ee29885ab162a30a10fdb0fed07e041a724a21c10d31
+  sha256: fdd32d47f99686fb6b4d2276fe58522470efc7abdfa06967937a424c7f4a53fa
   requires_dist:
   - pytest-benchmark>=4.0.0
   - memray>=1.12.0
