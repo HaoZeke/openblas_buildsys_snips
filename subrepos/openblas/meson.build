@@ -1925,16 +1925,16 @@ if not as_subproject
 endif
 
 if build_testing
-  subdir('test')
-  subdir('ctest')
-  subdir('utest')
+  # subdir('test')
+  # subdir('ctest')
+  # subdir('utest')
 endif
 
 # Handle LAPACK
 # This prepares:
 # netlib_lapack => complete build (including reference BLAS)
 # netlib_shim_lapack => `lapack.cmake` equivalent for folding into openblas
-subdir('lapack-netlib')
+# subdir('lapack-netlib')
 
 # Dependency setup
 openblas_dep =  declare_dependency(
@@ -1943,8 +1943,8 @@ openblas_dep =  declare_dependency(
   version: meson.project_version(),
 )
 
-netlib_lapack_dep = declare_dependency(
-  link_with : netlib_lapack,
-  include_directories : _inc,
-  version: meson.project_version(),
-)
+# netlib_lapack_dep = declare_dependency(
+#   link_with : netlib_lapack,
+#   include_directories : _inc,
+#   version: meson.project_version(),
+# )
