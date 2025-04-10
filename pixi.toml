@@ -14,6 +14,13 @@ jupytext = "1.16.1.*"
 pdm = "2.12.4.*"
 pip = "24.0.*"
 spin = ">=0.13,<0.14"
+doit = ">=0.36.0,<0.37"
+pydevtool = ">=0.3.0,<0.4"
+rich-click = ">=1.8.8,<2"
+pythran = ">=0.17.0,<0.18"
+pybind11 = ">=2.13.6,<3"
+ccache = ">=4.11.2,<5"
+libgcc-ng = ">=14.2.0,<15"
 
 [pypi-dependencies]
 openblas_buildsys_snips = { path = "./", editable = true}
