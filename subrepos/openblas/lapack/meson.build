@@ -1,3 +1,6 @@
+add_languages('fortran', native: false)
+lapack_deps = [ fc.find_library('quadmath', required: true) ]
+
 lapack_args = []
 # Recall from the LAPACK Users Guide 1990 that:
 # XYYZZZ
@@ -321,7 +324,7 @@ lapack_netlib_roots = [
     {'base': '?larrk', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?larrr', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?laneg', '_t': ['s', 'd'], 'froot': 'SRC'},
-    {'base': '?lartg', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?lartg', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC', 'ext': '.f90'},
     {'base': '?laruv', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?las2', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?lascl', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
@@ -346,7 +349,7 @@ lapack_netlib_roots = [
     {'base': '?lasq6', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?lasr', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     {'base': '?lasrt', '_t': ['s', 'd'], 'froot': 'SRC'},
-    {'base': '?lassq', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?lassq', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC', 'ext': '.f90'},
     {'base': '?lasv2', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?pttrf', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     {'base': '?stebz', '_t': ['s', 'd'], 'froot': 'SRC'},
@@ -714,8 +717,8 @@ lapack_netlib_roots = [
     {'base': '?tplqt2', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     {'base': '?tpmlqt', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     {'base': '?sytrd_2stage', '_t': ['s', 'd'], 'froot': 'SRC'},
-    {'base': '?sytrd_sy2sb', '_t': ['s', 'd'], 'froot': 'SRC'},
-    {'base': '?sytrd_sb2st', '_t': ['s', 'd'], 'froot': 'SRC'},
+    {'base': '?sytrd_sy2sb', '_t': ['s', 'd'], 'froot': 'SRC', 'ext': '.f'},
+    {'base': '?sytrd_sb2st', '_t': ['s', 'd'], 'froot': 'SRC', 'ext': '.F'},
     {'base': '?sb2st_kernels', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?syevd_2stage', '_t': ['s', 'd'], 'froot': 'SRC'},
     {'base': '?syev_2stage', '_t': ['s', 'd'], 'froot': 'SRC'},
@@ -734,8 +737,8 @@ lapack_netlib_roots = [
     {'base': '?latrs3', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     {'base': '?trsyl3', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     {'base': '?gelst', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
-    {'base': '?gedmd', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
-    {'base': '?gedmdq', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
+    {'base': '?gedmd', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC', 'ext': '.f90'},
+    {'base': '?gedmdq', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC', 'ext': '.f90'},
     {'base': '?trtri', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC'},
     # {'base': '?gesvxx', '_t': ['s', 'd'], 'froot': 'SRC'},
     # {'base': '?gerfsx', '_t': ['s', 'd'], 'froot': 'SRC'},
@@ -921,7 +924,11 @@ foreach simple_def : lapack_netlib_roots
   foreach _type : _tlist
     # Construct the specific filename (e.g., sgebal.c, dgebal.c, etc.)
     sym_name = base_pattern.replace('?', _type)
-    fname = sym_name + '.c'
+    if simple_def.has_key('ext')
+      fname = sym_name + simple_def['ext']
+    else
+      fname = sym_name + '.f'
+    endif
 
     _lapack_roots += {
       'base': base_pattern,

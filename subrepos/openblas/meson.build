@@ -155,8 +155,6 @@ if cpu_fam == 'x86_64'
   _cargs += ['-m64']
 endif
 
-quadmath_dep = fc.find_library('quadmath', required: false)
-
 if fc_id == 'gcc'
     add_project_arguments('-DF_INTERFACE_GFORT', language: 'c')
 else
@@ -1857,7 +1855,7 @@ openblas = library('openblas',
                            _kern,
                            _lapack,
                           ],
-                          dependencies: [threads_dep, quadmath_dep],
+                          dependencies: threads_dep,
                           override_options: ['b_lundef=false', 'b_asneeded=false'],
                           install: true,
                          )
