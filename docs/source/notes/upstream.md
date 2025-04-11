@@ -114,8 +114,22 @@ lapack.dpotrf(a, np.zeros(4))
 
 ```bash
 PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/../pkgconfig" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
+python dev.py test -- -k linprog -x
+# ...? AGAIN.
 ```
 
+Though once again, things work out just fine in most cases.
+
+```bash
+python dev.py ipython
+```
+
+```python
+import numpy as np
+from scipy.linalg import lapack
+a=np.random.rand(4,4)
+lapack.dpotrf(a, np.zeros(4))
+```
 
 ## WrapDB Updates
 
