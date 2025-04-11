@@ -114,8 +114,36 @@ lapack.dpotrf(a, np.zeros(4))
 
 ```bash
 PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/../pkgconfig" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
+python dev.py test -- -k linprog -x
+# ...? AGAIN.
 ```
 
+Though this time, things **do not work**.
+
+```bash
+python dev.py ipython
+```
+
+```python
+import numpy as np
+from scipy.linalg import lapack
+a=np.random.rand(4,4)
+lapack.dpotrf(a, np.zeros(4))
+...
+ImportError: /home/rgoswami/Git/Github/ScientificPython/scipy/build-install/lib/python3.12/site-packages/scipy/linalg/cython_blas.cpython-312-x86_64-linux-gnu.so: undefined symbol: dcabs1_
+```
+
+Likely becuase of [gh-1390](https://github.com/mesonbuild/meson/issues/13940), so `make` runs:
+
+```bash
+[2025-04-11T13:17:05Z INFO] cc -c -O2 -DSMALL_MATRIX_OPT -DMAX_STACK_ALLOC=2048 -Wall -m64 -DF_INTERFACE_GFORT -fPIC -DSMP_SERVER -DNO_WARMUP -DMAX_CPU_NUMBER=12 -DMAX_PARALLEL_NUMBER=1 -DBUILD_SINGLE=1 -DBUILD_DOUBLE=1 -DBUILD_COMPLEX=1 -DBUILD_COMPLEX16=1 -DVERSION=\"0.3.28.dev\" -msse3 -mssse3 -msse4.1 -mavx -mavx2 -mavx2 -UASMNAME -UASMFNAME -UNAME -UCNAME -UCHAR_NAME -UCHAR_CNAME -DASMNAME=dcabs1 -DASMFNAME=dcabs1_ -DNAME=dcabs1_ -DCNAME=dcabs1 -DCHAR_NAME=\"dcabs1_\" -DCHAR_CNAME=\"dcabs1\" -DNO_AFFINITY -I.. -DCOMPLEX -DDOUBLE -DF_INTERFACE ../kernel/x86_64/cabs.S -o dcabs1.o
+```
+
+While `meson` ends up with:
+
+```bash
+[2025-04-11T13:51:41Z INFO] [3688/10425] gfortran -Ikernel/libdcabs1.a.p -Ikernel -I../kernel -I. -I.. -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -O0 -g -Wno-conversion -Wno-maybe-uninitialized -Wno-unused-dummy-argument -Wno-unused-variable -fPIC -m64 -DSMP_SERVER -DBUILD_SINGLE=1 -DBUILD_DOUBLE=1 -DBUILD_COMPLEX=1 -DBUILD_COMPLEX16=1 -UASMNAME -UASMFNAME -UNAME -UCNAME -UCHAR_NAME -UCHAR_CNAME -DNO_AFFINITY -DNO_WARMUP -DDOUBLE -UCOMPLEX -DASMNAME=dcabs1 -DASMFNAME=dcabs1_ -DNAME=dcabs1_ -DCNAME=dcabs1 '-DCHAR_NAME="dcabs1_"' '-DCHAR_CNAME="dcabs1"' -Jkernel/libdcabs1.a.p -o kernel/libdcabs1.a.p/x86_64_cabs.S.o -c ../kernel/x86_64/cabs.S
+```
 
 ## WrapDB Updates
 
