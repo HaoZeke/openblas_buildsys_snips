@@ -9,6 +9,10 @@ The general context for the `openblas` work was to integrate with `scipy`. In pr
 
 In practice, this means integration testing with `scipy`.
 
+```bash
+PKG_CONFIG_PATH="$(OPENBLAS_GITROOT)/../pkgconfig" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
+```
+
 ## WrapDB
 
 See this original PR.
