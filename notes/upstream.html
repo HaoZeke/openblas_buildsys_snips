@@ -241,10 +241,105 @@
 <section id="process">
 <h2>Process<a class="headerlink" href="#process" title="Link to this heading">#</a></h2>
 <p>In practice, this means integration testing with <code class="docutils literal notranslate"><span class="pre">scipy</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.linalg</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">get_blas_funcs</span><span class="p">(</span><span class="s1">&#39;axpy&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">get_lapack_funcs</span><span class="p">(</span><span class="s1">&#39;gesvd&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Actually similar to <code class="docutils literal notranslate"><span class="pre">numpy.show_config()</span></code> we can double check what’s getting used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scipy</span><span class="o">.</span><span class="n">show_config</span><span class="p">(</span><span class="s1">&#39;dicts&#39;</span><span class="p">)[</span><span class="s1">&#39;Build Dependencies&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<section id="baseline">
+<h3>Baseline<a class="headerlink" href="#baseline" title="Link to this heading">#</a></h3>
+<p>Remember the library locations can be queried from:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">SOMTHIN</span><span class="si">}</span><span class="w"> </span>gcc<span class="w"> </span>--print-file-name<span class="o">=</span>libopenblas.so
+<span class="c1"># or</span>
+<span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">WHTEVA</span><span class="si">}</span><span class="w"> </span>--cflags<span class="w"> </span>--libs<span class="w"> </span>openblas
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span>
+<span class="c1"># bless is optional, helps with logging</span>
+bless<span class="w"> </span>--label<span class="w"> </span>makelog_sys<span class="w"> </span>--<span class="w"> </span>make<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span>
+make<span class="w"> </span>install<span class="w"> </span><span class="nv">PREFIX</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/local-make
+</pre></div>
+</div>
+<p>Now over to <code class="docutils literal notranslate"><span class="pre">scipy</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/local-make/lib/pkgconfig&quot;</span><span class="w"> </span>python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>openblas<span class="w"> </span>-C-Dlapack<span class="o">=</span>openblas
+python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--<span class="w"> </span>-k<span class="w"> </span>linprog<span class="w"> </span>-x
+<span class="c1"># ...?</span>
+</pre></div>
+</div>
+<p>Which yields:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>💻<span class="w">  </span>ninja<span class="w"> </span>-C<span class="w"> </span>/home/rgoswami/Git/Github/ScientificPython/scipy/build<span class="w"> </span>-j10
+ninja:<span class="w"> </span>Entering<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/home/rgoswami/Git/Github/ScientificPython/scipy/build<span class="s1">&#39;</span>
+<span class="s1">[2/338] Generating subprojects/highs/src/HConfig.h with a custom command</span>
+<span class="s1">Build OK</span>
+<span class="s1">💻  meson install -C build --only-changed --tags runtime,python-runtime,tests,devel</span>
+<span class="s1">Installing, see meson-install.log...</span>
+<span class="s1">Installation OK</span>
+<span class="s1">SciPy from development installed path at: /home/rgoswami/Git/Github/ScientificPython/scipy/build-install/lib/python3.12/site-packages</span>
+<span class="s1">Running tests for scipy version:1.16.0.dev0+git20250410.aeaed57, installed at:/home/rgoswami/Git/Github/ScientificPython/scipy/build-install/lib/python3.12/site-packages/scipy</span>
+<span class="s1">===================================== test session starts =====================================</span>
+<span class="s1">platform linux -- Python 3.12.9, pytest-8.3.4, pluggy-1.5.0</span>
+<span class="s1">benchmark: 5.1.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)</span>
+<span class="s1">rootdir: /home/rgoswami/Git/Github/ScientificPython/scipy</span>
+<span class="s1">configfile: pytest.ini</span>
+<span class="s1">plugins: anyio-4.3.0, cov-5.0.0, approvaltests-0.2.4, datadir-1.5.0, approvaltests-14.3.0, benchmark-5.1.0, hypothesis-6.130.6, xdist-3.6.1, timeout-2.3.1</span>
+<span class="s1">collected 19 items / 1 error                                                                  </span>
+
+<span class="s1">=========================================== ERRORS ============================================</span>
+<span class="s1">_ ERROR collecting build-install/lib/python3.12/site-packages/scipy/_lib/tests/test__util.py __</span>
+<span class="s1">ImportError while importing test module &#39;</span>/home/rgoswami/Git/Github/ScientificPython/scipy/build-install/lib/python3.12/site-packages/scipy/_lib/tests/test__util.py<span class="s1">&#39;.</span>
+<span class="s1">Hint: make sure your test modules/packages have valid Python names.</span>
+<span class="s1">Traceback:</span>
+<span class="s1">../../../../../../Python/openblas_buildsys_snips/.pixi/envs/default/lib/python3.12/importlib/__init__.py:90: in import_module</span>
+<span class="s1">    return _bootstrap._gcd_import(name[level:], package, level)</span>
+<span class="s1">scipy/_lib/tests/test__util.py:21: in &lt;module&gt;</span>
+<span class="s1">    from scipy import cluster, interpolate, linalg, optimize, sparse, spatial, stats</span>
+<span class="s1">scipy/__init__.py:131: in __getattr__</span>
+<span class="s1">    return _importlib.import_module(f&#39;</span>scipy.<span class="o">{</span>name<span class="o">}</span><span class="err">&#39;</span><span class="o">)</span>
+../../../../../../Python/openblas_buildsys_snips/.pixi/envs/default/lib/python3.12/importlib/__init__.py:90:<span class="w"> </span><span class="k">in</span><span class="w"> </span>import_module
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>_bootstrap._gcd_import<span class="o">(</span>name<span class="o">[</span>level:<span class="o">]</span>,<span class="w"> </span>package,<span class="w"> </span>level<span class="o">)</span>
+scipy/cluster/__init__.py:27:<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>.<span class="w"> </span>import<span class="w"> </span>vq,<span class="w"> </span>hierarchy
+scipy/cluster/vq.py:76:<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>scipy.spatial.distance<span class="w"> </span>import<span class="w"> </span>cdist
+scipy/spatial/__init__.py:116:<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>._geometric_slerp<span class="w"> </span>import<span class="w"> </span>geometric_slerp
+scipy/spatial/_geometric_slerp.py:7:<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>scipy.spatial.distance<span class="w"> </span>import<span class="w"> </span>euclidean
+scipy/spatial/distance.py:122:<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>.<span class="w"> </span>import<span class="w"> </span>_hausdorff,<span class="w"> </span>_distance_pybind,<span class="w"> </span>_distance_wrap
+E<span class="w">   </span>ImportError:<span class="w"> </span>/home/rgoswami/Git/Github/ScientificPython/scipy/build-install/lib/python3.12/site-packages/scipy/spatial/_distance_pybind.cpython-312-x86_64-linux-gnu.so:<span class="w"> </span>undefined<span class="w"> </span>symbol:<span class="w"> </span><span class="nv">__cxa_call_terminate</span>
+<span class="o">===================================</span><span class="w"> </span>short<span class="w"> </span><span class="nb">test</span><span class="w"> </span>summary<span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="o">===================================</span>
+ERROR<span class="w"> </span>scipy/_lib/tests/test__util.py
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<span class="w"> </span>stopping<span class="w"> </span>after<span class="w"> </span><span class="m">1</span><span class="w"> </span>failures<span class="w"> </span>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<span class="o">======================================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>error<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.13s<span class="w"> </span><span class="o">=======================================</span>
+</pre></div>
+</div>
+<p>Although its nice to know at-least some of these are working..</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>dev.py<span class="w"> </span>ipython
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">lapack</span>
+<span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">lapack</span><span class="o">.</span><span class="n">dpotrf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
 </section>
-<section id="wrapdb">
-<h2>WrapDB<a class="headerlink" href="#wrapdb" title="Link to this heading">#</a></h2>
-<p>See this original PR.</p>
+<section id="with-meson">
+<h3>With <code class="docutils literal notranslate"><span class="pre">meson</span></code><a class="headerlink" href="#with-meson" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/../pkgconfig&quot;</span><span class="w"> </span>python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>meson-openblas<span class="w"> </span>-C-Dlapack<span class="o">=</span>meson-openblas
+</pre></div>
+</div>
+</section>
+</section>
+<section id="wrapdb-updates">
+<h2>WrapDB Updates<a class="headerlink" href="#wrapdb-updates" title="Link to this heading">#</a></h2>
+<p>Basically copy over everything and ditch the <code class="docutils literal notranslate"><span class="pre">benchmarks</span></code> folder.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">DDIR</span><span class="o">=</span><span class="s2">&quot;/home/rgoswami/Git/Github/Quansight/wrapdb/subprojects/packagefiles/openblas&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SDIR</span><span class="o">=</span><span class="s2">&quot;/home/rgoswami/Git/Github/Quansight/OpenBLAS&quot;</span><span class="w"> </span>
 rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<span class="w"> </span>--include<span class="o">=</span><span class="s2">&quot;*/&quot;</span><span class="w"> </span>--include<span class="o">=</span><span class="s2">&quot;meson_options.txt&quot;</span><span class="w"> </span>--exclude<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="nv">$SDIR</span>/<span class="w"> </span><span class="nv">$DDIR</span>
@@ -296,8 +391,12 @@ rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<spa
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Upstream contribution scheme</a><ul>
-<li><a class="reference internal" href="#process">Process</a></li>
-<li><a class="reference internal" href="#wrapdb">WrapDB</a></li>
+<li><a class="reference internal" href="#process">Process</a><ul>
+<li><a class="reference internal" href="#baseline">Baseline</a></li>
+<li><a class="reference internal" href="#with-meson">With <code class="docutils literal notranslate"><span class="pre">meson</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wrapdb-updates">WrapDB Updates</a></li>
 <li><a class="reference internal" href="#relevant-samples">Relevant samples</a></li>
 </ul>
 </li>
