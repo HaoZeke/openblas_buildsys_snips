@@ -1,3 +1,4 @@
+# TODO: This is all specialized for Fortran LAPACK only for now
 add_languages('fortran', native: false)
 lapack_deps = [ fc.find_library('quadmath', required: true) ]
 
@@ -282,6 +283,59 @@ endforeach
 subdir('laswp/generic')
 
 # Handle netlib fill-in, i.e. adding all the symbols without optimized variants
+
+lapack_base_netlib = [
+    # This is basically _install_aux
+    {'base': 'ilaver', '_t': [''], 'froot': 'INSTALL'}, # needed here
+    {'base': 'lsame', '_t': [''], 'froot': 'INSTALL'},
+    {'base': '?lamch', '_t': ['s', 'd'], 'froot': 'INSTALL'},
+    {'base': '?roundup_lwork', '_t': ['s', 'd'], 'froot': 'INSTALL'},
+    {'base': '?secnd_INT_CPU_TIME', '_t': ['d'], 'froot': 'INSTALL'},
+    # This is basically _auxlapack from lapack-netlib/SRC
+    {'base': 'ilaenv2stage', '_t': [''], 'froot': 'SRC'},
+    {'base': 'ieeeck', '_t': [''], 'froot': 'SRC'},
+    {'base': 'lsamen', '_t': [''], 'froot': 'SRC'},
+    {'base': 'iparmq', '_t': [''], 'froot': 'SRC'},
+    {'base': 'iparam2stage', '_t': [''], 'froot': 'SRC', 'ext': '.F'},
+    {'base': 'ilaprec', '_t': [''], 'froot': 'SRC'},
+    {'base': 'ilatrans', '_t': [''], 'froot': 'SRC'},
+    {'base': 'ilauplo', '_t': [''], 'froot': 'SRC'},
+    {'base': 'iladiag', '_t': [''], 'froot': 'SRC'},
+    {'base': 'chla_transtype', '_t': [''], 'froot': 'SRC'},
+    {'base': 'la_xisnan', '_t': [''], 'froot': 'SRC', 'ext': '.F90'},
+    {'base': 'la_constants', '_t': [''], 'froot': 'SRC', 'ext': '.f90'},
+    {'base': 'xerbla_array', '_t': [''], 'froot': 'SRC'},
+]
+
+_allaux = []
+foreach simple_def : lapack_base_netlib
+  base_pattern = simple_def['base']
+  _tlist = simple_def['_t']
+  _fdir = '../lapack-netlib/' + simple_def['froot']
+
+    if simple_def.has_key('ext')
+      fname = sym_name + simple_def['ext']
+    else
+      fname = sym_name + '.f'
+    endif
+
+  foreach _type : _tlist
+    # Construct the specific filename (e.g., sgebal.c, dgebal.c, etc.)
+    sym_name = base_pattern.replace('?', _type)
+    if simple_def.has_key('ext')
+      fname = sym_name + simple_def['ext']
+    else
+      fname = sym_name + '.f'
+    endif
+    _allaux += f'@_fdir@/@fname@'
+  endforeach
+
+endforeach
+
+# _auxlapack -- Auxiliary routines for lapack
+_auxlapack = static_library('_auxlapack',
+                     sources: _allaux,
+                    )
 
 lapack_netlib_roots = [
     {'base': '?combssq', '_t': ['s', 'd'], 'froot': 'SRC'},
@@ -893,22 +947,7 @@ lapack_netlib_roots = [
     {'base': 'scsum1', '_t': [''], 'froot': 'SRC'},
     {'base': 'dzsum1', '_t': [''], 'froot': 'SRC'},
     {'base': 'ilaenv', '_t': [''], 'froot': 'SRC'},
-    {'base': 'ilaenv2stage', '_t': [''], 'froot': 'SRC'},
-    {'base': 'ieeeck', '_t': [''], 'froot': 'SRC'},
-    {'base': 'lsamen', '_t': [''], 'froot': 'SRC'},
-    {'base': 'iparmq', '_t': [''], 'froot': 'SRC'},
-    {'base': 'iparam2stage', '_t': [''], 'froot': 'SRC'},
-    {'base': 'ilaprec', '_t': [''], 'froot': 'SRC'},
-    {'base': 'ilatrans', '_t': [''], 'froot': 'SRC'},
-    {'base': 'ilauplo', '_t': [''], 'froot': 'SRC'},
-    {'base': 'iladiag', '_t': [''], 'froot': 'SRC'},
-    {'base': 'chla_transtype', '_t': [''], 'froot': 'SRC'},
     # {'base': 'dlaset', '_t': [''], 'froot': 'SRC'},
-    {'base': 'xerbla_array', '_t': [''], 'froot': 'SRC'},
-    # --- Auxiliary
-    {'base': '?lamch', '_t': ['s', 'd'], 'froot': 'INSTALL'},
-    {'base': 'ilaver', '_t': [''], 'froot': 'INSTALL'},
-    {'base': 'lsame', '_t': [''], 'froot': 'INSTALL'},
 
     # {'base': 'lapacke_ctrtri', '_t': [''], 'froot': 'LAPACKE/src'},
     # {'base': 'lapacke_nancheck', '_t': [''], 'froot': 'LAPACKE/src'},
@@ -1004,6 +1043,7 @@ foreach conf : _lapack_roots
                 lib = static_library(
                     sym_name,
                     sources: all_srcs,
+                    link_whole: _auxlapack,
                     include_directories: _inc,
                     c_args: compiler_args + [
                         f'-DASMNAME=@asm_name_prefix@@sym_name@',
@@ -1022,6 +1062,7 @@ foreach conf : _lapack_roots
             lib = static_library(
                 sym_name,
                 sources: all_srcs,
+                link_whole: _auxlapack,
                 include_directories: _inc,
                 c_args: compiler_args + [
                     f'-DASMNAME=@asm_name_prefix@@sym_name@',
