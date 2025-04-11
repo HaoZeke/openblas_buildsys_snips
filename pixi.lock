@@ -131,7 +131,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/notebook-7.1.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/notebook-shim-0.2.4-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/numpy-2.2.4-py312h72c5963_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/openblas-0.3.29-pthreads_h6ec200e_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/openssl-3.4.1-h7b32b05_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/overrides-7.7.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/packaging-24.0-pyhd8ed1ab_0.conda
@@ -1985,16 +1984,6 @@ packages:
   - pkg:pypi/numpy?source=compressed-mapping
   size: 8424727
   timestamp: 1742255434709
-- conda: https://conda.anaconda.org/conda-forge/linux-64/openblas-0.3.29-pthreads_h6ec200e_0.conda
-  sha256: 49814ee7c946fc583ea9217dfaad23d6bb75868988062fdd921cedc79affd07a
-  md5: 7e4d48870b3258bea920d51b7f495a81
-  depends:
-  - libopenblas 0.3.29 pthreads_h94d23a6_0
-  license: BSD-3-Clause
-  license_family: BSD
-  purls: []
-  size: 6054007
-  timestamp: 1739825745796
 - pypi: ./
   name: openblas-buildsys-snips
   version: 0.1.0

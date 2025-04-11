@@ -21,7 +21,6 @@ pythran = ">=0.17.0,<0.18"
 pybind11 = ">=2.13.6,<3"
 ccache = ">=4.11.2,<5"
 libgcc-ng = ">=14.2.0,<15"
-openblas = ">=0.3.29,<0.4"
 
 [pypi-dependencies]
 openblas_buildsys_snips = { path = "./", editable = true}
