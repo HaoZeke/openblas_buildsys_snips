@@ -287,7 +287,7 @@ subdir('laswp/generic')
 lapack_base_netlib = [
     # This is basically _install_aux
     {'base': 'ilaver', '_t': [''], 'froot': 'INSTALL'}, # needed here
-    {'base': 'lsame', '_t': [''], 'froot': 'INSTALL'},
+    # {'base': 'lsame', '_t': [''], 'froot': 'INSTALL'}, # Part of openblas anyway
     {'base': '?lamch', '_t': ['s', 'd'], 'froot': 'INSTALL'},
     {'base': '?roundup_lwork', '_t': ['s', 'd'], 'froot': 'INSTALL'},
     {'base': '?secnd_INT_CPU_TIME', '_t': ['d'], 'froot': 'INSTALL'},
