@@ -338,13 +338,16 @@ base_kops = [
   },
   { 'base': '?lsame',
     'modes': {
-        '': {'exts': {'': {}}},
+        '': {'exts': {'': {'addl': ['-DF_INTERFACE']}
+                     }},
     },
   },
   { 'base': '?cabs',
     'modes': {
-        's': {'exts': {'1': {}}},
-        'd': {'exts': {'1': {}}},
+        's': {'exts': {'1': {'addl': ['-DF_INTERFACE']}
+                      }},
+        'd': {'exts': {'1': {'addl': ['-DF_INTERFACE']}
+                      }},
         # 'q': {'exts': {'': {}}},
     },
   },
