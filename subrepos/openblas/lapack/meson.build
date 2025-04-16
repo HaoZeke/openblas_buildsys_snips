@@ -900,6 +900,9 @@ lapack_netlib_roots = [
     {'base': '?lacp2', '_t': ['c', 'z'], 'froot': 'SRC'},
     {'base': '?laqhp', '_t': ['c', 'z'], 'froot': 'SRC'},
     {'base': '?lahef', '_t': ['c', 'z'], 'froot': 'SRC'},
+    {'base': '?lahef_aa', '_t': ['c', 'z'], 'froot': 'SRC'},
+    {'base': '?lahef_rk', '_t': ['c', 'z'], 'froot': 'SRC'},
+    {'base': '?lahef_rook', '_t': ['c', 'z'], 'froot': 'SRC'},
     {'base': '?lacrt', '_t': ['c', 'z'], 'froot': 'SRC'},
     {'base': '?lacgv', '_t': ['c', 'z'], 'froot': 'SRC'},
     {'base': '?laesy', '_t': ['c', 'z'], 'froot': 'SRC'},
@@ -1026,6 +1029,7 @@ lapack_netlib_roots = [
     {'base': '?latm6', '_t': ['s', 'd', 'c', 'z'], 'froot': 'TESTING/MATGEN'},
     {'base': '?latm7', '_t': ['s', 'd'], 'froot': 'TESTING/MATGEN'},
     {'base': '?lahilb', '_t': ['s', 'd', 'c', 'z'], 'froot': 'TESTING/MATGEN'},
+    {'base': '?laghe', '_t': ['c', 'z'], 'froot': 'TESTING/MATGEN'},
 
     # {'base': 'dlaset', '_t': [''], 'froot': 'SRC'},
     # {'base': 'lapacke_ctrtri', '_t': [''], 'froot': 'LAPACKE/src'},
