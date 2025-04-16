@@ -952,6 +952,19 @@ lapack_netlib_roots = [
     {'base': 'scsum1', '_t': [''], 'froot': 'SRC'},
     {'base': 'dzsum1', '_t': [''], 'froot': 'SRC'},
     {'base': 'ilaenv', '_t': [''], 'froot': 'SRC'},
+
+    # Deprecated symbols (still built by Makefile:545)
+    {'base': '?gegs', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?gegv', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?gelsx', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?geqpf', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?ggsvd', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?ggsvp', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?lahrd', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?latzm', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?tzrqf', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?gelqs', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
+    {'base': '?geqrs', '_t': ['s', 'd', 'c', 'z'], 'froot': 'SRC/DEPRECATED'},
     # {'base': 'dlaset', '_t': [''], 'froot': 'SRC'},
 
     # {'base': 'lapacke_ctrtri', '_t': [''], 'froot': 'LAPACKE/src'},
