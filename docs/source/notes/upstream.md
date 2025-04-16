@@ -145,6 +145,16 @@ While `meson` ends up with:
 [2025-04-11T13:51:41Z INFO] [3688/10425] gfortran -Ikernel/libdcabs1.a.p -Ikernel -I../kernel -I. -I.. -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -O0 -g -Wno-conversion -Wno-maybe-uninitialized -Wno-unused-dummy-argument -Wno-unused-variable -fPIC -m64 -DSMP_SERVER -DBUILD_SINGLE=1 -DBUILD_DOUBLE=1 -DBUILD_COMPLEX=1 -DBUILD_COMPLEX16=1 -UASMNAME -UASMFNAME -UNAME -UCNAME -UCHAR_NAME -UCHAR_CNAME -DNO_AFFINITY -DNO_WARMUP -DDOUBLE -UCOMPLEX -DASMNAME=dcabs1 -DASMFNAME=dcabs1_ -DNAME=dcabs1_ -DCNAME=dcabs1 '-DCHAR_NAME="dcabs1_"' '-DCHAR_CNAME="dcabs1"' -Jkernel/libdcabs1.a.p -o kernel/libdcabs1.a.p/x86_64_cabs.S.o -c ../kernel/x86_64/cabs.S
 ```
 
+## Debugging and sanity checks
+
+To ensure all the symbols with `_` match consider:
+
+```bash
+nm local-make/lib/libopenblas.so | rg '_$' | awk {'printf ("%1s\t%s\n", $2, $3)'} > _make_symbs
+nm meson_local/lib/libopenblas.so | rg '_$' | awk {'printf ("%1s\t%s\n", $2, $3)'} > _meson_symbs
+meld _make_symbs _meson_symbs
+```
+
 ## WrapDB Updates
 
 Basically copy over everything and ditch the `benchmarks` folder.
