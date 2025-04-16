@@ -359,6 +359,15 @@ python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">tes
 </div>
 </section>
 </section>
+<section id="debugging-and-sanity-checks">
+<h2>Debugging and sanity checks<a class="headerlink" href="#debugging-and-sanity-checks" title="Link to this heading">#</a></h2>
+<p>To ensure all the symbols with <code class="docutils literal notranslate"><span class="pre">_</span></code> match consider:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nm<span class="w"> </span>local-make/lib/libopenblas.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>rg<span class="w"> </span><span class="s1">&#39;_$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="o">{</span><span class="s1">&#39;printf (&quot;%1s\t%s\n&quot;, $2, $3)&#39;</span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>_make_symbs
+nm<span class="w"> </span>meson_local/lib/libopenblas.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>rg<span class="w"> </span><span class="s1">&#39;_$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="o">{</span><span class="s1">&#39;printf (&quot;%1s\t%s\n&quot;, $2, $3)&#39;</span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>_meson_symbs
+meld<span class="w"> </span>_make_symbs<span class="w"> </span>_meson_symbs
+</pre></div>
+</div>
+</section>
 <section id="wrapdb-updates">
 <h2>WrapDB Updates<a class="headerlink" href="#wrapdb-updates" title="Link to this heading">#</a></h2>
 <p>Basically copy over everything and ditch the <code class="docutils literal notranslate"><span class="pre">benchmarks</span></code> folder.</p>
@@ -418,6 +427,7 @@ rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<spa
 <li><a class="reference internal" href="#with-meson">With <code class="docutils literal notranslate"><span class="pre">meson</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#debugging-and-sanity-checks">Debugging and sanity checks</a></li>
 <li><a class="reference internal" href="#wrapdb-updates">WrapDB Updates</a></li>
 <li><a class="reference internal" href="#relevant-samples">Relevant samples</a></li>
 </ul>
