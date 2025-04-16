@@ -332,12 +332,12 @@ ERROR<span class="w"> </span>scipy/_lib/tests/test__util.py
 </section>
 <section id="with-meson">
 <h3>With <code class="docutils literal notranslate"><span class="pre">meson</span></code><a class="headerlink" href="#with-meson" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/../pkgconfig&quot;</span><span class="w"> </span>python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>meson-openblas<span class="w"> </span>-C-Dlapack<span class="o">=</span>meson-openblas
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/meson_local/lib&quot;</span><span class="w"> </span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/../pkgconfig&quot;</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>-Csetup-args<span class="o">=</span>-Dblas<span class="o">=</span>meson-openblas<span class="w"> </span>-Csetup-args<span class="o">=</span>-Dlapack<span class="o">=</span>meson-openblas<span class="w"> </span>-vvv
 python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--<span class="w"> </span>-k<span class="w"> </span>linprog<span class="w"> </span>-x
 <span class="c1"># ...? AGAIN.</span>
 </pre></div>
 </div>
-<p>Though this time, things <strong>do not work</strong>.</p>
+<p>The nice thing about this is that only <code class="docutils literal notranslate"><span class="pre">meson</span> <span class="pre">install</span> <span class="pre">-C</span> <span class="pre">bbdir</span></code> needs to be run subsequently for undefined symbol issues.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>dev.py<span class="w"> </span>ipython
 </pre></div>
 </div>

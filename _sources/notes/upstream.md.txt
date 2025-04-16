@@ -113,12 +113,12 @@ lapack.dpotrf(a, np.zeros(4))
 ### With `meson`
 
 ```bash
-PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/../pkgconfig" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
+LD_LIBRARY_PATH="${OPENBLAS_GITROOT}/meson_local/lib" PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/../pkgconfig" python -m pip install . -Csetup-args=-Dblas=meson-openblas -Csetup-args=-Dlapack=meson-openblas -vvv
 python dev.py test -- -k linprog -x
 # ...? AGAIN.
 ```
 
-Though this time, things **do not work**.
+The nice thing about this is that only `meson install -C bbdir` needs to be run subsequently for undefined symbol issues.
 
 ```bash
 python dev.py ipython
