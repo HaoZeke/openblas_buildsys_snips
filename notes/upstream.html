@@ -393,6 +393,17 @@ python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"
 python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--<span class="w"> </span>-x
 </pre></div>
 </div>
+<p>Or from scratch..</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>scipy
+git<span class="w"> </span>clean<span class="w"> </span>-dfx<span class="w"> </span><span class="c1"># Destroys everything</span>
+git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+micromamba<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
+micromamba<span class="w"> </span>activate<span class="w"> </span>scipy-dev
+micromamba<span class="w"> </span>remove<span class="w"> </span>libblas<span class="w"> </span>openblas
+pip<span class="w"> </span>install<span class="w"> </span>pythran
+<span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/meson_local/lib&quot;</span><span class="w"> </span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/../pkgconfig&quot;</span><span class="w"> </span>python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>meson-openblas<span class="w"> </span>-C-Dlapack<span class="o">=</span>meson-openblas
+</pre></div>
+</div>
 </section>
 <section id="debugging-and-sanity-checks">
 <h2>Debugging and sanity checks<a class="headerlink" href="#debugging-and-sanity-checks" title="Link to this heading">#</a></h2>

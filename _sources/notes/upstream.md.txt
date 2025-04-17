@@ -183,6 +183,19 @@ python dev.py build -C-Dblas=openblas-src -C-Dlapack=openblas-src
 python dev.py test -- -x
 ```
 
+Or from scratch..
+
+```bash
+cd scipy
+git clean -dfx # Destroys everything
+git submodule update --init --recursive
+micromamba create -f environment.yml
+micromamba activate scipy-dev
+micromamba remove libblas openblas
+pip install pythran
+LD_LIBRARY_PATH="${OPENBLAS_GITROOT}/meson_local/lib" PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/../pkgconfig" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
+```
+
 ## Debugging and sanity checks
 
 To ensure all the symbols with `_` match consider:
