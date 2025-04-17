@@ -256,7 +256,7 @@
 <p>Remember the library locations can be queried from:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">SOMTHIN</span><span class="si">}</span><span class="w"> </span>gcc<span class="w"> </span>--print-file-name<span class="o">=</span>libopenblas.so
 <span class="c1"># or</span>
-<span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">WHTEVA</span><span class="si">}</span><span class="w"> </span>--cflags<span class="w"> </span>--libs<span class="w"> </span>openblas
+<span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">WHTEVA</span><span class="si">}</span><span class="w"> </span>pkg-config<span class="w"> </span>--cflags<span class="w"> </span>--libs<span class="w"> </span>openblas
 </pre></div>
 </div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span>
@@ -393,15 +393,80 @@ python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"
 python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--<span class="w"> </span>-x
 </pre></div>
 </div>
-<p>Or from scratch..</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>scipy
-git<span class="w"> </span>clean<span class="w"> </span>-dfx<span class="w"> </span><span class="c1"># Destroys everything</span>
-git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
-micromamba<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
+</section>
+<section id="ex-nihilo-scipy-testing">
+<h2>Ex-nihilo <code class="docutils literal notranslate"><span class="pre">scipy</span></code> testing<a class="headerlink" href="#ex-nihilo-scipy-testing" title="Link to this heading">#</a></h2>
+<p>Or from <strong>scratch</strong>..</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:haozeke/openblas_buildsys_snips
+<span class="nb">cd</span><span class="w"> </span>openblas_buildsys_snips
+git<span class="w"> </span>checkout<span class="w"> </span>addLAPACK
+pixi<span class="w"> </span>s
+<span class="nb">cd</span><span class="w"> </span>subrepos/openblas
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENBLAS_GITROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+meson<span class="w"> </span>setup<span class="w"> </span>bbdir<span class="w"> </span>-Dbuild_testing<span class="o">=</span>False<span class="se">\</span>
+<span class="w">    </span>-Dbuild_without_lapack<span class="o">=</span>false<span class="se">\</span>
+<span class="w">    </span>--prefix<span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/meson_local
+meson<span class="w"> </span>install<span class="w"> </span>-C<span class="w"> </span>bbdir
+</pre></div>
+</div>
+<p>Now we just need a suitable <code class="docutils literal notranslate"><span class="pre">pkgconfig</span></code>, say at <code class="docutils literal notranslate"><span class="pre">$OPENBLAS_GITROOT/pkgconfs/meson-openblas.pc</span></code>:</p>
+<div class="highlight-pkgconfig notranslate"><div class="highlight"><pre><span></span><span class="na">prefix</span><span class="o">=</span>/home/temp_scipy/openblas_buildsys_snips/subrepos/openblas/meson_local
+<span class="na">includedir</span><span class="o">=</span><span class="si">${</span><span class="na">prefix</span><span class="si">}</span>/include
+<span class="na">libdir</span><span class="o">=</span><span class="si">${</span><span class="na">prefix</span><span class="si">}</span>/lib
+
+<span class="nt">Name</span><span class="p">:</span><span class="w"> </span>openblas
+<span class="nt">Description</span><span class="p">:</span><span class="w"> </span>OpenBLAS<span class="w"> </span>via<span class="w"> </span>meson<span class="w"> </span>build
+<span class="nt">Version</span><span class="p">:</span><span class="w"> </span>0.3.28_meson
+<span class="nt">Libs</span><span class="p">:</span><span class="w"> </span>-L<span class="si">${</span><span class="na">libdir</span><span class="si">}</span><span class="w"> </span>-lopenblas
+<span class="nt">Libs.private</span><span class="p">:</span><span class="w"> </span>-pthread<span class="w"> </span>-lquadmath
+<span class="nt">Cflags</span><span class="p">:</span><span class="w"> </span>-I<span class="si">${</span><span class="na">includedir</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>Replace the prefix as needed and do a sanity check.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span>/pkgconfs<span class="w"> </span>pkg-config<span class="w"> </span>--cflags<span class="w"> </span>--libs<span class="w"> </span>meson-openblas
+</pre></div>
+</div>
+<p>Onto <code class="docutils literal notranslate"><span class="pre">scipy</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>../../<span class="w"> </span><span class="c1"># I like to be parallel to openblas_buildsys_snip</span>
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:scipy/scipy.git<span class="w">              </span>
+<span class="nb">cd</span><span class="w"> </span>scipy
+git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init
+<span class="nb">exit</span><span class="w"> </span><span class="c1"># get out of the pixi environment</span>
+micromamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
 micromamba<span class="w"> </span>activate<span class="w"> </span>scipy-dev
 micromamba<span class="w"> </span>remove<span class="w"> </span>libblas<span class="w"> </span>openblas
 pip<span class="w"> </span>install<span class="w"> </span>pythran
-<span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/meson_local/lib&quot;</span><span class="w"> </span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/../pkgconfig&quot;</span><span class="w"> </span>python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>meson-openblas<span class="w"> </span>-C-Dlapack<span class="o">=</span>meson-openblas
+<span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/meson_local/lib&quot;</span><span class="w"> </span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="s2">/pkgconfs&quot;</span><span class="w"> </span>python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>meson-openblas<span class="w"> </span>-C-Dlapack<span class="o">=</span>meson-openblas
+</pre></div>
+</div>
+<p>So we can finally check.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># python dev.py ipython</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">scipy</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">show_config</span><span class="p">(</span><span class="s1">&#39;dicts&#39;</span><span class="p">)[</span><span class="s1">&#39;Build Dependencies&#39;</span><span class="p">]</span>
+<span class="c1"># ... lots of stuff with the right openblas, 0.3.28_meson</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+   <span class="o">...</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">lapack</span>
+   <span class="o">...</span><span class="p">:</span> <span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+   <span class="o">...</span><span class="p">:</span> <span class="n">lapack</span><span class="o">.</span><span class="n">dpotrf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+   <span class="o">...</span><span class="p">:</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> 
+<span class="p">(</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.53246028</span><span class="p">,</span>  <span class="mf">1.29883591</span><span class="p">,</span>  <span class="mf">0.57982442</span><span class="p">,</span>  <span class="mf">1.84653321</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.</span>        <span class="p">,</span> <span class="o">-</span><span class="mf">1.01741798</span><span class="p">,</span>  <span class="mf">0.96536332</span><span class="p">,</span>  <span class="mf">0.84202944</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.72297867</span><span class="p">,</span>  <span class="mf">0.96580834</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.</span>        <span class="p">,</span>  <span class="mf">0.05334771</span><span class="p">]]),</span>
+ <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The full testsuite works as well.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--<span class="w"> </span>-x
+</pre></div>
+</div>
+<p>For subsequent tests just use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>scipy
+git<span class="w"> </span>clean<span class="w"> </span>-dfx<span class="w"> </span><span class="c1"># Destroys everything</span>
+git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </pre></div>
 </div>
 </section>
@@ -410,6 +475,12 @@ pip<span class="w"> </span>install<span class="w"> </span>pythran
 <p>To ensure all the symbols with <code class="docutils literal notranslate"><span class="pre">_</span></code> match consider:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nm<span class="w"> </span>local-make/lib/libopenblas.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>rg<span class="w"> </span><span class="s1">&#39;_$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="o">{</span><span class="s1">&#39;printf (&quot;%1s\t%s\n&quot;, $2, $3)&#39;</span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>_make_symbs
 nm<span class="w"> </span>meson_local/lib/libopenblas.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>rg<span class="w"> </span><span class="s1">&#39;_$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="o">{</span><span class="s1">&#39;printf (&quot;%1s\t%s\n&quot;, $2, $3)&#39;</span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>_meson_symbs
+meld<span class="w"> </span>_make_symbs<span class="w"> </span>_meson_symbs
+</pre></div>
+</div>
+<p>Or just for everything..</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nm<span class="w"> </span>-gD<span class="w"> </span>local-make/lib/libopenblas.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="o">{</span><span class="s1">&#39;printf (&quot;%1s\t%s\n&quot;, $2, $3)&#39;</span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>_make_symbs<span class="w">  </span>
+nm<span class="w"> </span>-gD<span class="w"> </span>meson_local/lib/libopenblas.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="o">{</span><span class="s1">&#39;printf (&quot;%1s\t%s\n&quot;, $2, $3)&#39;</span><span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>_meson_symbs<span class="w">  </span>
 meld<span class="w"> </span>_make_symbs<span class="w"> </span>_meson_symbs
 </pre></div>
 </div>
@@ -474,6 +545,7 @@ rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<spa
 </ul>
 </li>
 <li><a class="reference internal" href="#testing-within-scipy">Testing within <code class="docutils literal notranslate"><span class="pre">scipy</span></code></a></li>
+<li><a class="reference internal" href="#ex-nihilo-scipy-testing">Ex-nihilo <code class="docutils literal notranslate"><span class="pre">scipy</span></code> testing</a></li>
 <li><a class="reference internal" href="#debugging-and-sanity-checks">Debugging and sanity checks</a></li>
 <li><a class="reference internal" href="#wrapdb-updates">WrapDB Updates</a></li>
 <li><a class="reference internal" href="#relevant-samples">Relevant samples</a></li>

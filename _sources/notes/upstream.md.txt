@@ -29,7 +29,7 @@ Remember the library locations can be queried from:
 ```bash
 LD_LIBRARY_PATH=${SOMTHIN} gcc --print-file-name=libopenblas.so
 # or
-PKG_CONFIG_PATH=${WHTEVA} --cflags --libs openblas
+PKG_CONFIG_PATH=${WHTEVA} pkg-config --cflags --libs openblas
 ```
 
 ```bash
@@ -183,17 +183,93 @@ python dev.py build -C-Dblas=openblas-src -C-Dlapack=openblas-src
 python dev.py test -- -x
 ```
 
-Or from scratch..
+## Ex-nihilo `scipy` testing
+
+Or from **scratch**..
+
+```bash
+git clone git@github.com:haozeke/openblas_buildsys_snips
+cd openblas_buildsys_snips
+git checkout addLAPACK
+pixi s
+cd subrepos/openblas
+export OPENBLAS_GITROOT="$(pwd)"
+meson setup bbdir -Dbuild_testing=False\
+    -Dbuild_without_lapack=false\
+    --prefix=$(pwd)/meson_local
+meson install -C bbdir
+```
+
+Now we just need a suitable `pkgconfig`, say at `$OPENBLAS_GITROOT/pkgconfs/meson-openblas.pc`:
+
+```pkgconfig
+prefix=/home/temp_scipy/openblas_buildsys_snips/subrepos/openblas/meson_local
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: openblas
+Description: OpenBLAS via meson build
+Version: 0.3.28_meson
+Libs: -L${libdir} -lopenblas
+Libs.private: -pthread -lquadmath
+Cflags: -I${includedir}
+```
+
+Replace the prefix as needed and do a sanity check.
+
+```bash
+PKG_CONFIG_PATH=${OPENBLAS_GITROOT}/pkgconfs pkg-config --cflags --libs meson-openblas
+```
+
+Onto `scipy`:
+
+```bash
+cd ../../ # I like to be parallel to openblas_buildsys_snip
+git clone git@github.com:scipy/scipy.git              
+cd scipy
+git submodule update --init
+exit # get out of the pixi environment
+micromamba env create -f environment.yml
+micromamba activate scipy-dev
+micromamba remove libblas openblas
+pip install pythran
+LD_LIBRARY_PATH="${OPENBLAS_GITROOT}/meson_local/lib" PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/pkgconfs" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
+```
+
+So we can finally check.
+
+```python
+# python dev.py ipython
+In [1]: import scipy
+
+In [2]: scipy.show_config('dicts')['Build Dependencies']
+# ... lots of stuff with the right openblas, 0.3.28_meson
+
+In [3]: import numpy as np
+   ...: from scipy.linalg import lapack
+   ...: a=np.random.rand(4,4)
+   ...: lapack.dpotrf(a, np.zeros(4))
+   ...:
+Out[3]: 
+(array([[ 0.53246028,  1.29883591,  0.57982442,  1.84653321],
+        [ 0.        , -1.01741798,  0.96536332,  0.84202944],
+        [ 0.        ,  0.        ,  0.72297867,  0.96580834],
+        [ 0.        ,  0.        ,  0.        ,  0.05334771]]),
+ 2)
+```
+
+The full testsuite works as well.
+
+```bash
+python dev.py test -- -x
+```
+
+For subsequent tests just use:
 
 ```bash
 cd scipy
 git clean -dfx # Destroys everything
 git submodule update --init --recursive
-micromamba create -f environment.yml
-micromamba activate scipy-dev
-micromamba remove libblas openblas
-pip install pythran
-LD_LIBRARY_PATH="${OPENBLAS_GITROOT}/meson_local/lib" PKG_CONFIG_PATH="${OPENBLAS_GITROOT}/../pkgconfig" python dev.py build -C-Dblas=meson-openblas -C-Dlapack=meson-openblas
 ```
 
 ## Debugging and sanity checks
@@ -203,6 +279,14 @@ To ensure all the symbols with `_` match consider:
 ```bash
 nm local-make/lib/libopenblas.so | rg '_$' | awk {'printf ("%1s\t%s\n", $2, $3)'} > _make_symbs
 nm meson_local/lib/libopenblas.so | rg '_$' | awk {'printf ("%1s\t%s\n", $2, $3)'} > _meson_symbs
+meld _make_symbs _meson_symbs
+```
+
+Or just for everything..
+
+```bash
+nm -gD local-make/lib/libopenblas.so | awk {'printf ("%1s\t%s\n", $2, $3)'} > _make_symbs  
+nm -gD meson_local/lib/libopenblas.so | awk {'printf ("%1s\t%s\n", $2, $3)'} > _meson_symbs  
 meld _make_symbs _meson_symbs
 ```
 
