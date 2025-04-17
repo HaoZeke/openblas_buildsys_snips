@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:HaoZeke/openblas
+	branch = addLAPACK
+	commit = c78f1254662ca4ab5e09fb020c00798f3caf0edb
+	parent = e93e15573ed9275c60d346034629879a194d950a
+	method = merge
+	cmdver = 0.4.9

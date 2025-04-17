@@ -1,0 +1,129 @@
+name: meson build
+
+on:
+  push:
+    branches:
+      - develop
+      - mesonBasic
+  pull_request:
+    branches:
+      - develop
+      - mesonBasic
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  linux-darwin:
+    if: "github.repository == 'HaoZeke/OpenBLAS'"
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-13, macos-14]
+        build: [meson]
+        fortran: [gfortran]
+        openmp: [0]
+        ilp64: [0]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Print system information
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            cat /proc/cpuinfo
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            sysctl -a | grep machdep.cpu
+          else
+            echo "::error::$RUNNER_OS not supported"
+            exit 1
+          fi
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          #cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt-get install -y gfortran libtinfo5
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            # It looks like "gfortran" isn't working correctly unless "gcc" is re-installed.
+            brew reinstall gcc
+            brew install coreutils
+            brew install llvm
+          else
+            echo "::error::$RUNNER_OS not supported"
+            exit 1
+          fi
+      - name: Install packages
+        run: |
+          python -m pip install meson ninja
+      - name: Build OpenBLAS
+        run: |
+          meson setup build --buildtype release -Dbuild_testing=true
+          meson compile -C build
+      - name: Run tests
+        run: |
+          meson test -C build -v
+
+  windows:
+    if: "github.repository == 'HaoZeke/OpenBLAS'"
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        msystem: [UCRT64]
+        idx: [int64]
+        build-type: [Release]
+        fc-pkg: [fc]
+        target-prefix: [mingw-w64-ucrt-x86_64]
+
+    defaults:
+      run:
+        # Use MSYS2 bash as default shell
+        shell: msys2 {0}
+
+    env:
+      CHERE_INVOKING: 1
+
+    steps:
+      - name: Get CPU name
+        shell: pwsh
+        run : |
+          Get-CIMInstance -Class Win32_Processor | Select-Object -Property Name
+
+      - name: Install build dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          update: true
+          release: false  # Use pre-installed version
+          install: >-
+            base-devel
+            ${{ matrix.target-prefix }}-cc
+            ${{ matrix.target-prefix }}-${{ matrix.fc-pkg }}
+            ${{ matrix.target-prefix }}-make
+            ${{ matrix.target-prefix }}-ninja
+            ${{ matrix.target-prefix }}-meson
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build OpenBLAS
+        run: |
+          meson setup build --buildtype release -Dbuild_testing=true
+          meson compile -C build
+
+      - name: Run tests
+        run: |
+          meson test -C build -v
