@@ -359,6 +359,41 @@ python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">tes
 </div>
 </section>
 </section>
+<section id="testing-within-scipy">
+<h2>Testing within <code class="docutils literal notranslate"><span class="pre">scipy</span></code><a class="headerlink" href="#testing-within-scipy" title="Link to this heading">#</a></h2>
+<p>Fairly straight forward, using <code class="docutils literal notranslate"><span class="pre">64ed6e24c9&#64;rgommers/openblas-src-wheel</span></code> and this diff:</p>
+<div class="highlight-patch notranslate"><div class="highlight"><pre><span></span>diff --git i/scipy/meson.build w/scipy/meson.build
+index 7711c6e5eb..eb77466c22 100644
+--- i/scipy/meson.build
++++ w/scipy/meson.build
+@@ -298,8 +298,7 @@ build, so you don&#39;t have to install an external one, with:
+ elif blas_name == &#39;openblas-src&#39;
+   openblas_subproj = subproject(&#39;openblas&#39;,
+       default_options: {
+-        &#39;build_without_lapack&#39;: true,
+-        &#39;netlib_lapack_name&#39;: &#39;scipy_lapack&#39;,
++        &#39;build_without_lapack&#39;: false,
+       })
+   blas = openblas_subproj.get_variable(&#39;openblas_dep&#39;)
+ elif blas_name != &#39;scipy-openblas&#39;  # if so, we found it already
+@@ -325,7 +324,7 @@ if &#39;mkl&#39; in blas.name() or blas.name().to_lower() == &#39;accelerate&#39; or blas_name i
+   # use that - no need to run the full detection twice.
+   lapack = blas
+ elif blas_name == &#39;openblas-src&#39;
+-  lapack = openblas_subproj.get_variable(&#39;netlib_lapack_dep&#39;)
++  lapack = openblas_subproj.get_variable(&#39;openblas_dep&#39;)
+ elif lapack_name == &#39;openblas&#39;
+   lapack = dependency([&#39;openblas&#39;, &#39;OpenBLAS&#39;])
+ else
+</pre></div>
+</div>
+<p>Setup is basically:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-sf<span class="w"> </span><span class="si">${</span><span class="nv">OPENBLAS_GITROOT</span><span class="si">}</span><span class="w"> </span>subprojects/OpenBLAS-0.3.28
+python<span class="w"> </span>dev.py<span class="w"> </span>build<span class="w"> </span>-C-Dblas<span class="o">=</span>openblas-src<span class="w"> </span>-C-Dlapack<span class="o">=</span>openblas-src
+python<span class="w"> </span>dev.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--<span class="w"> </span>-x
+</pre></div>
+</div>
+</section>
 <section id="debugging-and-sanity-checks">
 <h2>Debugging and sanity checks<a class="headerlink" href="#debugging-and-sanity-checks" title="Link to this heading">#</a></h2>
 <p>To ensure all the symbols with <code class="docutils literal notranslate"><span class="pre">_</span></code> match consider:</p>
@@ -427,6 +462,7 @@ rsync<span class="w"> </span>-zarv<span class="w"> </span>--prune-empty-dirs<spa
 <li><a class="reference internal" href="#with-meson">With <code class="docutils literal notranslate"><span class="pre">meson</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#testing-within-scipy">Testing within <code class="docutils literal notranslate"><span class="pre">scipy</span></code></a></li>
 <li><a class="reference internal" href="#debugging-and-sanity-checks">Debugging and sanity checks</a></li>
 <li><a class="reference internal" href="#wrapdb-updates">WrapDB Updates</a></li>
 <li><a class="reference internal" href="#relevant-samples">Relevant samples</a></li>

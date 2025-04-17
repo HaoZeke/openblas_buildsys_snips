@@ -145,6 +145,44 @@ While `meson` ends up with:
 [2025-04-11T13:51:41Z INFO] [3688/10425] gfortran -Ikernel/libdcabs1.a.p -Ikernel -I../kernel -I. -I.. -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -O0 -g -Wno-conversion -Wno-maybe-uninitialized -Wno-unused-dummy-argument -Wno-unused-variable -fPIC -m64 -DSMP_SERVER -DBUILD_SINGLE=1 -DBUILD_DOUBLE=1 -DBUILD_COMPLEX=1 -DBUILD_COMPLEX16=1 -UASMNAME -UASMFNAME -UNAME -UCNAME -UCHAR_NAME -UCHAR_CNAME -DNO_AFFINITY -DNO_WARMUP -DDOUBLE -UCOMPLEX -DASMNAME=dcabs1 -DASMFNAME=dcabs1_ -DNAME=dcabs1_ -DCNAME=dcabs1 '-DCHAR_NAME="dcabs1_"' '-DCHAR_CNAME="dcabs1"' -Jkernel/libdcabs1.a.p -o kernel/libdcabs1.a.p/x86_64_cabs.S.o -c ../kernel/x86_64/cabs.S
 ```
 
+## Testing within `scipy`
+
+Fairly straight forward, using `64ed6e24c9@rgommers/openblas-src-wheel` and this diff:
+
+```patch
+diff --git i/scipy/meson.build w/scipy/meson.build
+index 7711c6e5eb..eb77466c22 100644
+--- i/scipy/meson.build
++++ w/scipy/meson.build
+@@ -298,8 +298,7 @@ build, so you don't have to install an external one, with:
+ elif blas_name == 'openblas-src'
+   openblas_subproj = subproject('openblas',
+       default_options: {
+-        'build_without_lapack': true,
+-        'netlib_lapack_name': 'scipy_lapack',
++        'build_without_lapack': false,
+       })
+   blas = openblas_subproj.get_variable('openblas_dep')
+ elif blas_name != 'scipy-openblas'  # if so, we found it already
+@@ -325,7 +324,7 @@ if 'mkl' in blas.name() or blas.name().to_lower() == 'accelerate' or blas_name i
+   # use that - no need to run the full detection twice.
+   lapack = blas
+ elif blas_name == 'openblas-src'
+-  lapack = openblas_subproj.get_variable('netlib_lapack_dep')
++  lapack = openblas_subproj.get_variable('openblas_dep')
+ elif lapack_name == 'openblas'
+   lapack = dependency(['openblas', 'OpenBLAS'])
+ else
+```
+
+Setup is basically:
+
+```bash
+ln -sf ${OPENBLAS_GITROOT} subprojects/OpenBLAS-0.3.28
+python dev.py build -C-Dblas=openblas-src -C-Dlapack=openblas-src
+python dev.py test -- -x
+```
+
 ## Debugging and sanity checks
 
 To ensure all the symbols with `_` match consider:
